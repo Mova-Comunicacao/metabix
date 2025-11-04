@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1762284559493,
+  "timestamp": 1762284932101,
   "index": "/metabix/index.html",
   "assetGroups": [
     {
@@ -387,7 +387,7 @@
     "/metabix/chunk-XAHT27IB.js": "90e19b5aac4274628d13f3a91bd2acdd2f334a24",
     "/metabix/chunk-XVYOZ4CS.js": "d6c0fdbe067743e29cd75a1fde42d9f2b1a08caa",
     "/metabix/chunk-ZXHT3TFS.js": "0930fad38b4ad5500e3e2e9f34a026676aec79f7",
-    "/metabix/index.html": "f1bfc73c2b042d2ca3f68beec3be3de92a34001f",
+    "/metabix/index.html": "143e9b0aa3c6d4d4593e9335f7fcf4a072237241",
     "/metabix/main-JPY3VVJK.js": "5e58042c841b7174f33d6c07b9857f6445156352",
     "/metabix/manifest.webmanifest": "5a96f7c1a0c5feb512a8495651b15b45e3926baa",
     "/metabix/media/separated-mask-OON6HTYZ.svg": "02767d2865c0860217a87a8c73bfc50298064a8c",
