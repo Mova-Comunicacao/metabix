@@ -1,0 +1,80 @@
+//
+// Reboot
+//
+
+:root {
+    scroll-behavior: smooth;
+}
+  
+html {
+  font-family: sans-serif;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; // 2
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);    
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: $app-general-root-font-size-desktop !important;
+    font-weight: $font-weight-base;
+    font-family: $font-family-sans-serif;
+    color: $gray-700;
+    overflow-x: hidden;
+    //overscroll-behavior: none;
+    scroll-behavior: smooth;
+    min-height: 100vh;    
+
+    // Tablet mode
+    @include media-breakpoint-down(lg) {
+        font-size: $app-general-root-font-size-tablet !important;
+    }
+
+    // Mobile mode
+    @include media-breakpoint-down(md) {
+        font-size: $app-general-root-font-size-mobile !important;
+    }    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        word-spacing: normal;
+    }
+    
+    a:hover,
+    a:active,
+    a:focus {
+        text-decoration: none !important;
+    }
+}
+
+canvas {
+    user-select: none;
+}
+
+// Angular integration
+router-outlet {
+    display: none;
+}
+
+// Layouts
+body,
+.app-default {
+    background-color: var(--#{$prefix}app-bg-color);    
+}
+
+.app-blank {
+    background-color: var(--#{$prefix}app-blank-bg-color);    
+}
+
+// Reset CSS3 Transitions for child elements
+[data-mv-app-reset-transition="true"] * {
+    transition: none !important;
+}

@@ -1,0 +1,30 @@
+//
+// Content
+//
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+	.app-content {
+        padding-bottom: $app-content-padding-y;		
+
+		.app-content-container {
+			transition: padding $app-general-transition-duration $app-general-transition-timing;
+
+			padding-left: $app-content-padding-x;
+			padding-right: $app-content-padding-x;			
+		}
+	}
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+	.app-content { 
+		max-width: none;
+        padding-bottom: $app-content-padding-y-mobile;
+
+		.app-content-container {
+			padding-left: $app-content-padding-x-mobile;
+			padding-right: $app-content-padding-x-mobile;		
+		}		
+	}
+}

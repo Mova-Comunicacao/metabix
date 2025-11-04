@@ -1,0 +1,69 @@
+//
+// Top
+//
+
+// General mode
+.app-top {
+    position: relative;
+    overflow: hidden;
+
+    .app-top-wrapper {
+        display: flex;
+        align-items: stretch; 
+        width: 100%;
+    }
+
+   // General
+   .menu {
+    .menu-item {
+        @include menu-link-default-state( 
+            $title-color: var(--#{$prefix}gray-600), 
+            $icon-color: var(--#{$prefix}gray-600), 
+            $bullet-color: var(--#{$prefix}gray-600), 
+            $arrow-color: var(--#{$prefix}gray-600),
+            $bg-color: null
+        );  
+        
+        @include menu-link-active-state( 
+            $title-color: var(--#{$prefix}text-secondary), 
+            $icon-color: var(--#{$prefix}text-secondary), 
+            $bullet-color: var(--#{$prefix}text-secondary), 
+            $arrow-color: var(--#{$prefix}text-secondary), 
+            $bg-color: null
+        );             
+    } 
+}    
+}
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+    // Base
+    .app-top {
+        @include property( z-index, $app-top-fixed-z-index);     
+    }    
+
+    // Vars
+    :root {
+        --#{$prefix}app-top-height: #{$app-top-base-height};
+        --#{$prefix}app-top-height-actual: #{$app-top-base-height};
+    }
+
+    // States
+    .app-top {          
+        height: var(--#{$prefix}app-top-height);
+        
+        .app-top-wrapper {
+            background-color: var(--#{$prefix}app-top-base-bg-color);
+            border-bottom: var(--#{$prefix}app-top-base-border-bottom); 
+        }
+
+        // Integration
+        [data-mv-app-header-sticky="true"] & {
+            .app-top-wrapper {
+                background-color: var(--#{$prefix}app-top-sticky-bg-color);
+                border-bottom: var(--#{$prefix}app-top-sticky-border-bottom);            
+            }
+        }    
+    }    
+
+}

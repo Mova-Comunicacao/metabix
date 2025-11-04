@@ -1,0 +1,537 @@
+//
+// Aside
+//
+
+// General mode
+.app-aside {    
+    display: flex;    
+    flex-shrink: 0;
+
+	.burger-icon {
+		@include  burger-icon-build($burger-icon-config);
+	}
+
+    .burger-icon {
+        @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+    }	
+    
+    [data-mv-app-aside-minimize="on"] & {
+		.burger-icon {
+			@include  burger-icon-active($burger-icon-config);
+            @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+		}          
+    }
+}
+
+// Utilities
+.app-aside-minimize {
+    display: none;    
+}
+
+.app-aside {
+    position: fixed;
+    overflow: hidden;
+
+    @include property( z-index, $app-aside-base-z-index);
+    @include property( top, $app-aside-fixed-top);
+    @include property( bottom, $app-aside-fixed-bottom);
+    @include property( right, $app-aside-fixed-right);
+
+
+    // Vars
+    :root {
+        --#{$prefix}app-aside-width: #{$app-aside-base-width};
+        --#{$prefix}app-aside-width-actual: #{$app-aside-base-width};
+    }
+
+    .app-aside-content {
+        position: relative;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        max-width: 100%;
+        background-color: var(--#{$prefix}app-aside-base-bg-color);        
+        box-shadow: var(--#{$prefix}app-aside-base-box-shadow);      
+        @include property( z-index, $app-aside-base-z-index);
+
+        @media (min-width: 1600px) and (min-height:700px) {
+            width: 880px;
+        }
+
+        // Desktop
+        @include media-breakpoint-up(lg) {
+            width: 880px;
+        }        
+
+        // Tablet & mobile modes
+        @include media-breakpoint-down(lg) {
+            width: 480px;           
+        }        
+    }
+
+    // Desktop mode
+    @media (min-width: 768px) and (min-height:550px) {
+        .app-aside-body {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;    
+        }
+    }
+
+    .app-aside-container {
+        width: 100%;
+    }
+    
+    // Desktop
+    @include media-breakpoint-up(lg) {
+        .app-aside-container {
+            padding: 0 32px 0 44px;
+        }
+    }    
+    
+    // Tablet & mobile modes
+    @include media-breakpoint-down(lg) {
+        .app-aside-container {
+            padding: 0 114px 14px;
+        }
+    }   
+    
+    // Desktop mode
+    @media (min-width: 768px) and (min-height:550px) {   
+        .app-aside-grid {
+            display:-webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 768px) and (min-height:550px) {
+        .app-aside-grid-col {
+            -webkit-box-flex:1.2;
+            -webkit-flex: 1.2;
+            -moz-box-flex: 1.2;
+            -ms-flex: 1.2;
+            flex: 1.2;
+        }   
+        
+        .app-aside-grid-col.left {
+            display: block;
+            -webkit-box-flex: .8;
+            -webkit-flex: .8;
+            -moz-box-flex: .8;
+            -ms-flex: .8;
+            flex: .8;
+        }        
+    }
+
+    // Fixed aside mode
+    .app-aside-fixed & {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    .app-aside-footer {
+        position: absolute;
+        bottom: 0;
+        padding: 50px 0 0 0;
+
+        // Tablet & mobile modes
+        @include media-breakpoint-down(lg) {
+            position: relative;
+            padding: 24px 0 0 0;
+        }
+    }
+    
+    // Desktop mode
+    @include media-breakpoint-up(lg) {
+        .app-aside-footer {
+            padding: 0 0 50px 0;
+        }
+    }    
+    
+    .menu-item:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        height: 1px;
+        -webkit-transform: scaleX(0);
+        -moz-transform: scaleX(0);
+        -ms-transform: scaleX(0);
+        -o-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transform-origin: right center;
+        -moz-transform-origin: right center;
+        -ms-transform-origin: right center;
+        -o-transform-origin: right center;
+        transform-origin: right center;
+        background: transparent;
+        -webkit-transition: -webkit-transform .5s,-webkit-transform-origin 0s;
+        transition: -webkit-transform .5s,-webkit-transform-origin 0s;
+        -o-transition: -o-transform .5s,-o-transform-origin 0s;
+        -moz-transition: transform .5s,transform-origin 0s,-moz-transform .5s,-moz-transform-origin 0s;
+        transition: transform .5s,transform-origin 0s;
+        transition: transform .5s,transform-origin 0s,-webkit-transform .5s,-moz-transform .5s,-o-transform .5s,-webkit-transform-origin 0s,-moz-transform-origin 0s,-ms-transform-origin 0s,-o-transform-origin 0s
+    }
+    
+    .menu-item em {
+        position: relative;
+        overflow: hidden;
+        display: block;
+        font-style: normal;
+        padding: 0 .01em 0 0
+    }
+
+    .menu-item span {
+        display: inline-block;
+        color: transparent;
+        -webkit-transition: -webkit-transform 1.2s cubic-bezier(.19,1,.22,1);
+        transition: -webkit-transform 1.2s cubic-bezier(.19,1,.22,1);
+        -o-transition: -o-transform 1.2s cubic-bezier(.19,1,.22,1);
+        -moz-transition: transform 1.2s cubic-bezier(.19,1,.22,1),-moz-transform 1.2s cubic-bezier(.19,1,.22,1);
+        transition: transform 1.2s cubic-bezier(.19,1,.22,1);
+        transition: transform 1.2s cubic-bezier(.19,1,.22,1),-webkit-transform 1.2s cubic-bezier(.19,1,.22,1),-moz-transform 1.2s cubic-bezier(.19,1,.22,1),-o-transform 1.2s cubic-bezier(.19,1,.22,1)
+    }
+
+    .menu-item span:after,
+    .menu-item span:before {
+        content: attr(title);
+        display: block;
+        position: absolute;
+        color: var(--#{$prefix}text-dark);
+    }
+
+    .menu-item span:before {
+        top: 0;
+        -webkit-transform: skewY(0);
+        -moz-transform: skewY(0);
+        -ms-transform: skewY(0);
+        -o-transform: skewY(0);
+        transform: skewY(0);
+        -webkit-transform-origin: right bottom;
+        -moz-transform-origin: right bottom;
+        -ms-transform-origin: right bottom;
+        -o-transform-origin: right bottom;
+        transform-origin: right bottom;
+        -webkit-transition: -webkit-transform 2s cubic-bezier(.19,1,.22,1);
+        transition: -webkit-transform 2s cubic-bezier(.19,1,.22,1);
+        -o-transition: -o-transform 2s cubic-bezier(.19,1,.22,1);
+        -moz-transition: transform 2s cubic-bezier(.19,1,.22,1),-moz-transform 2s cubic-bezier(.19,1,.22,1);
+        transition: transform 2s cubic-bezier(.19,1,.22,1);
+        transition: transform 2s cubic-bezier(.19,1,.22,1),-webkit-transform 2s cubic-bezier(.19,1,.22,1),-moz-transform 2s cubic-bezier(.19,1,.22,1),-o-transform 2s cubic-bezier(.19,1,.22,1)
+    }
+    
+    .menu-item span:after {
+        top: 105%;
+        -webkit-transform: skewY(7deg);
+        -moz-transform: skewY(7deg);
+        -ms-transform: skewY(7deg);
+        -o-transform: skewY(7deg);
+        transform: skewY(7deg);
+        -webkit-transform-origin: left top;
+        -moz-transform-origin: left top;
+        -ms-transform-origin: left top;
+        -o-transform-origin: left top;
+        transform-origin: left top;
+        -webkit-transition: -webkit-transform 2s cubic-bezier(.19,1,.22,1);
+        transition: -webkit-transform 2s cubic-bezier(.19,1,.22,1);
+        -o-transition: -o-transform 2s cubic-bezier(.19,1,.22,1);
+        -moz-transition: transform 2s cubic-bezier(.19,1,.22,1),-moz-transform 2s cubic-bezier(.19,1,.22,1);
+        transition: transform 2s cubic-bezier(.19,1,.22,1);
+        transition: transform 2s cubic-bezier(.19,1,.22,1),-webkit-transform 2s cubic-bezier(.19,1,.22,1),-moz-transform 2s cubic-bezier(.19,1,.22,1),-o-transform 2s cubic-bezier(.19,1,.22,1)
+    }  
+    
+    .menu-item:focus span,
+    .menu-item:hover span {
+        -webkit-transform: translateY(-105%);
+        -moz-transform: translateY(-105%);
+        -ms-transform: translateY(-105%);
+        -o-transform: translateY(-105%);
+        transform: translateY(-105%)
+    }
+
+    @media (pointer: coarse) {
+        .menu-item:focus span,
+        .menu-item:hover span {
+            -webkit-transform:none;
+            -moz-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+            transform: none
+        }
+    }
+
+    .menu-item:focus span:before,
+    .menu-item:hover span:before {
+        -webkit-transform: skewY(7deg);
+        -moz-transform: skewY(7deg);
+        -ms-transform: skewY(7deg);
+        -o-transform: skewY(7deg);
+        transform: skewY(7deg)
+    }   
+    
+    @media (pointer: coarse) {
+        .menu-item:focus span:before,
+        .menu-item:hover span:before {
+            -webkit-transform:none;
+            -moz-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+            transform: none
+        }        
+    }
+
+    .menu-item:focus span:after,
+    .menu-item:hover span:after {
+        -webkit-transform: skewY(0);
+        -moz-transform: skewY(0);
+        -ms-transform: skewY(0);
+        -o-transform: skewY(0);
+        transform: skewY(0)
+    }
+    
+    @media (pointer: coarse) {
+        .menu-item:focus span:after,
+        .menu-item:hover span:after {
+            -webkit-transform:none;
+            -moz-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+            transform: none
+        }        
+    }    
+
+    .menu-item > .active:before {
+        -webkit-transform: scaleX(1);
+        -moz-transform: scaleX(1);
+        -ms-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        transform: scaleX(1);
+        -webkit-transform-origin: left center;
+        -moz-transform-origin: left center;
+        -ms-transform-origin: left center;
+        -o-transform-origin: left center;
+        transform-origin: left center        
+    }
+
+    .menu-item .active span:after,
+    .menu-item .active span:before {
+        color: var(--#{$prefix}text-primary);
+    }    
+
+
+    .app-aside-menu-language {
+        display: inline-flex;
+        align-items: center;
+    }
+
+     .app-aside-menu-language a {
+        color: var(--#{$prefix}text-dark);
+        display: inline-block;
+        margin: 5px 10px;
+        text-decoration: none;
+        position: relative;
+        cursor: pointer;
+     }
+
+    .app-aside-menu-mail {
+        display: block
+    }
+
+    .app-aside-menu-mail a {
+        position: relative;
+        display: inline-block;
+        padding: 0 0 5px 0;
+        text-decoration: none
+    }
+    
+    @media (min-width: 1600px) and (min-height:700px) {
+        .app-aside-menu-mail a {
+            padding: 0 0 6px 0;
+        }
+    }
+    
+    .app-aside-menu-language a:after,
+    .app-aside-menu-language a:before,    
+    .app-aside-menu-mail a:after,
+    .app-aside-menu-mail a:before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: var(--#{$prefix}text-gray-400);
+    }
+
+    .app-aside-menu-language a:after,
+    .app-aside-menu-mail a:after {
+        background: var(--#{$prefix}text-dark);
+        -webkit-transform: scaleX(0);
+        -moz-transform: scaleX(0);
+        -ms-transform: scaleX(0);
+        -o-transform: scaleX(0);
+        transform: scaleX(0);
+        -webkit-transition: -webkit-transform .8s cubic-bezier(.19,1,.22,1);
+        transition: -webkit-transform .8s cubic-bezier(.19,1,.22,1);
+        -o-transition: -o-transform .8s cubic-bezier(.19,1,.22,1);
+        -moz-transition: transform .8s cubic-bezier(.19,1,.22,1),-moz-transform .8s cubic-bezier(.19,1,.22,1);
+        transition: transform .8s cubic-bezier(.19,1,.22,1);
+        transition: transform .8s cubic-bezier(.19,1,.22,1),-webkit-transform .8s cubic-bezier(.19,1,.22,1),-moz-transform .8s cubic-bezier(.19,1,.22,1),-o-transform .8s cubic-bezier(.19,1,.22,1)
+    }  
+
+    .app-aside-menu-language a:focus:after,
+    .app-aside-menu-language a:hover:after,
+    .app-aside-menu-language a:active:after,  
+    .app-aside-menu-language a.active:after,  
+    .app-aside-menu-mail a:focus:after,
+    .app-aside-menu-mail a:hover:after {
+        -webkit-transform: scaleX(1);
+        -moz-transform: scaleX(1);
+        -ms-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        transform: scaleX(1)
+    }
+
+    [data-mv-app-aside-minimize="on"] & {
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        bottom: 0;
+        right: 0;        
+        // transition: width $app-aside-base-transition ease; 
+        @include property( z-index, $app-aside-base-z-index);
+        
+        &.app-aside-minimize {   
+            display: block;
+        }
+
+        // Menu
+        .app-aside-menu {
+            .menu-content,
+            .menu-title {
+                opacity: 1;
+                transition: opacity $app-aside-base-transition ease;
+            }
+
+            .menu-item.show > .menu-sub {
+                height: auto;
+                overflow: hidden;
+                transition: height $app-aside-base-transition ease;
+            }
+        } 
+
+        .app-aside-backdrop {
+            pointer-events: auto;
+        }   
+          
+    }
+
+    // Aside menu
+    .app-aside-menu {
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 100px 0 90px 15px;
+
+        .app-aside-title {
+            padding: 0 0 15px 0;
+        }
+
+        // Desktop mode
+        @include media-breakpoint-up(lg) {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -moz-box-orient: vertical;
+            -moz-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -moz-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 20px 0 0 0;
+            
+            .app-aside-title {
+                padding: 0 0 50px 0;
+            }
+        }  
+        
+        // Mobile mode
+        @include media-breakpoint-up(md) {
+            display:-webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -moz-box-orient: vertical;
+            -moz-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: 0;            
+        }  
+
+        // Mobile mode
+        @include media-breakpoint-down(md) {
+            left: auto;
+        }
+
+        .menu-content,
+        .menu-title {
+            opacity: 0;
+            transition: opacity $app-aside-base-transition ease;
+        }
+
+        .menu-item.show > .menu-sub {
+            height: 0;
+            overflow: hidden;
+            transition: height $app-aside-base-transition ease;
+        }        
+    }  
+    
+    .app-aside-backdrop {
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        pointer-events: none;
+        background-color: rgba(0,0,0,.4);
+        @include property( z-index, $app-aside-fixed-z-index);
+    }        
+}

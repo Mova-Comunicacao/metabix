@@ -1,0 +1,106 @@
+//
+// Label
+//
+
+// Set arrow direction
+@mixin menu-link-arrow-rotate($angle, $angleRtl) {
+	/*rtl:ignore*/
+	transform: rotateZ($angleRtl);
+	/*rtl:remove*/
+	transform: rotateZ($angle);
+	transition: $menu-accordion-arrow-transition;
+}
+
+// Set menu link theme
+@mixin menu-link-theme($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color: null) {
+	@if ( $bg-color != null ) {
+		background-color: $bg-color;
+	}
+
+	@if ( $title-color != null ) {
+		color: $title-color;
+
+		.menu-title {
+			color: $title-color;
+		}
+	}
+
+	@if ( $icon-color != null ) {
+		.menu-icon {
+			&,
+			.svg-icon,
+			i {
+				color: $icon-color;
+			}
+		}
+	}
+
+	@if ( $bullet-color != null ) {
+		.menu-bullet {
+			.bullet {
+				background-color: $bullet-color;
+			}
+		}
+	}
+
+	@if ( $arrow-color != null ) {
+		// Arrow
+		.menu-arrow:after {
+			@include svg-bg-icon(arrow-start, $arrow-color);
+			/*rtl:begin:remove*/
+			@include svg-bg-icon(arrow-end, $arrow-color);
+			/*rtl:end:remove*/
+		}
+	}
+}
+
+// Set menu link default state
+@mixin menu-link-default-state($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color: null, $all-links: true) {
+	$sel: '';
+
+	@if ($all-links == false) {
+		$sel: '& > ';
+	}
+
+	#{$sel}.menu-link {
+		@include menu-link-theme($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color);
+	}
+}
+
+// Set menu link hover state
+@mixin menu-link-hover-state($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color: null, $all-links: true) {
+	$sel: '&:not(.here) ';
+
+	@if ($all-links == false) {
+		$sel: '&:not(.here) > ';
+	}
+
+	&.hover:not(.here) > .menu-link:not(.disabled):not(.active):not(.here),
+	#{$sel}.menu-link:hover:not(.disabled):not(.active):not(.here) {
+		transition: $transition-link;
+
+		@include menu-link-theme($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color);
+	}
+}
+
+// Set menu link active state
+@mixin menu-link-active-state($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color: null, $all-links: true) {
+	$sel: '';
+
+	@if ($all-links == false) {
+		$sel: '& > ';
+	}
+
+	#{$sel}.menu-link.active {
+		transition: $transition-link;
+
+		@include menu-link-theme($title-color, $icon-color, $bullet-color, $arrow-color, $bg-color);
+	}
+}
+
+// Set sub indention
+@mixin menu-sub-indention($value) {
+	.menu-sub:not([data-popper-placement]) {
+		margin-left: $value;
+	}
+}

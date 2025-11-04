@@ -1,0 +1,15 @@
+//
+// Reboot
+//
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--#{$prefix}text-dark);
+	outline: 0;
+}
+
+.bg-image {
+	// Headings
+	h1,h2,h3,h4,h5,h6,p,.lead {
+		color: var(--#{$prefix}text-white);
+	}	
+}

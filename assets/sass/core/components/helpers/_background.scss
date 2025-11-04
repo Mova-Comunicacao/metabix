@@ -1,0 +1,162 @@
+//
+// Custom background helpers
+//
+
+// Background white color
+.bg-white {
+	--#{$prefix}bg-rgb-color: var(--#{$prefix}white-bg-rgb);
+	background-color: $white !important;
+}
+
+// Background black color
+.bg-black {
+	--#{$prefix}bg-rgb-color: var(--#{$prefix}black-bg-rgb);
+	background-color: $black !important;
+}
+
+// Background body color
+.bg-body {
+	--#{$prefix}bg-rgb-color: var(--#{$prefix}body-bg-rgb);
+	background-color: var(--#{$prefix}body-bg) !important;
+}
+
+.bg-gradient::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: .84;
+    mix-blend-mode: multiply;
+    background: -webkit-linear-gradient(0deg, rgba($primary, 1), rgba($primary, 1));
+    background: -moz-linear-gradient(0deg, rgba($primary, 1), rgba($primary, 1));
+    background: linear-gradient(0deg, rgba($primary, 1), rgba($primary, 1));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#365669",endColorstr="#365669",GradientType=1);    
+    background-repeat: repeat-x; 
+    pointer-events: none;
+    z-index: 1;
+} 
+
+.bg-grayscale {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+
+	transition: .2s ease;
+
+	&:hover {
+		-webkit-filter: grayscale(0%);
+		filter: grayscale(0%);		
+	}
+}
+
+// Background theme light colors
+@each $name, $value in $theme-colors {
+	@if (theme-light-color($name)) {
+		.bg-light-#{$name} {
+			background-color: var(--#{$prefix}#{$name}-light) !important;
+		}
+	}
+
+	.bg-#{$name} {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}#{$name}-rgb);
+		background-color: var(--#{$prefix}#{$name}) !important;
+	}
+
+	.bg-#{$name}-active {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}#{$name}-active-rgb);
+		background-color: var(--#{$prefix}#{$name}-active) !important;
+	}
+}
+
+// Background gray colors
+@each $name, $value in $grays {
+    .bg-gray-#{$name} {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}gray-#{$name}-rgb);
+		background-color: var(--#{$prefix}gray-#{$name});
+	}
+
+	.bg-hover-gray-#{$name} {
+		&:hover {
+			--#{$prefix}bg-rgb-color: var(--#{$prefix}gray-#{$name}-rgb);
+			background-color: var(--#{$prefix}gray-#{$name});	
+		}		
+	}
+
+	.bg-gray-#{$name}i {
+		--#{$prefix}bg-rgb-color: var(--#{$prefix}gray-#{$name}-rgb);
+		background-color: var(--#{$prefix}gray-#{$name}) !important;
+	}
+}
+
+// Background image helpers
+// Background repeat
+.bgi-no-repeat {
+	background-repeat: no-repeat;
+}
+
+// Background positions
+.bgi-position-y-top {
+	background-position-y: top;
+}
+
+.bgi-position-y-bottom {
+	background-position-y: bottom;
+}
+
+.bgi-position-y-center {
+	background-position-y: center;
+}
+
+.bgi-position-x-start {
+	background-position-x: left;
+}
+
+.bgi-position-x-end {
+	background-position-x: right;
+}
+
+.bgi-position-x-center {
+	background-position-x: center;
+}
+
+.bgi-position-top {
+	background-position: 0 top;
+}
+
+.bgi-position-bottom {
+	background-position: 0 bottom;
+}
+
+.bgi-position-center {
+	background-position: center;
+}
+
+// Responsive helpers
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+		
+		// Background sizes
+		.bgi-size#{$infix}-auto {
+			background-size: auto;
+		}
+
+		.bgi-size#{$infix}-cover {
+			background-size: cover;
+		}
+
+		.bgi-size#{$infix}-contain {
+			background-size: contain;
+		}	
+
+		// Background attachment
+		.bgi-attachment#{$infix}-fixed {
+			background-attachment: fixed;
+		}
+
+		.bgi-attachment#{$infix}-scroll {
+			background-attachment: scroll;
+		}
+	}
+}

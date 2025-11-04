@@ -1,0 +1,54 @@
+//
+// Root
+//
+
+:root {
+    // Layouts
+    @include property(--#{$prefix}app-bg-color, $app-bg-color);
+    @include property(--#{$prefix}app-blank-bg-color, $app-blank-bg-color); 
+    
+    // Page
+    @include property(--#{$prefix}app-page-bg-color, $app-page-bg-color);   
+    
+    // Sidebar
+    @include property(--#{$prefix}app-sidebar-width, #{$app-sidebar-base-width});
+    @include property(--#{$prefix}app-sidebar-gap-start, #{$app-sidebar-base-gap-start});
+    @include property(--#{$prefix}app-sidebar-gap-end, #{$app-sidebar-base-gap-end});
+    
+    @include property(--#{$prefix}app-sidebar-width-mobile, #{$app-sidebar-base-width-mobile});
+    @include property(--#{$prefix}app-sidebar-gap-start-mobile, #{$app-sidebar-base-gap-start-mobile});
+    @include property(--#{$prefix}app-sidebar-gap-end-mobile, #{$app-sidebar-base-gap-end-mobile});
+
+    // Top base
+    @include property(--#{$prefix}app-top-base-bg-color, $app-top-base-bg-color);   
+    @include property(--#{$prefix}app-top-base-border-bottom, $app-top-base-border-bottom); 
+
+    // Top sticky
+    @include property(--#{$prefix}app-top-sticky-bg-color, $app-top-sticky-bg-color);
+    @include property(--#{$prefix}app-top-sticky-border-bottom, $app-top-sticky-border-bottom); 
+
+    // Header base
+    @include property(--#{$prefix}app-header-base-bg-color, $app-header-base-bg-color);
+    @include property(--#{$prefix}app-header-base-box-shadow, $app-header-base-box-shadow);
+    @include property(--#{$prefix}app-header-base-border-bottom, $app-header-base-border-bottom);
+
+    // Header sticky
+    @include property(--#{$prefix}app-header-sticky-bg-color, $app-header-sticky-bg-color);
+    @include property(--#{$prefix}app-header-sticky-box-shadow, $app-header-sticky-box-shadow);
+    @include property(--#{$prefix}app-header-sticky-border-bottom, $app-header-sticky-border-bottom);  
+    
+    // Aside base
+    @include property(--#{$prefix}app-aside-base-bg-color, $app-aside-base-bg-color);
+    @include property(--#{$prefix}app-aside-base-box-shadow, $app-aside-base-box-shadow);
+        
+    // Sidebar base
+    @include property(--#{$prefix}app-sidebar-base-width, $app-sidebar-base-width);
+    @include property(--#{$prefix}app-sidebar-base-bg-color, $app-sidebar-base-bg-color);
+    @include property(--#{$prefix}app-sidebar-base-border-end, $app-sidebar-base-border-end);
+
+    // Footer
+    @include property(--#{$prefix}app-footer-bg-color, $app-footer-bg-color);
+    @include property(--#{$prefix}app-footer-box-shadow, $app-footer-box-shadow);
+    @include property(--#{$prefix}app-footer-border-top, $app-footer-border-top);   
+    
+}

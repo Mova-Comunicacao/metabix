@@ -1,0 +1,114 @@
+//
+// CSS Variables
+//
+
+:root {
+    // Breakpoints
+    @each $breakpoint, $value in $grid-breakpoints {
+        --#{$prefix}#{$breakpoint}:#{$value};
+    }
+
+    // scrollbar component 
+    --#{$prefix}scrollbar-size: #{$scrollbar-size};
+    --#{$prefix}scrollbar-overlay-size: #{$scrollbar-overlay-size};
+    --#{$prefix}scrollbar-overlay-space: #{$scrollbar-overlay-space};
+
+    // Bootstrap general    
+    --#{$prefix}white-bg-rgb: #{to-rgb($white)};
+    --#{$prefix}black-bg-rgb: #{to-rgb($black)};
+
+    // Bootstrap muted color
+    --#{$prefix}text-muted: #{$text-muted};
+
+    // Grey colors
+    @each $name, $value in $grays {
+        --#{$prefix}gray-#{$name}: #{$value};
+        --#{$prefix}gray-#{$name}-rgb: #{to-rgb($value)};
+    }
+
+    // Contextual colors
+    @each $name, $value in $theme-colors {
+        --#{$prefix}#{$name}: #{$value};
+    }
+
+    // Contextual active state colors
+    @each $name, $value in $theme-active-colors {
+        --#{$prefix}#{$name}-active: #{$value};
+    }
+
+    // Contextual light state colors
+    @each $name, $value in $theme-light-colors {
+        --#{$prefix}#{$name}-light: #{$value};
+    }
+
+    // Contextual inverse state colors
+    @each $name, $value in $theme-inverse-colors {
+        --#{$prefix}#{$name}-inverse: #{$value};
+    }
+
+    // Contextual clarity state colors
+    @each $name, $value in $theme-clarity-colors {
+        --#{$prefix}#{$name}-clarity: #{$value};
+    }
+
+    // Contextual rbg colors
+    @each $name, $value in $theme-colors {
+        --#{$prefix}#{$name}-rgb: #{to-rgb($value)};
+    }
+
+    // Text colors
+    @each $name, $value in $theme-text-colors {
+        --#{$prefix}text-#{$name}: #{$value};
+    }   
+    
+    // scrollbar component 
+    --#{$prefix}scrollbar-color: #{$scrollbar-color};
+    --#{$prefix}scrollbar-hover-color: #{$scrollbar-hover-color};
+
+    // overlay component 
+    --#{$prefix}overlay-bg: #{$overlay-bg};  
+    
+    // cursor
+    --#{$prefix}cursor-color: #{$cursor-color};
+    --#{$prefix}cursor-color-inverse: #{$cursor-color-inverse};  
+    
+    // Card
+    --#{$prefix}root-card-box-shadow: #{$card-box-shadow};
+    --#{$prefix}root-card-border-color: #{$card-border-color}; 
+    
+    // Tooltip
+    --#{$prefix}tooltip-box-shadow: #{$tooltip-box-shadow};
+
+    // Table
+    --#{$prefix}table-striped-bg: #{$table-striped-bg};
+    --#{$prefix}table-loading-message-box-shadow: #{$table-loading-message-box-shadow};
+
+    // Dropdowns
+    --#{$prefix}dropdown-bg: #{$dropdown-bg};
+    --#{$prefix}dropdown-box-shadow: #{$dropdown-box-shadow};   
+    
+    // Symbol
+    --#{$prefix}symbol-label-color: #{$symbol-label-color};
+    --#{$prefix}symbol-label-bg: #{$symbol-label-bg};
+    --#{$prefix}symbol-border-color: #{$symbol-border-color};   
+
+    // Bullet
+    --#{$prefix}bullet-bg-color: #{$bullet-bg-color};
+
+    // Menu component
+    --#{$prefix}menu-dropdown-box-shadow: #{$menu-dropdown-box-shadow};
+    --#{$prefix}menu-dropdown-bg-color: #{$menu-dropdown-bg-color};  
+    
+    // Menu component
+    --#{$prefix}menu-dropdown-box-shadow: #{$menu-dropdown-box-shadow};
+    --#{$prefix}menu-dropdown-bg-color: #{$menu-dropdown-bg-color};
+    --#{$prefix}menu-heading-color: #{$menu-heading-color};
+    --#{$prefix}menu-link-color-hover: #{$menu-link-color-hover};
+    --#{$prefix}menu-link-color-show: #{$menu-link-color-show};
+    --#{$prefix}menu-link-color-here: #{$menu-link-color-here};
+    --#{$prefix}menu-link-color-active: #{$menu-link-color-active};
+    --#{$prefix}menu-link-bg-color-hover: #{$menu-link-bg-color-hover};
+    --#{$prefix}menu-link-bg-color-show: #{$menu-link-bg-color-show};
+    --#{$prefix}menu-link-bg-color-here: #{$menu-link-bg-color-here};
+    --#{$prefix}menu-link-bg-color-active: #{$menu-link-bg-color-active};       
+}

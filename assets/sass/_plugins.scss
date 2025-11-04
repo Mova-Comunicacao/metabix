@@ -1,0 +1,30 @@
+//
+// Vendors customization
+//
+
+////////////////////////////////////////////////////////////////
+///////////// DO NOT MODIFY BELOW INCLUDE ORDER ////////////////
+////////////////////////////////////////////////////////////////
+
+// Initialize
+@import "init";
+
+// Angular vendors
+@import "swiper/scss";
+@import "swiper/scss/a11y";
+@import "swiper/scss/controller";
+@import "swiper/scss/autoplay";
+@import "swiper/scss/pagination";
+@import "swiper/scss/navigation";
+@import "swiper/scss/mousewheel";
+@import "swiper/scss/free-mode";
+@import "swiper/scss/effect-fade";
+@import "swiper/scss/effect-cube";
+
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.snow.css';
+// ng-select
+@import "@ng-select/ng-select/themes/default.theme.css";
+
+// Plugins
+@import "./core/vendors/plugins";

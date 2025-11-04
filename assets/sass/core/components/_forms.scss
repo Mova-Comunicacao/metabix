@@ -1,0 +1,227 @@
+//
+// Form controls
+//
+
+// Customization
+.form-control {
+	// Transparent style
+	&.form-control-transparent {
+		background-color: transparent;
+		border-color: transparent;
+
+		.dropdown.show > &,
+		&:active,
+		&.active,
+		&:focus,
+		&.focus {
+			background-color: transparent;
+			border-color: transparent;
+		}
+	}
+
+	// Flush
+	&.form-control-flush {
+		@include input-reset();
+	}
+}
+
+// Solid style
+.form-control.form-control-solid {
+	background-color: $input-solid-bg;
+	border-color: $input-solid-bg;
+	color: $input-solid-color;
+	@include placeholder($input-solid-placeholder-color);
+	transition: $transition-input;
+
+	.dropdown.show > &,
+	&:active,
+	&.active,
+	&:focus,
+	&.focus {
+		background-color: $input-solid-bg-focus;
+		border-color: $input-solid-bg-focus;
+		color: $input-solid-color;
+		transition: $transition-input;
+	}
+}
+
+
+// Form control solid bg
+.form-control-solid-bg {
+	background-color: $input-solid-bg;
+}
+
+// Readonly controls as plain text
+.form-control-plaintext {
+  	color: $input-plaintext-color
+}
+
+// Select
+.form-select {
+	appearance: none;
+	//box-shadow: none !important;
+
+	&:focus {
+		border-color: $form-select-focus-border-color;
+		@if $enable-shadows {
+			@include box-shadow($form-select-box-shadow, $form-select-focus-box-shadow);
+		} @else {
+			// Avoid using mixin so we can pass custom focus shadow properly
+			box-shadow: $form-select-focus-box-shadow;
+		}
+	}
+
+	&:disabled {
+		color: $form-select-disabled-color;
+		background-color: $form-select-disabled-bg;
+		border-color: $form-select-disabled-border-color;
+	}
+
+	// Remove outline from select box in FF
+	&:-moz-focusring {
+		text-shadow: 0 0 0 $form-select-color;
+	}
+
+	// Solid style
+	&.form-select-solid {
+		@include placeholder($input-solid-placeholder-color);
+		background-color: $input-solid-bg;
+		border-color: $input-solid-bg;
+		color: $input-solid-color;
+		transition: $transition-input;
+		
+		.dropdown.show > &,
+		&:active,
+		&.active,
+		&:focus,
+		&.focus {
+			background-color: $input-solid-bg-focus;
+			border-color: $input-solid-bg-focus !important;
+			color: $input-solid-color;
+			transition: $transition-input;
+		}
+	}
+
+	// Transparent style
+	&.form-select-transparent {
+		@include placeholder($input-placeholder-color);
+		background-color: transparent;
+		border-color: transparent;
+		color: $input-color;
+
+		.dropdown.show > &,
+		&:active,
+		&.active,
+		&:focus,
+		&.focus {
+			background-color: transparent;
+			border-color: transparent !important;
+			color: $input-color;
+		}
+	}	
+}
+
+//
+// Form Check
+//
+
+// Customization
+.form-check {
+    // Input 
+    &:not(.form-switch) {
+        .form-check-input {
+            &[type="checkbox"] {
+                background-size: $form-check-input-bg-size;
+            }
+        }
+    }
+    
+    // Sizing
+    &.form-check-sm {
+        .form-check-input {
+            height: $form-check-input-width-sm;
+            width: $form-check-input-width-sm;
+        }
+    }
+
+    &.form-check-lg {
+        .form-check-input {
+            height: $form-check-input-width-lg;
+            width: $form-check-input-width-lg;
+        }
+    }
+
+    // Inline
+    &.form-check-inline {
+        display: inline-block;
+        margin-right: $form-check-inline-margin-end;
+    }
+
+    // Solid
+    &.form-check-solid {
+        .form-check-input {
+            border: 0;
+
+            &:not(:checked) {
+                background-color: $form-check-input-bg-solid;
+            }            
+
+            &[type=checkbox]:indeterminate {
+                background-color: $form-check-input-checked-bg-color;
+            }
+        }
+    }	
+}
+
+//
+// Floating label
+//
+
+.form-floating {
+    .form-control.form-control-solid {
+        &::placeholder {
+            color: transparent;    
+        }
+    }
+
+    &.form-control-solid-bg label,
+    > :disabled ~ label,
+    > :focus ~ label {
+        &::after {
+            background-color: transparent !important;
+        }
+    }
+}
+
+// Form control
+.input-group {
+    &.input-group-solid {
+        @include border-radius($input-border-radius);
+
+        &.input-group-sm {
+            @include border-radius($input-border-radius-sm);
+        }
+
+        &.input-group-lg {
+            @include border-radius($input-border-radius-lg);
+        }
+
+        .input-group-text {
+            background-color: $input-solid-bg;
+		    border-color: $input-solid-bg;
+
+            & + .form-control {
+                border-left-color: $input-border-color;
+            }
+        }
+
+        .form-control {
+            background-color: $input-solid-bg;
+    		border-color: $input-solid-bg;
+
+            & + .input-group-text {
+                border-left-color: $input-border-color;
+            }
+        }
+    }
+}

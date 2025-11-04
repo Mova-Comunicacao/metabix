@@ -1,0 +1,273 @@
+//
+// Header
+//
+
+// General mode
+.app-header {
+    position: fixed;
+    display: flex;
+    align-items: center;       
+    left: 0;
+    right: 0;
+    top: 0;      
+    
+    .app-header-wrapper {
+        display: flex;
+        align-items: stretch;    
+        background-color: var(--#{$prefix}app-header-base-bg-color);
+        box-shadow: var(--#{$prefix}app-header-base-box-shadow);
+        //border-bottom: var(--#{$prefix}app-header-base-border-bottom);
+        transition: $app-header-base-transition;           
+        
+        @include property( z-index, $app-header-fixed-z-index); 
+    }
+    
+    .app-header-container {
+        width: 100%;
+    }
+
+	.burger-icon {
+		@include  burger-icon-build($burger-icon-config);
+	}
+
+    .burger-icon {
+        @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+    }	    
+}
+
+.app-header {
+
+    [data-mv-app-header-color="color"] & {
+        .menu {
+            .menu-item {
+                @include menu-link-default-state( 
+                    $title-color: var(--#{$prefix}gray-100), 
+                    $icon-color: var(--#{$prefix}gray-100), 
+                    $bullet-color: var(--#{$prefix}gray-100), 
+                    $arrow-color: var(--#{$prefix}gray-100),
+                    $bg-color: null
+                );
+            }
+        }
+
+        .svg-icon {
+            color: var(--#{$prefix}text-white);
+        }     
+
+        .burger-icon {
+            @include  burger-icon-theme(get($burger-icon-config, theme, dark, color), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+        }	           
+    }   
+
+    // General
+    .menu {
+        .menu-item {
+            @include menu-link-default-state( 
+                $title-color: var(--#{$prefix}gray-400), 
+                $icon-color: var(--#{$prefix}gray-400), 
+                $bullet-color: var(--#{$prefix}gray-400), 
+                $arrow-color: var(--#{$prefix}gray-400),
+                $bg-color: null
+            );  
+            
+            @include menu-link-active-state( 
+                $title-color: var(--#{$prefix}text-primary), 
+                $icon-color: var(--#{$prefix}text-primary), 
+                $bullet-color: var(--#{$prefix}text-primary), 
+                $arrow-color: var(--#{$prefix}text-primary), 
+                $bg-color: null
+            );             
+        } 
+    }
+            
+    [data-mv-app-header-sticky="true"][data-mv-app-header-color="color"] & {
+        .menu {
+            .menu-item {
+                @include menu-link-default-state( 
+                    $title-color: var(--#{$prefix}text-dark), 
+                    $icon-color: var(--#{$prefix}text-dark), 
+                    $bullet-color: var(--#{$prefix}text-dark), 
+                    $arrow-color: var(--#{$prefix}text-dark),
+                    $bg-color: null
+                );
+            }   
+        }
+
+        .burger-icon {
+            @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+        }	               
+    }
+
+	[data-mv-app-aside-minimize="on"][data-mv-app-header-color="color"] & {
+		.burger-icon {
+            @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+		}  		
+	}	    
+}
+
+
+// General menu mode
+.app-header-menu,
+.app-header-language,
+.app-header-social {        
+    .menu {
+
+        // Root
+        .menu-item {
+            .menu-link {
+                .menu-title {
+                    font-weight: $font-weight-semibold;               
+                }
+            }    
+        }        
+    }
+}
+
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+    // Base
+    .app-header {
+        @include property( z-index, $app-header-base-z-index);
+
+        //@include property( padding-left, $app-sidebar-base-gap-start);
+        //@include property( padding-right, $app-sidebar-base-gap-end);
+        //@include property( padding-top, $app-sidebar-base-gap-top);
+        //@include property( padding-bottom, $app-sidebar-base-gap-bottom);      
+    }    
+
+    // Vars
+    :root {
+        --#{$prefix}app-header-height: #{$app-header-base-height};
+        --#{$prefix}app-header-height-actual: #{$app-header-base-height};
+
+        [data-mv-app-header-fixed="true"] {
+            --#{$prefix}app-header-height: calc(var(--#{$prefix}app-header-base-height, 0px) + var(--#{$prefix}app-top-base-height, 0px));
+            --#{$prefix}app-header-height-actual: calc(#{$app-header-base-height} + #{$app-top-base-height});
+        }
+
+        [data-mv-app-header-sticky="true"] {
+            --#{$prefix}app-header-height: #{$app-header-sticky-height};
+            --#{$prefix}app-header-height-actual: #{$app-header-base-height};
+        }        
+    }    
+
+    // States
+    .app-header {          
+        height: var(--#{$prefix}app-header-height);
+        @include property( z-index, $app-header-fixed-z-index);    
+
+        .svg-icon {
+            line-height: 1;
+            color: var(--#{$prefix}text-secondary);
+            @include svg-icon-size($font-size-base * 8.5);
+        }     
+
+        [data-mv-app-header-fixed="true"] & {
+            .app-header-wrapper {
+                @include property( padding-left, $app-sidebar-base-gap-start);
+                @include property( padding-right, $app-sidebar-base-gap-end);                                    
+            }
+        }
+
+        // Integration
+        [data-mv-app-header-sticky="true"] & {
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);     
+                            
+            @include property( z-index, $app-header-sticky-z-index);
+    
+            background-color: var(--#{$prefix}app-header-sticky-bg-color);
+            box-shadow: var(--#{$prefix}app-header-sticky-box-shadow);
+            border-bottom: var(--#{$prefix}app-header-sticky-border-bottom);
+            transition: $app-header-sticky-transition; 
+
+            .svg-icon {
+                color: var(--#{$prefix}text-secondary);
+                @include svg-icon-size($font-size-base * 7);
+            }    
+
+            .burger-icon {
+                @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+            }              
+            
+            .menu {
+                // General
+                .menu-item {
+                    @include menu-link-default-state( 
+                        $title-color: var(--#{$prefix}text-dark), 
+                        $icon-color: var(--#{$prefix}text-dark), 
+                        $bullet-color: var(--#{$prefix}text-dark), 
+                        $arrow-color: var(--#{$prefix}text-dark),
+                        $bg-color: null
+                    );  
+
+                    @include menu-link-active-state( 
+                        $title-color: var(--#{$prefix}text-primary), 
+                        $icon-color: var(--#{$prefix}text-primary), 
+                        $bullet-color: var(--#{$prefix}text-primary), 
+                        $arrow-color: var(--#{$prefix}text-primary), 
+                        $bg-color: null
+                    );                      
+                }
+            }            
+        }         
+    }    
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+    .app-header {
+        @include property( z-index, $app-header-fixed-z-index-mobile); 
+    }
+    
+    // Vars
+    :root {
+        --#{$prefix}app-header-height: #{$app-header-base-height-mobile};
+        --#{$prefix}app-header-height-actual: #{$app-header-base-height-mobile};
+
+        [data-mv-app-header-sticky="true"] {
+            --#{$prefix}app-header-height: #{$app-header-sticky-height-mobile};
+            --#{$prefix}app-header-height-actual: #{$app-header-base-height-mobile};
+        }       
+    } 
+
+    // States
+    .app-header {
+        @include property( z-index, $app-header-fixed-z-index-mobile);
+
+        height: var(--#{$prefix}app-header-height);  
+
+        // Integration
+        .app-header-menu,
+        .app-header-language {   
+            display: none!important;
+        }   
+        
+        .svg-icon {
+            color: var(--#{$prefix}text-secondary);
+            @include svg-icon-size($font-size-base * 7.5);
+        }  
+
+        [data-mv-app-header-sticky="true"] & {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);            
+            @include property( z-index, $app-header-sticky-z-index);
+    
+            background-color: var(--#{$prefix}app-header-sticky-bg-color);
+            box-shadow: var(--#{$prefix}app-header-sticky-box-shadow);
+            border-bottom: var(--#{$prefix}app-header-sticky-border-bottom);
+            transition: $app-header-sticky-transition;  
+            
+            .burger-icon {
+                @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
+            }   
+            
+            .svg-icon {
+                line-height: 1;
+                color: var(--#{$prefix}text-secondary);
+                @include svg-icon-size($font-size-base * 7);
+            }                  
+        }         
+    }
+}

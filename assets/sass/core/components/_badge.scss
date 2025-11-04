@@ -1,0 +1,38 @@
+//
+// Badge
+//
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    
+    // Fixed size
+    &.badge-circle,
+    &.badge-square {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: $badge-size;
+        min-width: $badge-size;
+        padding: 0 0.8rem;
+        line-height: 0;
+    }
+}
+
+@each $name, $value in $theme-colors {
+    .badge-#{$name} {
+        color: var(--#{$prefix}#{$name}-inverse);
+        background-color: var(--#{$prefix}#{$name});
+
+        &.badge-outline {
+            border: 1px solid var(--#{$prefix}#{$name});
+            color: var(--#{$prefix}#{$name});
+            background-color: transparent;
+        }
+    }
+
+    .badge-light-#{$name} {
+        color: var(--#{$prefix}#{$name}-inverse);
+        background-color: var(--#{$prefix}#{$name}-light);
+    }    
+}

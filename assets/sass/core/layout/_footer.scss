@@ -1,0 +1,131 @@
+//
+// Footer
+//
+
+footer {
+    padding: 0;
+}
+
+// General mode
+.app-footer {
+    display: flex;
+    align-items: flex-start;
+    color: var(--#{$prefix}text-white);    
+    background-color: var(--#{$prefix}app-footer-bg-color);      
+    z-index: 1;
+    
+    .app-footer-content {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-bottom: 16px; 
+        pointer-events: auto;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            background: 
+                url('../../../img/separated-mask.svg') center 0px;
+            background-size: 65%;    
+            background-repeat: no-repeat;            
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }        
+
+        // Desktop mode
+        @include media-breakpoint-up(lg) {
+            padding: 84px 0 16px;
+        }
+    
+        // Tablet & mobile modes
+        @include media-breakpoint-down(lg) {
+            background-size: 95.5%;
+            padding: 44px 0 16px;
+        }        
+    }
+
+
+    .svg-icon {
+        display: block;
+        color: var(--#{$prefix}text-white);
+        @include svg-icon-size($font-size-base * 9);
+    }     
+    
+    // General
+    .menu {
+        .menu-item {
+            @include menu-link-default-state( 
+                $title-color: var(--#{$prefix}text-white), 
+                $icon-color: var(--#{$prefix}text-white), 
+                $bullet-color: var(--#{$prefix}text-white), 
+                $arrow-color: var(--#{$prefix}text-white),
+                $bg-color: null
+            );  
+            
+            @include menu-link-active-state( 
+                $title-color: var(--#{$prefix}text-primary), 
+                $icon-color: var(--#{$prefix}text-primary), 
+                $bullet-color: var(--#{$prefix}text-primary), 
+                $arrow-color: var(--#{$prefix}text-primary), 
+                $bg-color: null
+            );             
+        } 
+    }    
+}
+
+.footer-bottom {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: inline-flex; 
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center; 		
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;		
+    -webkit-justify-content: space-between;
+    justify-content: space-between;				
+    width: 100%;
+    bottom: 0px;
+    padding: 12px 0 0;
+
+    // Desktop mode
+    @include media-breakpoint-up(lg) {
+        padding: 16px 0 0;
+    }		
+
+    .sub {
+        font-family: $font-family-base;
+        font-size: 12px;
+        line-height: 24px;
+        font-weight: $font-weight-base;
+        color: $gray-300;
+    }
+    
+    .img_mova {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }    
+}
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+    // Base
+    .app-footer {
+        @include property( z-index, $app-footer-z-index);
+    }      
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+    // Base
+    .app-footer {
+        @include property( z-index, $app-footer-z-index-mobile);
+    }
+}

@@ -1,0 +1,177 @@
+//
+// Variables
+//
+
+// Reboot
+$app-bg-color: #ffffff  !default;
+$app-bg-color-dark: #1E1E1E !default;
+$app-blank-bg-color: $white;
+$app-blank-bg-color-dark: $app-bg-color-dark;
+
+// General
+$app-general-transition-duration: .3s !default;
+$app-general-transition-timing: ease !default;
+$app-general-root-font-size-desktop: 16px !default;
+$app-general-root-font-size-tablet: 14px !default;
+$app-general-root-font-size-mobile: 13px !default;
+
+// Container
+$app-container-padding-x: 30px !default;
+$app-container-padding-x-mobile: 15px !default;
+
+// Page
+$app-page-bg-color: null !default;
+$app-page-bg-color-dark: null !default;
+
+// Main
+$app-main-transition: margin $app-general-transition-duration $app-general-transition-timing;
+$app-main-padding-y: null !default;
+$app-main-padding-y-mobile: null !default;
+$app-main-padding-x: null !default;
+$app-main-padding-x-mobile: 0 !default;
+$app-main-margin-y: null !default;
+$app-main-margin-y-mobile: null !default;
+$app-main-margin-x: null !default;
+$app-main-margin-x-mobile: null !default;
+
+// Wrapper
+$app-wrapper-transition: margin-left $app-general-transition-duration $app-general-transition-timing, margin-right $app-general-transition-duration $app-general-transition-timing;
+$app-wrapper-bg-color: null !default;
+$app-wrapper-bg-color-dark: null !default;
+
+// Content
+$app-content-padding-y: 30px !default;
+$app-content-padding-y-mobile: 20px !default;
+$app-content-padding-x: 85px !default;
+$app-content-padding-x-mobile: null !default;
+
+// Top base
+$app-top-base-transition: none !default;
+$app-top-base-height: 24px !default;
+$app-top-base-height-mobile: 20px !default;
+$app-top-base-z-index: null !default;
+$app-top-base-z-index-mobile: null !default;
+$app-top-base-bg-color: hsl(203, 44%, 14%) !default;
+$app-top-base-bg-color-dark: null !default;
+$app-top-base-border-bottom: 1px solid hsla(103, 0%, 4%, 0.5) !default;
+$app-top-base-border-bottom-dark: null !default;
+
+// Top fixed
+$app-top-fixed-z-index: 100 !default;
+$app-top-fixed-z-index-mobile: 100 !default;
+$app-top-sticky-bg-color: hsla(0, 0%, 100%, 1) !default;
+$app-top-sticky-border-bottom: 1px solid hsla(0, 0%, 100%, 0.2) !default;
+
+// Top sticky
+$app-top-sticky-transition: height $app-general-transition-duration $app-general-transition-timing !default;
+
+$app-top-sticky-height: 72px !default;
+$app-top-sticky-height-mobile: 64px !default;
+
+
+
+// Header base
+$app-header-base-transition: none !default;
+$app-header-base-height: 84px !default;
+$app-header-base-height-mobile: 84px !default;
+$app-header-base-z-index: null !default;
+$app-header-base-z-index-mobile: null !default;
+$app-header-base-bg-color: null !default;
+$app-header-base-bg-color-dark: null !default;
+$app-header-base-box-shadow: null !default;
+$app-header-base-box-shadow-dark: null !default;
+$app-header-base-border-bottom: 1px solid hsla(0, 0%, 100%, 0.2) !default;
+$app-header-base-border-bottom-dark: null !default;
+
+// Header fixed
+$app-header-fixed-z-index: 981 !default;
+$app-header-fixed-z-index-mobile: 981 !default;
+
+// Header sticky
+$app-header-sticky-transition: height $app-general-transition-duration $app-general-transition-timing !default;
+
+$app-header-sticky-height: 64px !default;
+$app-header-sticky-height-mobile: 56px !default;
+$app-header-sticky-z-index: 981 !default;
+$app-header-sticky-z-index-mobile: 981 !default;
+$app-header-sticky-bg-color: hsla(0, 0%, 100%, 0.8) !default;
+$app-header-sticky-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05) !default;
+$app-header-sticky-border-bottom: null !default;
+
+
+// Aside base
+$app-aside-base-transition: $app-general-transition-duration $app-general-transition-timing !default;
+$app-aside-base-width: 880px !default;
+$app-aside-base-width-mobile: 689px !default;      
+$app-aside-base-z-index: 9981 !default;
+$app-aside-base-z-index-mobile: 981 !default; 
+$app-aside-base-bg-color: #fff !default;
+$app-aside-base-box-shadow: 0 0 28px 0 rgba(82, 63, 105, 0.05) !default;
+$app-aside-base-gap-start: 0px !default;
+$app-aside-base-gap-end: 0px !default;
+$app-aside-base-gap-top: 0px !default;
+$app-aside-base-gap-bottom: 0px !default;
+// Aside fixed
+$app-aside-fixed-z-index: 971 !default;
+$app-aside-fixed-right: 0 !default;
+$app-aside-fixed-top: 0 !default;
+$app-aside-fixed-bottom: 0 !default;
+
+// Sidebar base
+$app-sidebar-base-transition: width $app-general-transition-duration $app-general-transition-timing !default;
+$app-sidebar-base-width: 85px !default;
+$app-sidebar-base-width-mobile: 0px !default;      
+$app-sidebar-base-z-index: null !default;
+$app-sidebar-base-z-index-mobile: 106 !default; 
+$app-sidebar-base-bg-color: null !default;
+$app-sidebar-base-bg-color-dark: null !default;
+$app-sidebar-base-box-shadow: null !default;
+$app-sidebar-base-box-shadow-dark: null !default;
+$app-sidebar-base-border-start: null !default;
+$app-sidebar-base-border-start-dark: null !default;
+$app-sidebar-base-border-end: null;
+$app-sidebar-base-border-end-dark: null !default;
+
+$app-sidebar-base-gap-start: 15px !default;
+$app-sidebar-base-gap-end: 15px !default;
+$app-sidebar-base-gap-top: 34px !default;
+$app-sidebar-base-gap-bottom: 34px !default;
+$app-sidebar-base-gap-start-mobile: 0px !default;
+$app-sidebar-base-gap-end-mobile: 0px !default;
+$app-sidebar-base-gap-top-mobile: 0px !default;
+$app-sidebar-base-gap-bottom-mobile: 0px !default;
+
+
+// Sidebar fixed
+$app-sidebar-fixed-z-index: 105 !default;
+$app-sidebar-fixed-left: 0 !default;
+$app-sidebar-fixed-top: 0 !default;
+$app-sidebar-fixed-bottom: 0 !default;
+
+// Footer
+$app-footer-transition: left $app-general-transition-duration $app-general-transition-timing, right $app-general-transition-duration $app-general-transition-timing !default;
+$app-footer-height-mobile: auto !default;
+$app-footer-bg-color: $secondary !default;
+$app-footer-box-shadow: null !default;
+$app-footer-border-top: null !default;
+$app-footer-z-index: null !default;
+$app-footer-z-index-mobile: null !default;
+
+// Burger Icon
+$burger-icon-config: (
+    width: 25px,
+    height: 25px,
+    transition: all 0.3s,
+    thickness: 2px,
+    space: 5px,
+    radius: 3px,
+    theme: (
+        default: $dark,
+        hover: $primary,
+        active: $primary,
+
+        dark: (
+            color: $white
+        )
+    )
+) !default;

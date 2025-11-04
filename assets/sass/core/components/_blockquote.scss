@@ -1,0 +1,11 @@
+//
+// Blockquotes
+//
+
+blockquote {
+    display: block;
+    border-left: 4px solid var(--#{$prefix}gray-500);
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+}
