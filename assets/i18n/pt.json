@@ -125,14 +125,22 @@
 		"solutions": "Soluções",
 		"partners": "Parceiros",
 
-		"technologyTitle": "Nossa Tecnologia",
-		"locationTitle": "Ajudamos produtores a tomar melhores decisões em todo o mundo.",
+		"locationTitle": "Na metaBIX, impulsionamos decisões proativas e baseadas em dados que controlam os riscos à saúde e as perdas na produção animal, com um retorno mínimo de 5x.",
 		"locationInfo": "Tenha nossa tecnologia em sua região.",
+		
+		"technologyTitle": "Nossa Tecnologia",
 		"technologyVideoTitle": "Nosso canal no YouTube",
 		"technologyVideoInfo": "Neste canal você encontra conteúdos relevantes sobre surtos e riscos microbiológicos, além das tecnologias preditivas desenvolvidas pela MetaBix Biotech.",
+		
+		
+		"partnersTitle": "Parceiros",
+		"associatessTitle": "Laboratórios Associados",
+
 		"requestTitle": "Solicitar Demonstração",
 		"requestInfo": "Entre em contato para solicitar uma demonstração do nosso serviço",
+
 		"solutionsTitle": "Diferenciais da nossa solução",
+		"haceTitle": "Lo que nos hace únicos",
 
 
 		"blogInfo": "Nossas Notícias",

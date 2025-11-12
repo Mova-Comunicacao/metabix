@@ -125,16 +125,22 @@
 		"solutions": "Solutions",
 		"partners": "Partners",
 
-		"technologyTitle": "Our Technology",
-		"locationTitle": "We help producers make better decisions worldwide.",
+		"locationTitle": "At metaBIX we drive proactive, data-driven decisions that control health risks and losses in animal production, with a minimum return of 5x",
 		"locationInfo": "Have our technology in your region.",
+		
+		"technologyTitle": "Our Technology",
 		"technologyVideoTitle": "Our YouTube Channel",
 		"technologyVideoInfo": "On this channel you’ll find relevant content on outbreaks and microbiological risks, as well as predictive technologies developed by MetaBix Biotech.",
+		
+		"partnersTitle": "Partners",
+		"associatessTitle": "Associated Laboratories",
+
 		"requestTitle": "Request a Demo",
 		"requestInfo": "Contact us to request a demonstration of our service",
 
 		"solutionsTitle": "Differentiators of our solution",
-
+		
+		"haceTitle": "Lo que nos hace únicos",
 
 		"blogInfo": "Our News",
 		"blogLast": "Latest News",

@@ -54,6 +54,12 @@
             color: var(--#{$prefix}text-white);
         }     
 
+        .logo-default {
+            .svg-icon {
+                color: var(--#{$prefix}text-white);
+            }            
+        }
+
         .burger-icon {
             @include  burger-icon-theme(get($burger-icon-config, theme, dark, color), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
         }	           
@@ -158,10 +164,16 @@
         @include property( z-index, $app-header-fixed-z-index);    
 
         .svg-icon {
-            line-height: 1;
-            color: var(--#{$prefix}text-secondary);
-            @include svg-icon-size($font-size-base * 8.5);
+            color: var(--#{$prefix}text-gray-400);
         }     
+
+        .logo-default {
+            .svg-icon {
+                line-height: 1;
+                color: var(--#{$prefix}text-secondary);
+                @include svg-icon-size($font-size-base * 8.5);
+            }            
+        }
 
         [data-mv-app-header-fixed="true"] & {
             .app-header-wrapper {
@@ -183,9 +195,16 @@
             transition: $app-header-sticky-transition; 
 
             .svg-icon {
-                color: var(--#{$prefix}text-secondary);
+                color: var(--#{$prefix}text-dark);
                 @include svg-icon-size($font-size-base * 7);
             }    
+
+            .logo-default {
+                .svg-icon {
+                    color: var(--#{$prefix}text-secondary);
+                    @include svg-icon-size($font-size-base * 7);
+                }            
+            }
 
             .burger-icon {
                 @include  burger-icon-theme(get($burger-icon-config, theme, default), get($burger-icon-config, theme, hover), get($burger-icon-config, theme, active));
@@ -211,7 +230,8 @@
                     );                      
                 }
             }            
-        }         
+        }   
+        
     }    
 }
 
@@ -249,6 +269,13 @@
             @include svg-icon-size($font-size-base * 7.5);
         }  
 
+        .logo-default {
+            .svg-icon {
+                color: var(--#{$prefix}text-secondary);
+                @include svg-icon-size($font-size-base * 7.5);
+            }            
+        }
+
         [data-mv-app-header-sticky="true"] & {
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);            
@@ -267,7 +294,14 @@
                 line-height: 1;
                 color: var(--#{$prefix}text-secondary);
                 @include svg-icon-size($font-size-base * 7);
-            }                  
+            }   
+            
+            .logo-default {
+                .svg-icon {
+                    color: var(--#{$prefix}text-secondary);
+                    @include svg-icon-size($font-size-base * 7);
+                }            
+            }            
         }         
     }
 }

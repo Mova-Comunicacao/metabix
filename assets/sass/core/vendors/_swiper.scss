@@ -117,8 +117,20 @@
 	display: none;
 }
 
-.bg-image {
+.bg-image,
+.bg-white {
 	.swiper-pagination-bullet-active {
-		background: var(--#{$prefix}text-secondary);
+		background: var(--#{$prefix}text-primary);
 	}	
+}
+
+.bg-white, 
+.bg-light {
+	.swiper-pagination-bullet {
+		background: var(--#{$prefix}gray-600);
+	}	
+
+	.swiper-pagination-bullet-active {
+		background: var(--#{$prefix}text-primary);
+	}		
 }

@@ -106,9 +106,8 @@ section {
 }
 
 .separated {
-    fill: #fff;
+    fill: var(--#{$prefix}text-white);
 
-    content: '';
     position: absolute;
     width: 100%;
     height: 100%;
@@ -335,6 +334,17 @@ section {
 .index-technology {
     background-color: var(--#{$prefix}white);
 
+    .index-technology-video {
+        video {
+            position: relative;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }        
+    }
+
     .index-technology-image {
         position: absolute;
         width: 100%;
@@ -454,19 +464,143 @@ section {
         }            
     }    
 
+    .section-diagnosis {
+        background-color: var(--#{$prefix}gray-300);
 
-    .section-protocol {
-        background-color: var(--#{$prefix}gray-700);
-
-        .protocol-image {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            background: 
+                url('../../../img/separated-mask.svg') center 0px;
+            background-size: 65%;    
+            background-repeat: no-repeat;            
             width: 100%;
             height: 100%;
-            z-index: 1;                    
+            pointer-events: none;
+        }  
+
+        &::after {
+            background-position: center top;
+            transform: rotate(180deg);
         }
+
+        .left-content {
+            position: relative;
+            height: 100%;
+
+            .diagnosis-image {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                z-index: 1;  
+            }
+
+            #diagnosis-svg {
+                width: 100%;
+                height: auto;
+                display: block;                    
+            }
+        }
+
+        .right-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            .diagnosis-content {
+                height: 75vh;
+                display: grid;
+                place-items: center;              
+            }
+        }
+    }
+
+    .section-precision {
+        background-color: var(--#{$prefix}white);   
+
+        .precision-tiles {  
+            .tile {
+                position: relative;
+                height: 100%;
+            }
+
+            .tile .counter {
+                position: relative;
+                display: inline-block;
+                overflow: hidden;
+                line-height: $line-height-lg;
+                pointer-events: none;
+            }            
+        }
+        .precision-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;  
+        }        
+    }    
+
+    .section-protocol {
+        background-color: var(--#{$prefix}gray-300);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            background: 
+                url('../../../img/separated-mask.svg') center 0px;
+            background-size: 65%;    
+            background-repeat: no-repeat;            
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }  
+
+        .left-content {
+            position: relative;
+            height: 100%;
+
+
+            .protocol-image {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                z-index: 1;  
+                
+                .protocol-image-img {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .img {
+                        position: absolute;     
+                        inset: 0; 
+                        width: 100%;
+                        height: auto;                        
+                        pointer-events: none;
+                        object-fit: contain;
+                        will-change: transform, opacity;                                        
+                    }
+                }
+            }
+        }
+
+        .right-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            .protocol-content {
+                position: relative;
+                overflow: hidden;
+                height: 75vh;
+                display: grid;
+                place-items: center;            
+            }
+        }        
     }
 }
 
@@ -488,8 +622,24 @@ section {
     }
 }
 
-.page-team {
-    background-color: var(--#{$prefix}white);  
+.page-partners {
+    background-color: var(--#{$prefix}light);  
+
+    .card {
+        .card-flag {
+            position: absolute;
+            overflow: hidden;
+            border-radius: $border-radius-pill;
+            margin: 6px;
+            right: 0;
+            z-index: 1;
+
+            .svg {
+                position: relative;
+                overflow: hidden;
+            }
+        }
+    }
 }
 
 .page-blog {
