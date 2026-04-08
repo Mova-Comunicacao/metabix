@@ -1,0 +1,126 @@
+<ng-container *ngIf="menuConfig && menuConfig.items">
+  <!-- Header Nav -->
+  <ng-container *ngFor="let item of menuConfig.items">
+    <ng-container
+      *ngIf="item.title"
+      [ngTemplateOutlet]="menu1LevelTemplate"
+      [ngTemplateOutletContext]="{ item: item }"
+    ></ng-container>
+  </ng-container>
+</ng-container>
+
+<!-- 1 Level -->
+<ng-template #menu1LevelTemplate let-item="item">
+    <!-- if don't have submenu -->
+    <ng-container *ngIf="!item.submenu">
+      <!-- 1 Level -->
+      <div class="menu-item me-lg-1">
+        <a class="menu-link py-3" [routerLink]="item.page | localize" routerLinkActive="active menu-here" [ngClass]="calculateMenuItemCssClass(item.page)">
+            <span class="menu-title" [translate]="item.translate">
+                {{item.title}}
+            </span>
+        </a>
+      </div>
+    </ng-container>
+
+    <!-- if has submenu classic -->
+    <ng-container *ngIf="item.submenu && !item.mega">
+        <!-- 1 Level -->
+        <div
+            class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
+            aria-haspopup="true"
+            data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+            data-kt-menu-placement="bottom-start"
+            [ngClass]="{ 'menu-item-active': calculateMenuItemCssClass(item.page) }">
+            <a
+                class="menu-link py-3"
+                [routerLink]="item.page | localize"
+                routerLinkActive="active"
+                [ngClass]="calculateMenuItemCssClass(item.page)">
+                <span class="menu-title" [translate]="item.translate">
+                    {{ item.title }}
+                </span>
+                <i class="menu-arrow d-lg-none"></i>
+            </a>
+            <div 
+                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+                data-kt-menu-dismiss="true"
+                data-popper-placement="bottom-start">
+                <div 
+                    class="menu-item menu-lg-down-accordion me-lg-1"
+                    data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+                    data-kt-menu-placement="right-start">
+                    <ng-container
+                        *ngFor="let sub of item.submenu"
+                        [ngTemplateOutlet]="menu2LevelTemplate"
+                        [ngTemplateOutletContext]="{ item: sub }">
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>   
+</ng-template>
+
+<!-- 2 Level -->
+<ng-template #menu2LevelTemplate let-item="item">
+    <!-- if don't have submenu -->
+    <ng-container *ngIf="!item.submenu">
+        <div
+            class="menu-item menu-lg-down-accordion"
+            aria-haspopup="true"
+            routerLinkActive="menu-item-active">
+            <a 
+                class="menu-link py-3" [routerLink]="item.page | localize" routerLinkActive="active" [ngClass]="calculateMenuItemCssClass(item.page)">
+                <span class="menu-bullet" *ngIf="item.bullet"><span class="bullet bullet-dot"></span></span>
+                <ng-container *ngIf="item.svg">
+                    <span class="menu-icon">
+                        <span [inlineSVG]="item.svg" class="svg-icon"></span>
+                    </span>
+                </ng-container>        
+                <span class="menu-title" [translate]="item.translate"></span>
+            </a>
+        </div>
+    </ng-container>
+
+    <!-- if has submenu -->
+    <ng-container *ngIf="item.submenu">
+        <!-- 2 Level -->
+        <div
+            class="menu-item menu-lg-down-accordion"
+            data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+            data-kt-menu-placement="right-start">
+            <a
+                class="menu-link py-3"
+                [routerLink]="item.page | localize"
+                routerLinkActive="active"
+                [ngClass]="calculateMenuItemCssClass(item.page)">
+                <ng-container *ngIf="item.svg">
+                    <span [inlineSVG]="item.svg" class="svg-icon menu-icon"></span>
+                </ng-container>
+                <span class="menu-title" [translate]="item.translate"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div 
+                class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
+                data-kt-menu-dismiss="true">
+                <!-- submenu-->
+                <ng-container
+                    *ngFor="let sub of item.submenu"
+                    [ngTemplateOutlet]="menu3LevelTemplate"
+                    [ngTemplateOutletContext]="{ item: sub }">
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>    
+</ng-template>
+
+<!-- 3 Level -->
+<ng-template #menu3LevelTemplate let-item="item">
+    <!-- 3 Level -->
+    <div class="menu-item">
+        <a class="menu-link py-3" [routerLink]="item.page | localize" routerLinkActive="active" [ngClass]="calculateMenuItemCssClass(item.page)">
+            <span class="menu-bullet" *ngIf="item.bullet"><span class="bullet bullet-dot"></span></span>
+            <span class="menu-title" [translate]="item.translate"></span>
+        </a>
+    </div>
+</ng-template>

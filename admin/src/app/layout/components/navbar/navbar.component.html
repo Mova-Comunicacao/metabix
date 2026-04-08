@@ -1,0 +1,44 @@
+<!-- Quick links -->
+<div class="app-navbar-item" [ngClass]="itemClass">
+    <!--Menu wrapper-->
+    <div [ngClass]="btnClass" data-kt-menu-trigger="hover" data-kt-menu-attach="parent"
+      data-kt-menu-placement="bottom-end">
+      <app-keenicon name="element-11" class="fs-2"></app-keenicon>
+    </div>
+    <app-quick-links></app-quick-links>
+</div>
+
+<!--Theme mode-->
+<div class="app-navbar-item" [ngClass]="itemClass">
+    <app-switcher [toggleBtnClass]="btnClass" toggleBtnClass="{`btn-active-light-primary btn-custom ${toolbarButtonHeightClass}`}"></app-switcher>
+</div>
+
+<!--Theme mode-->
+<div class="app-navbar-item" [ngClass]="itemClass">
+    <app-lang-navbar [toggleBtnClass]="btnClass" toggleBtnClass="{`btn-active-light-primary btn-custom ${toolbarButtonHeightClass}`}"></app-lang-navbar>
+</div>
+  
+  <!--User menu-->
+<div class="app-navbar-item" [ngClass]="itemClass">
+    <!--Menu wrapper-->
+    <ng-container *ngIf="staff$ | async as _staff">
+        <div class="cursor-pointer symbol symbol-primary" [ngClass]="userAvatarClass" data-kt-menu-trigger="{default: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+          <img *ngIf="_staff.avatar" [src]="_staff.avatar" [alt]="_staff.firstname" />       
+          <span 
+            class="symbol-label text-primary fw-bold fs-4"
+            *ngIf="!_staff.avatar || _staff.avatar === null">
+            {{ _staff.firstname[0] }}
+        </span>              
+        </div>
+        <app-user-navbar data-kt-menu='true' [staff]="_staff"></app-user-navbar>
+    </ng-container>
+</div>
+
+<!--Header menu toggle-->
+<ng-container *ngIf="appHeaderDefaulMenuDisplay">
+    <div class="app-navbar-item d-lg-none ms-2 me-n3" title="Show header menu">
+      <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_header_menu_toggle">
+        <app-keenicon name="element-4" class="fs-1" [ngClass]="btnIconClass"></app-keenicon>
+      </div>
+    </div>
+</ng-container>

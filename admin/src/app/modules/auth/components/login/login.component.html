@@ -1,0 +1,138 @@
+<!--Form-->
+<form class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form"
+  (ngSubmit)="submit()">
+  <!--Heading-->
+  <div class="text-center mb-11">
+    <h1 class="text-gray-900 fw-bolder mb-3">
+      {{ 'login.adminLogin' | translate }}
+    </h1>
+    <!--Subtitle-->
+    <div class="text-gray-500 fw-semibold fs-6">
+      {{ 'login.loginInstructions' | translate }}
+    </div>
+  </div>
+
+  <!-- Alert info-->
+  <ng-container *ngIf="!loginError">
+    <div class="mb-10 bg-light-info p-8 rounded">
+      <div class="text-info">
+        Use account <strong>{{ defaultAuth.email }}</strong> and password
+        <strong>{{ defaultAuth.password }}</strong> to continue.
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Alert error-->
+  <ng-container *ngIf="loginError">
+    <div class="mb-lg-15 alert alert-danger">
+      <div class="alert-text fw-bold">
+        {{ 'login.loginFailedMsg' | translate }}
+      </div>
+    </div>
+  </ng-container>
+
+  <!--Form group-->
+  <div class="fv-row mb-8">
+    <label class="form-label fs-6 fw-bolder text-gray-900">{{ 'form.emailAddressField' | translate }}</label>
+    <div class="input-group input-group-lg">
+      <input class="form-control h-auto py-7 px-6 rounded-lg" type="email" name="email" formControlName="email" autocomplete="off"
+        [ngClass]="{
+          'is-invalid': loginForm.controls['email'].invalid,
+          'is-valid': loginForm.controls['email'].valid
+        }" />
+      <span class="input-group-text">
+        <app-keenicon name="user" class="fs-3 text-primary"></app-keenicon>
+      </span>        
+    </div>        
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'form.propertyReq' | translate,
+        control: loginForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'email',
+        message: 'form.adminEmailReq' | translate,
+        control: loginForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'minLength',
+        message: 'form.propertyMinimumReq' | translate:{min: '3'},
+        control: loginForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'form.propertyMaximumReq' | translate:{max: '100'},
+        control: loginForm.controls['email']
+      }"></ng-container>
+  </div>
+
+  <!--Form group-->
+  <div class="fv-row mb-3">
+    <label class="form-label fs-6 fw-bolder text-gray-900">{{ 'form.passwordField' | translate }}</label>
+    <div class="input-group input-group-lg">
+      <input 
+        class="form-control h-auto py-7 px-6 rounded-lg" 
+        [type]="showPassword ? 'text' : 'password'" 
+        name="password"
+        autocomplete="off"
+        formControlName="password" [ngClass]="{
+          'is-invalid': loginForm.controls['password'].invalid,
+          'is-valid': loginForm.controls['password'].valid
+        }" />
+      <span class="input-group-text cursor-pointer" (click)='showHidePassword()'>
+        <app-keenicon class="fs-3 text-primary" [name]="!showPassword ? 'eye' : 'eye-slash'"></app-keenicon>
+      </span>         
+    </div>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'form.propertyReq' | translate,
+        control: loginForm.controls['password']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'minlength',
+        message: 'form.propertyMinimumReq' | translate:{min: '3'},
+        control: loginForm.controls['password']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'form.propertyMaximumReq' | translate:{max: '100'},
+        control: loginForm.controls['password']
+      }"></ng-container>
+
+  </div>
+
+  <!--Wrapper-->
+  <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+    <div></div>
+    <!--Link-->
+    <a routerLink="/auth/forgot-password" class="link-primary">
+      Forgot Password ?
+    </a>
+  </div>
+
+  <!--Action-->
+  <div class="d-grid mb-10">
+    <button type="submit" id="kt_sign_in_submit" class="btn btn-primary fw-bolder fs-5 px-4 py-5" [disabled]="loginForm.invalid">
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="indicator-progress" [style.display]="'block'">
+          Please wait...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="(isLoading$ | async) === false">
+        <span class="indicator-label">{{ 'btn.logInBtn' | translate }}</span>
+      </ng-container>
+    </button>
+  </div>
+
+</form>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <span role="alert">
+        {{ message }}
+      </span>
+    </div>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,363 @@
+<div
+  class="card-body scroll-y pe-5" [id]="isDrawer ? 'kt_drawer_chat_messenger_body' : 'kt_chat_messenger_body'"
+  [ngClass]="{
+    'h-300px h-lg-auto': !isDrawer,
+    'overlay overlay-block': isLoading$ | async
+  }"
+  data-kt-element="messages"
+  data-kt-scroll="true"
+  data-kt-scroll-activate="{default: false, lg: true}"
+  data-kt-scroll-max-height="auto"
+  [attr.data-kt-scroll-dependencies]="
+    isDrawer
+      ? '#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer'
+      : '#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer'
+  "
+  [attr.data-kt-scroll-wrappers]="
+    isDrawer
+      ? '#kt_drawer_chat_messenger_body'
+      : '#kt_content, #kt_chat_messenger_body'
+  "
+  [attr.data-kt-scroll-offset]="isDrawer ? '0px' : '-2px'">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-white bg-opacity-5">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">{{ 'assistant.processing_ai' | translate }}</span>
+            </div>
+        </div>            
+    </ng-container>   
+    <div class="d-flex align-items-center p-2">
+        <div class="d-flex flex-column">
+            <span class="text-muted">{{ 'assistant.movaai_description' | translate }}</span>
+        </div>        
+    </div> 
+    <ng-container *ngFor="let message of messagesObs | async; let i = index">
+        <div
+            [ngClass]="{
+                'd-flex': !isDrawer,
+                'justify-content-start': message.type === 'in',
+                'justify-content-end': message.type !== 'in'
+            }"
+            [attr.data-kt-element]="'template-' + message.type"
+            class="mb-10">        
+            <div
+                class="d-flex flex-column align-items"
+                [ngClass]="'align-items-' + (message.type === 'in' ? 'start' : 'end')">
+                <div class="d-flex align-items-center mb-2">
+                    <ng-container *ngIf="message.type === 'in'"></ng-container>
+                    <ng-container *ngIf="message.type !== 'in'"></ng-container>
+                </div>
+                <div
+                    [ngClass]="getMessageCssClass(message)"
+                    data-kt-element="message-text">
+                    <ng-container *ngIf="message.isImage; else textMessage">
+                        <div class="overlay">
+                            <div class="overlay-wrapper">
+                                <img
+                                    [src]="message.text"
+                                    alt="Imagem gerada pela IA"
+                                    class="img-fluid rounded"
+                                    style="max-width: 100%; height: auto;"
+                                />                                   
+                            </div>	
+							<div class="overlay-layer bg-dark bg-opacity-25 align-items-start justify-content-center">
+								<div class="d-flex justify-content-end flex-grow-1 flex-center p-2">
+									<button  
+                                        class="btn btn-light-primary btn-icon"
+                                        (click)="downloadImage(message)">
+										<app-keenicon name="file-down" class="fs-1"></app-keenicon>  
+									</button>   									
+								</div>
+							</div>  													
+						</div>                              
+                        <div class="small text-muted mt-1">
+                            <!--
+                                {{ message.text }}
+                            -->
+                        </div>                         
+                    </ng-container>  
+
+                    <!-- text --> 
+                    <ng-template #textMessage>
+                        <div 
+                            [innerHTML]="message.text | safe:'html'"
+                            style="white-space: pre-line;">
+                        </div>
+                    </ng-template>    
+                    <!-- text -->
+
+                </div>  
+                <div class="mt-2 d-flex gap-2" *ngIf="message.type === 'out'">
+                    <button
+                        type="button"
+                        class="btn btn-icon btn-sm"
+                        [ngClass]="{
+                            'btn-light-primary': isCopied !== message.text,
+                            'btn-light-success': isCopied === message.text
+                        }"
+                        [ngbTooltip]="'assistant.copy_to_clipboard' | translate"
+                        placement="top-right"                        
+                        (click)="copyMessage(message)">
+                        <ng-container *ngIf="isCopied === message.text; else noCopied">
+                            <app-keenicon name="copy-success" class="fs-2"></app-keenicon>
+                        </ng-container>
+                        <ng-template #noCopied>
+                            <app-keenicon name="copy" class="fs-2"></app-keenicon>
+                        </ng-template>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-icon btn-sm btn-light-primary"
+                        [ngbTooltip]="'assistant.use_in_form' | translate"
+                        placement="top-right"                        
+                        (click)="useMessageInForm(message)">
+                        <app-keenicon name="add-item" class="fs-2"></app-keenicon>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-icon btn-sm btn-light-primary"
+                        [ngbTooltip]="'assistant.continue_from_this' | translate"
+                        placement="top-right"                           
+                        (click)="continueFromMessage(message)">
+                        <app-keenicon name="abstract-45" class="fs-2"></app-keenicon>
+                    </button>
+                </div>                               
+            </div>
+        </div>
+    </ng-container>
+    <div #aiMessagesEnd id="aiMessagesEnd"></div>
+    <ng-container *ngIf="isError">
+        <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+            <span 
+                [inlineSVG]="'./assets/media/icons/duotune/general/gen048.svg'"
+                class="svg-icon svg-icon-2hx svg-icon-light me-3">
+            </span>
+            <!--Wrapper-->
+            <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                <!--Title-->
+                <h4 class="mb-1 text-light">Error</h4>
+                <!--Content-->
+                <span>{{ isError }}</span>
+            </div>                        
+        </div>        
+    </ng-container>     
+</div>
+<div
+    class="card-footer pt-4"
+    [id]="isDrawer ? 'kt_drawer_chat_messenger_footer' : 'kt_chat_messenger_footer'">
+    <form class="form form-label-right" [formGroup]="formGroup">
+        <div class="form-group row mb-7">
+            <div class="col-md-12">
+                <textarea 
+                    #messageInput
+                    type="text" class="form-control form-control-solid" 
+                    [placeholder]="'form.propertyDescField' | translate" 
+                    [class.is-invalid]="isControlInvalid('description')"
+                    [class.is-valid]="isControlValid('description')" 
+                    data-kt-element="input"
+                    autocomplete="off" 
+                    name="description"
+                    formControlName="description"
+                    rows="3">
+                </textarea>
+                <span class="form-text text-muted">{{ 'form.htmlNotAllowedHelper' | translate }}</span>
+                <div class="valid-feedback" *ngIf="isControlValid('description')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">{{ 'form.propertyReq' | translate }}</div>
+                <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>
+            </div>
+        </div>  
+        <div class="d-flex flex-stack">
+            <div class="d-flex align-items-center me-2">
+                <div
+                    ngbDropdown
+                    class="dropdown">		
+                    <button
+                        type="button"
+                        class="btn btn-icon btn-light btn-color-muted btn-active-light-primary"
+                        ngbDropdownToggle>
+                        <app-keenicon name="abstract-36" class="fs-1"></app-keenicon> 
+                    </button>	
+                    <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu> 
+                        <div class="menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7">
+                            <li class="menu-item px-3">     
+                                <a
+                                    class="menu-link px-3 cursor-pointer"
+                                    [ngClass]="{'active': currentTone === 'formal'}"
+                                    (click)="setTone('formal')"
+                                    ngbDropdownItem>
+                                    <span class="menu-icon">
+                                        <app-keenicon name="abstract-18" class="fs-2"></app-keenicon>
+                                    </span>
+                                    <span class="menu-title">
+                                        Formal
+                                    </span>
+                                </a>                                
+                            </li>
+                            <li class="menu-item px-3">     
+                                <a
+                                    class="menu-link px-3 cursor-pointer"
+                                    [ngClass]="{'active': currentTone === 'neutro'}"
+                                    (click)="setTone('neutro')"
+                                    ngbDropdownItem>
+                                    <span class="menu-icon">
+                                        <app-keenicon name="abstract-22" class="fs-2"></app-keenicon>
+                                    </span>                                    
+                                    <span class="menu-title">
+                                        Neutro
+                                    </span>
+                                </a>                                
+                            </li>                             
+                            <li class="menu-item px-3">     
+                                <a
+                                    class="menu-link px-3 cursor-pointer"
+                                    [ngClass]="{'active': currentTone === 'educativo'}"
+                                    (click)="setTone('educativo')"
+                                    ngbDropdownItem>
+                                    <span class="menu-icon">
+                                        <app-keenicon name="teacher" class="fs-2"></app-keenicon>
+                                    </span>                                    
+                                    <span class="menu-title">
+                                        Educativo
+                                    </span>
+                                </a>                                
+                            </li> 
+                            <li class="menu-item px-3">     
+                                <a
+                                    class="menu-link px-3 cursor-pointer"
+                                    [ngClass]="{'active': currentTone === 'corporativo'}"
+                                    (click)="setTone('corporativo')"
+                                    ngbDropdownItem>
+                                    <span class="menu-icon">
+                                        <app-keenicon name="briefcase" class="fs-2"></app-keenicon>
+                                    </span>                                    
+                                    <span class="menu-title">
+                                        Corporativo
+                                    </span>
+                                </a>                                
+                            </li> 
+                            <li class="menu-item px-3">     
+                                <a
+                                    class="menu-link px-3 cursor-pointer"
+                                    [ngClass]="{'active': currentTone === 'tecnico'}"
+                                    (click)="setTone('tecnico')"
+                                    ngbDropdownItem>
+                                    <span class="menu-icon">
+                                        <app-keenicon name="shield" class="fs-2"></app-keenicon>
+                                    </span>                                    
+                                    <span class="menu-title">
+                                        Técnico
+                                    </span>
+                                </a>                                
+                            </li>                                                                                                                
+                        </div>
+                    </div>               
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <!-- Text AI -->
+                <div class="btn-group me-2" role="group">
+                    <button
+                        type="button"
+                        class="btn btn-light-primary"
+                        (click)="onAction()"
+                        [disabled]="formGroup.invalid">
+                        <ng-container *ngIf="isLoading$ | async">
+                            <span class="indicator-progress" [style.display]="'block'">
+                                Loading...
+                                <span class="spinner-grow spinner-grow-sm align-middle ms-2"></span>
+                            </span>
+                        </ng-container>     
+                        <ng-container *ngIf="!(isLoading$ | async)">
+                            <ng-container *ngIf="currentMode === 'rewrite'; else imageLabel">
+                                <span class="indicator-label">{{ 'assistant.rewriteBtn' | translate }}</span>
+                            </ng-container>  
+                            <ng-template #imageLabel>
+                                Gerar imagem com IA
+                            </ng-template>         
+                        </ng-container>
+                    </button> 
+                    <div class="btn btn-light-primary btn-icon fw-bold" ngbDropdown  container="body" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" [disabled]="formGroup.invalid" class="btn btn-icon btn-icon-primary rounded-start-0" ngbDropdownToggle>
+                            <app-keenicon name="abstract-3" class="fs-2"></app-keenicon>                                      
+                        </button>
+                        <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu> 
+                            <div class="menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7">
+                                <li class="menu-item px-3">
+                                    <a
+                                        class="menu-link px-3 cursor-pointer"
+                                        [ngClass]="{'active': currentMode === 'rewrite'}"
+                                        (click)="setMode('rewrite')"
+                                        ngbDropdownItem>
+                                        <span class="menu-icon">
+                                            <app-keenicon name="subtitle" class="fs-2"></app-keenicon>
+                                        </span>                                          
+                                        <span class="menu-title">
+                                            Gerar texto
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="menu-item px-3">
+                                    <a
+                                        class="menu-link px-3 cursor-pointer"
+                                        [ngClass]="{'active': currentMode === 'image'}"
+                                        (click)="setMode('image')"
+                                        ngbDropdownItem>
+                                        <span class="menu-icon">
+                                            <app-keenicon name="picture" class="fs-2"></app-keenicon>
+                                        </span>                                        
+                                        <span class="menu-title">
+                                            Gerar imagem
+                                        </span>
+                                    </a>
+                                </li>                                
+                            </div>
+                        </div>                        
+                    </div>                    
+                </div>
+                <!-- Translate -->
+                <div class="btn-group" role="group">
+                    <button
+                        type="button"
+                        class="btn btn-light-dark"
+                        (click)="onTranslateContent()"
+                        [disabled]="formGroup.invalid">
+                        {{ 'assistant.translateBtn' | translate }}
+                    </button>   
+                    <div class="btn btn-light-dark btn-icon fw-bold" ngbDropdown  container="body" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" [disabled]="formGroup.invalid" class="btn btn-icon rounded-start-0" ngbDropdownToggle>
+                            <app-keenicon name="more-2" class="fs-2"></app-keenicon>                                      
+                        </button>
+                        <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu> 
+                            <div class="menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7">
+                                <li class="menu-item px-3">
+                                    <a
+                                        class="menu-link px-3 cursor-pointer"
+                                        [ngClass]="{'active': currentLang === 'es'}"
+                                        (click)="setLang('es')"
+                                        ngbDropdownItem>
+                                        <span class="menu-title">
+                                            {{ 'lang.spanish' | translate }}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="menu-item px-3">
+                                    <a
+                                        class="menu-link px-3 cursor-pointer"
+                                        [ngClass]="{'active': currentLang === 'en'}"
+                                        (click)="setLang('en')"
+                                        ngbDropdownItem>
+                                        <span class="menu-title">
+                                            {{ 'lang.english' | translate }}
+                                        </span>
+                                    </a>
+                                </li>                    
+                            </div>    
+                        </div>  
+                    </div> 
+                </div>  
+            </div>             
+        </div>        
+    </form>
+</div>

@@ -1,0 +1,196 @@
+<div class="card mb-5 mb-xl-10">
+    <!--Header-->
+    <div class="card-header border-0 py-5">
+        <div class="card-title align-items-start flex-column">
+            <h3 class="fw-bold">{{ 'title.propertyDetailsH3' | translate }}</h3>
+        </div>
+        <div class="card-toolbar"></div>
+    </div>
+    <div 
+        class="card-body p-9"
+        [ngClass]="{'overlay overlay-block': isLoading$ | async}">
+        <ng-container *ngIf="isLoading$ | async">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>            
+        </ng-container>            
+        <ng-container *ngIf="company$ | async as company">     
+            <div class="mt-5">
+                <form class="form form-label-right" *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="save()">               
+                    <div class="form-group row mb-7">
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ 'form.propertyNameField' | translate }}</label>
+                        <div class="col-lg-9 col-xl-9">
+                            <div>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-control-solid"
+                                    name="name"
+                                    formControlName="name"
+                                    [placeholder]="'form.propertyNameField' | translate"
+                                    [class.is-invalid]="isControlInvalid('name')"
+                                    [class.is-valid]="isControlValid('name')"
+                                /> 
+                                <div class="valid-feedback" *ngIf="isControlValid('name')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('required', 'name')">{{ 'form.propertyNameReq' | translate }}</div>                             
+                                <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'name')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                       
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="form-group row mb-7">
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ 'form.propertyNotesField' | translate }}</label>
+                        <div class="col-lg-9 col-xl-9">
+                            <div>
+                                <textarea
+                                    type="text"
+                                    class="form-control form-control-lg form-control-solid"
+                                    name="description"
+                                    formControlName="description"                                        
+                                    [placeholder]="'form.propertyNotesField' | translate"
+                                    [class.is-invalid]="isControlInvalid('description')"
+                                    [class.is-valid]="isControlValid('description')"
+                                    rows="3">
+                                </textarea> 
+                                <span class="form-text text-muted">{{ 'form.htmlNotAllowedHelper' | translate }}</span>
+                                <div class="valid-feedback" *ngIf="isControlValid('description')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">{{ 'form.propertyNameReq' | translate }}</div>                             
+                                <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>   
+                                <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'description')">{{ 'form.propertyMaximumReq' | translate:{max: '250'} }}</div>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="form-group row mb-7">                          
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ 'form.propertyDescField' | translate }}</label>
+                        <div class="col-lg-9 col-xl-9">
+                            <quill-editor
+                                name="long_description"
+                                formControlName="long_description"
+                                [class.is-invalid]="isControlInvalid('long_description')"
+                                [class.is-valid]="isControlValid('long_description')"
+                                [format]="'html'"
+                                [sanitize]="true"
+                                class="form-control-solid w-100">  
+                                <div quill-editor-toolbar>
+                                    <span class="ql-formats">
+                                        <select class="ql-header">
+                                            <option value="1"></option>
+                                            <option value="2"></option>
+                                            <option selected="selected"></option>
+                                        </select>   
+                                    </span>                           
+                                    <span class="ql-formats">
+                                        <button class="ql-bold" [title]="'Bold'"></button>
+                                        <button class="ql-italic" [title]="'Italic'"></button>
+                                        <button class="ql-underline" [title]="'Undeline'"></button>
+                                    </span>                          
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered" [title]="'List'"></button>
+                                        <button class="ql-list" value="bullet" [title]="'List'"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link" [title]="'Link'"></button>
+                                    </span>                                                                 
+                                    <span class="ql-formats">
+                                        <button class="ql-clean" [title]="'Clean'"></button>
+                                    </span>   
+                                    <span class="ql-formats">
+                                        <button class="ql-code-block" [title]="'Code'"></button>
+                                    </span>                                                                     
+                                </div>                                                                
+                            </quill-editor>  
+                            <span class="form-text text-muted">{{ 'form.propertyDescHelper' | translate }}</span>
+                            <div class="valid-feedback" *ngIf="isControlValid('long_description')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                            <div class="invalid-feedback" *ngIf="controlHasError('required', 'long_description')">{{ 'form.propertyReq' | translate }}</div>                                                                    
+                            <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'long_description')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                                                                                               
+                        </div>
+                    </div>                                                     
+                </form>
+            </div> 
+        </ng-container>                
+    </div>
+    <div class="card-footer border-0" >
+        <div class="d-flex justify-content-end gap-2 gap-lg-3">
+            <button class="btn btn-light fw-bolder me-2" (click)="reset()">
+                {{ 'btn.resetBtn' | translate }}
+            </button>                  
+            <button type="submit" (click)="save()" class="btn btn-primary fw-bolder">
+                {{ 'btn.saveBtn' | translate }}
+            </button>               
+        </div>               
+    </div>
+</div>
+<!-- Items -->
+<ng-container *ngIf="company$ | async as company">
+    <app-items></app-items>   
+</ng-container>
+<!-- Gallery -->
+<div class="card card-flush mb-5 mb-xl-10" >    
+    <ng-container *ngIf="company$ | async as company">
+        <div 
+            class="card-body"
+            [ngClass]="{'overlay overlay-block': isLoading$ | async}">
+            <ng-container *ngIf="isLoading$ | async">
+                <div class="overlay-layer bg-dark bg-opacity-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>            
+            </ng-container>               
+            <div class="d-flex justify-content-between align-items-center mb-7">
+                <h2 class="fw-bold text-dark fs-3 mb-0">{{ 'title.propertyPicturesH3' | translate }}</h2>
+                <button title="Upload Image" (click)="upload()" class="btn btn-light-primary fw-bolder">
+                    <i class="fa fa-upload icon-sm"></i> {{ 'btn.uploadBtn' | translate }}
+                </button>
+            </div>
+            <div #dropListContainer>
+                <div
+                    cdkDropList
+                    [cdkDropListData]="pictures"
+                    [cdkDropListOrientation]="'mixed'"
+                    (cdkDropListDropped)="dragDropped($event)"
+                    class="row">
+                    @for(pic of (pictures); track pic.id; let i = $index) {
+                        <div
+                            cdkDrag
+                            [cdkDragData]="i"
+                            (cdkDragEntered)="dragEntered($event)"
+                            (cdkDragMoved)="dragMoved($event)"
+                            class="col-md-4 col-lg-4 mb-4">
+                            <!--Card-->
+                            <div class="card overlay overflow-hidden">
+                                <div class="card-body p-0">
+                                    <div class="overlay">
+                                        <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px"
+                                            [style.backgroundImage]="'url('+ company.folder + pic.file_name +')'">
+                                        </div>
+                                        <div class="overlay-layer bg-dark bg-opacity-25 align-items-end justify-content-center">
+                                            <div class="d-flex justify-content-end flex-grow-1 flex-center p-5">
+                                                <button (click)="deletePicture(pic.id)" class="btn btn-light-danger btn-icon">
+                                                    <i class="fa fa-trash icon-lg"></i>
+                                                </button>                              
+                                            </div>
+                                        </div>                                 
+                                    </div>
+                                </div>             
+                            </div>
+                        </div>
+                    } @empty {
+                        <div class="col-lg-12 col-xl-12">
+                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-8">
+                                <!--Wrapper-->
+                                <div class="d-flex flex-stack flex-grow-1">
+                                    <!--Content-->
+                                    <div class="fw-bold">
+                                        <h4 class="text-gray-800 fw-bolder mb-3">{{ 'form.noPicturesUploaded' | translate }}</h4>
+                                        <div class="fs-6 text-gray-600">Start creating new folders or uploading a new file!</div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>  
+                    }            
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

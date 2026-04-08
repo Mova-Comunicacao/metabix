@@ -1,0 +1,94 @@
+<div class="modal-header">
+    <div class="modal-title h4">
+        <ng-container *ngIf="items">
+            <ng-container *ngIf="items.id">{{ 'title.editTitle' | translate }}</ng-container>
+            <ng-container *ngIf="!items.id">{{ 'title.createTitle' | translate }}</ng-container>
+            {{'nav.servicesNav' | translate }}
+            <ng-container *ngIf="items.id">'{{items.name}}'</ng-container>
+        </ng-container>
+    </div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>   
+</div>
+<div 
+    class="modal-body" 
+    [ngClass]="{'overlay overlay-block ': isLoading$ | async}"
+    style="min-height: 325px;">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>      
+    </ng-container>
+    <ng-container *ngIf="items">  
+        <form action="#" class="form form-label-right" [formGroup]="formGroup">
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">{{ 'form.propertyNameField' | translate }}</label>
+                    <input 
+                        type="text"
+                        name="name"
+                        class="form-control form-control-lg form-control-solid" 
+                        [class.is-invalid]="isControlInvalid('name')"
+                        [class.is-valid]="isControlValid('name')"                        
+                        formControlName="name"
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('name')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'name')">{{ 'form.propertyNameHelper' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'name')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                            
+                </div>
+            </div>                                  
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">{{ 'form.propertyNotesField' | translate }}</label>
+                    <quill-editor
+                        format="html"
+                        name="description"
+                        [class.is-invalid]="isControlInvalid('description')"
+                        [class.is-valid]="isControlValid('description')"                        
+                        formControlName="description"
+                        class="form-control-solid w-100">
+                        <div quill-editor-toolbar>
+                            <span class="ql-formats">
+                                <select class="ql-header">
+                                    <option value="1"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option selected="selected"></option>
+                                </select>   
+                            </span>                             
+                            <span class="ql-formats">
+                                <button class="ql-bold" [title]="'Bold'"></button>
+                                <button class="ql-italic" [title]="'Italic'"></button>
+                                <button class="ql-underline" [title]="'Undeline'"></button>
+                            </span>                          
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" [title]="'List'"></button>
+                                <button class="ql-list" value="bullet" [title]="'List'"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-clean" [title]="'Clean'"></button>
+                            </span>                              
+                        </div>                            
+                    </quill-editor>  
+                </div>
+            </div>   
+            <p>&nbsp;</p>                  
+        </form>    
+    </ng-container>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate fw-bolder me-2" (click)="modal.close()">
+        {{ 'btn.cancelBtn' | translate }}
+    </button>
+    <ng-container *ngIf="items">
+        <button type="submit" class="btn btn-primary btn-elevate fw-bolder" (click)="save()" [disabled]="formGroup.invalid">
+            {{ 'btn.saveBtn' | translate }}
+        </button>
+    </ng-container>
+</div>    

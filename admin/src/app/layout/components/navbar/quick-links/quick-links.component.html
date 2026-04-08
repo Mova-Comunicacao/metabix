@@ -1,0 +1,35 @@
+<div 
+    class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10"
+    [style.background-image]="'url(./assets/media/bg/menu-header-bg.jpg)'">
+    <h3 class="text-white fw-bold mb-3">Quick Links</h3>
+    <span class="badge bg-primary py-2 px-3">&nbsp;</span>
+</div>
+<div class="row g-0">
+    <div class="col-6">
+        <a [routerLink]="['/projects/add'] | localize" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom cursor-pointer">
+            <app-keenicon name="abstract-26" class="fs-3x text-primary mb-2"></app-keenicon>
+            <span class="fs-5 fw-bold text-gray-800 mb-0">{{ 'nav.projectNav' | translate }}</span>
+            <span class="fs-7 text-gray-500">{{ 'btn.addBtn' | translate }}</span>
+        </a>
+    </div>
+    <div class="col-6">
+        <a [routerLink]="['/posts/add'] | localize" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-bottom cursor-pointer">
+            <app-keenicon name="subtitle" class="fs-3x text-primary mb-2"></app-keenicon>
+            <span class="fs-5 fw-bold text-gray-800 mb-0">{{ 'nav.postNav' | translate }}</span>
+            <span class="fs-7 text-gray-500">{{ 'btn.addBtn' | translate }}</span>
+        </a>
+    </div>    
+    <div class="col-12">
+        <a [routerLink]="['/settings'] | localize" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-bottom cursor-pointer">
+            <app-keenicon name="setting" class="fs-3x text-primary mb-2"></app-keenicon>
+            <span class="fs-5 fw-bold text-gray-800 mb-0">{{ 'nav.settingsNav' | translate }}</span>
+            <span class="fs-7 text-gray-500">{{ 'settings.siteSetAccTitle' | translate }}</span>
+        </a>
+    </div>    
+</div>
+<div class="py-2 text-center border-top">
+    <a [routerLink]="['/sitemap'] | localize" class="btn btn-color-gray-600 btn-active-color-primary fw-bold">
+        {{ 'btn.seeAllBtn' | translate }}
+        <app-keenicon name="arrow-right" class="fs-5 ms-1"></app-keenicon>
+    </a>
+</div>

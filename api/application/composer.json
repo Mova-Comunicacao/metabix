@@ -1,0 +1,16 @@
+{
+    "require": {
+        "php": "*",
+        "google/apiclient": "^2.0",
+        "tecnickcom/tcpdf": "^6.6.2",
+        "google/analytics-data": "^0.10.0",
+        "guzzlehttp/guzzle": "^7.4",
+        "neitanod/forceutf8": "^2.0",
+        "bainternet/php-hooks": "^1.0",
+        "phpmailer/phpmailer": "^6.8",
+        "illuminate/collections": "^8.77",
+        "xemlock/htmlpurifier-html5": "^0.1.11",
+        "cocur/slugify": "^4.3",
+        "firebase/php-jwt": "^6.9"
+    }
+}

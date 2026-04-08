@@ -1,0 +1,70 @@
+<form [formGroup]="formPermissionGroup">
+    <div class="form-group row mb-7">
+        <label class="col-form-label col-3 text-lg-right text-left">{{ 'profile.formType' | translate }}</label>
+        <div class="col-9">
+            <select 
+                class="form-select form-select-solid form-select-lg fw-bold" 
+                formControlName="role"
+                (change)="onChangeRole($event)">
+                <ng-container *ngFor="let role of roleService.items$ | async">
+                    <option [value]="role.roleid">{{ role.name }}</option>
+                </ng-container>
+                <!--
+                    <ng-container *ngIf="currentAdmin.role == 0 || currentAdmin.role == 1 && currentAdmin.admin == 0">
+                        <option value="0">{{ 'profile.formTypeAdmin' | translate }}</option>
+                    </ng-container>
+                    <option value="1">{{ 'profile.formTypeSupereditor' | translate }}</option>
+                    <option value="2">{{ 'profile.formTypeSupervisor' | translate }}</option>                          
+                -->
+            </select>
+        </div>
+    </div>                                 
+    <div class="fv-row">
+        <label class="fs-5 fw-bold form-label mb-2">Permissions</label>
+        <div class="table-responsive">
+            <table class="table align-start table-row-bordered fs-6 gy-2" >
+                <tbody class="text-gray-600 fw-semibold">
+                    <ng-container>
+                        <ng-container *ngFor="let permission of permissionService.items$ | async; let i = index;">
+                            <tr>
+                                <td class="text-gray-800 fw-bold">{{ permission.name }}</td>
+                                <td>
+                                    <ng-container *ngIf="permission.capability">
+                                        <div class="d-flex">
+                                            <ng-container>
+                                                <label 
+                                                    [for]="i"
+                                                    class="form-check form-check-sm form-check-custom form-check-solid">
+                                                    <input 
+                                                        [id]="i"
+                                                        class="form-check-input" 
+                                                        type="checkbox" 
+                                                        (change)="onChangePermission(permission, $event)"
+                                                        [checked]="permission.checked"
+                                                        [disabled]="permission.disabled"
+                                                        formArrayName="role"
+                                                    />
+                                                    <span class="form-check-label">
+                                                    {{ permission.label}} <small>{{ permission.feature }}</small>
+                                                        <ng-container *ngIf="permission.help">
+                                                            <i
+                                                                class="fas fa-exclamation-circle ms-1 fs-7"
+                                                                [ngbTooltip]="permission.help"
+                                                                container="body"
+                                                                placement="top">
+                                                            </i>       
+                                                        </ng-container>                                                                     
+                                                    </span>
+                                                </label>    
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>                                               
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</form>

@@ -1,0 +1,68 @@
+<div class="card card-flush py-4">
+    <div class="card-header">
+        <!--Card title-->
+        <div class="card-title">
+            <h2 class="fw-bold mb-0">Social</h2>
+        </div>
+    </div>
+    <div class="card-body pt-2">
+        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+            <!--Wrapper-->
+            <div class="d-flex flex-stack flex-grow-1">
+                <!--Content-->
+                <div class="fw-semibold">
+                    <div class="fs-6 text-gray-700 ">Conete uma rede social ao cliente.</div>
+                </div>
+            </div>
+        </div>          
+        <div class="table-responsive">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+                <tbody>
+                    <tr *ngFor="let social of socialService.items$ | async; index as i">
+                        <td class="pl-0 py-8">
+                            <div class="d-flex align-items-center">
+                                <div class="symbol symbol-sm me-4">
+                                    <span 
+                                        class="btn btn-sm btn-icon btn-{{ social.name }} btn-pill">
+                                        <i class="fa-brands fa-{{ social.name }} fs-2"></i>
+                                    </span>   
+                                </div>
+                                <div>
+                                    <a [href]="social.link" class="text-dark-75 fw-bolder text-hover-primary mb-1 fs-lg">
+                                        {{ social.name }}
+                                    </a>
+                                    <span class="text-muted fw-bold d-block"></span>
+                                </div>
+                            </div>                            
+                        </td>
+                        <td class="">      
+                            <div class="d-flex justify-content-end flex-shrink-0"> 
+                                <button 
+                                    class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
+                                    (click)="edit(social.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>                                                    
+                                </button>
+                                <button 
+                                    class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
+                                    (click)="delete(social.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>                                                    
+                                </button>                                    
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>                        
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-center pt-0">
+        <button type="button" class="btn btn-light-primary fw-bolder" (click)="create()">
+            {{ 'btn.addBtn' | translate }}
+        </button>
+    </div>
+</div>   

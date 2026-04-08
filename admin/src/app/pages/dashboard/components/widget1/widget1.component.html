@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-md-12 mb-md-5 mb-xl-10">
+        <div class="row g-5 g-xl-10" *ngIf="result">           
+            <div class="col-md-6 col-xl-3">
+                <div class="card card-flush h-100 mb-5 bgi-no-repeat bgi-size-contain bgi-position-x-end" style="background-color: #CBD4F4;background-image:url('./assets/media/svg/wave-bg-purple.svg')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-column">
+                            <div class="m-0">
+                                <div class="symbol symbol-40px symbol-light-info symbol-circle">
+                                    <span class="symbol-label bg-light-info">
+                                        <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/communication/com014.svg'"
+                                        class="svg-icon svg-icon-1 svg-icon-info">
+                                        </span>
+                                    </span>
+                                </div>                                
+                            </div>
+                            <div class="d-flex flex-column my-7">
+                                <!--Amount-->
+                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ result.totals?.activeUsers }}</span>
+                                <!--Subtitle-->
+                                <div class="m-0">
+                                    <span class="ext-dark opacity-75 pt-1 fw-semibold fs-6">{{ 'dashboard.activeUsers' | translate }}</span>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="card card-flush h-100 mb-5 bgi-no-repeat bgi-size-contain bgi-position-x-end" style="background-color: #CBD4F4;background-image:url('./assets/media/svg/wave-bg-purple.svg')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-column">
+                            <div class="m-0">
+                                <div class="symbol symbol-40px symbol-light-info symbol-circle">
+                                    <span class="symbol-label bg-light-info">
+                                        <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/communication/com015.svg'"
+                                        class="svg-icon svg-icon-1 svg-icon-info">
+                                        </span>
+                                    </span>
+                                </div>                                
+                            </div>
+                            <div class="d-flex flex-column my-7">
+                                <!--Amount-->
+                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ result.totals?.newUsers }}</span>
+                                <!--Subtitle-->
+                                <div class="m-0">
+                                    <span class="ext-dark opacity-75 pt-1 fw-semibold fs-6">{{ 'dashboard.newUsers' | translate }}</span>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-md-6 col-xl-3">
+                <div class="card card-flush h-100 mb-5 bgi-no-repeat bgi-size-contain bgi-position-x-end" style="background-color: #CBD4F4;background-image:url('./assets/media/svg/wave-bg-purple.svg')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-column">
+                            <div class="m-0">
+                                <div class="symbol symbol-40px symbol-light-info symbol-circle">
+                                    <span class="symbol-label bg-light-info">
+                                        <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/graphs/gra001.svg'"
+                                        class="svg-icon svg-icon-1 svg-icon-info">
+                                        </span>
+                                    </span>
+                                </div>                                
+                            </div>
+                            <div class="d-flex flex-column my-7">
+                                <!--Amount-->
+                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ result.totals?.eventCount }}</span>
+                                <!--Subtitle-->
+                                <div class="m-0">
+                                    <span class="ext-dark opacity-75 pt-1 fw-semibold fs-6">Contagem de Eventos</span>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-md-6 col-xl-3">
+                <div class="card card-flush h-100 mb-5 bgi-no-repeat bgi-size-contain bgi-position-x-end" style="background-color: #CBD4F4;background-image:url('./assets/media/svg/wave-bg-purple.svg')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-column">
+                            <div class="m-0">
+                                <div class="symbol symbol-40px symbol-light-info symbol-circle">
+                                    <span class="symbol-label bg-light-info">
+                                        <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/communication/com004.svg'"
+                                        class="svg-icon svg-icon-1 svg-icon-info">
+                                        </span>
+                                    </span>
+                                </div>                                
+                            </div>
+                            <div class="d-flex flex-column my-7">
+                                <!--Amount-->
+                                <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ result.totals?.screenPageViews }}</span>
+                                <!--Subtitle-->
+                                <div class="m-0">
+                                    <span class="ext-dark opacity-75 pt-1 fw-semibold fs-6">{{ 'dashboard.views' | translate }}</span>                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                                               
+        </div>
+    </div>
+</div>
+

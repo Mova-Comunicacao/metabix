@@ -1,0 +1,241 @@
+<div 
+    class="card card-flush"
+    [ngClass]="{'overlay overlay-block': settingService.isLoading$ | async}"> 
+    <ng-container *ngIf="settingService.isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>     
+    <ng-container *ngIf="settingService.settings$ | async as settings">
+        <div class="card-header">
+            <div class="card-title align-items-start flex-column">
+                <h3 class="fs-3 fw-bolder">Whatsapp Chat Configuration</h3>
+                <span class="text-gray-500 mt-1 fw-semibold fs-6">Please use your mobile phone in international format and no spaced, i.e: +556941636578</span>
+            </div>
+        </div> 
+        <div class="card-body p-9">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">  
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Enable WhatsApp</label>
+                    <div class="col-lg-9">
+                        <select 
+                            class="form-select" 
+                            name="whatsapp_chat"
+                            formControlName="whatsapp_chat"
+                            aria-label="Enable WhatsApp">
+                            <option value="enable">Enabled</option>
+                            <option value="disable">Disabled</option>
+                        </select>
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>                  
+                <div class="form-group row mb-8">              
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        Mobile phone
+                        <span 
+                            class="ms-1" 
+                            aria-label="Set the title of the store for SEO."
+                            ngbTooltip="Enter a mobile phone here if you want WhatsApp Chat. Leave this field blank and chat code will not load in the frontend."
+                            placement="top">
+                            <i class="fa fa-info-circle text-gray-400 fs-6"></i>
+                        </span>
+                    </label>
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon3">+55</span>                              
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                name="whatsapp_chat_clients_area"
+                                formControlName="whatsapp_chat_clients_area"
+                                [class.is-invalid]="isControlInvalid('whatsapp_chat_clients_area')"
+                                [class.is-valid]="isControlValid('whatsapp_chat_clients_area')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>
+                </div>            
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                    WhatsApp Text
+                    </label>
+                    <div class="col-lg-9">                        
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            name="whatsapp_chat_description"
+                            formControlName="whatsapp_chat_description"
+                            [class.is-invalid]="isControlInvalid('whatsapp_chat_description')"
+                            [class.is-valid]="isControlValid('whatsapp_chat_description')"
+                        />   
+                        <span class="form-text text-muted">{{ 'form.htmlNotAllowedHelper' | translate }}</span>                     
+                    </div>
+                </div>                        
+                <div class="separator my-2"></div>
+                <ng-container *ngIf="!showChangeTokenForm">
+                    <div class="col-lg-9 float-md-end">
+                        <div class="d-flex flex-wrap align-items-center my-10">
+                        <div id="kt_signin_Token" class="false">
+                            <div class="fs-6 fw-bolder mb-1">WhatsApp Permenant Access Token</div>
+                            <div class="fw-bold text-gray-600">****************</div>
+                        </div>
+                        <div id="kt_signin_token_button" class="ms-auto false">
+                            <button
+                            class="btn btn-light btn-active-light-primary"
+                            (click)="toggleTokenForm(true)">
+                            Change Token
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="showChangeTokenForm">                              
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                            Access Token
+                            <span 
+                                class="ms-1" 
+                                aria-label="Set the title of the store for SEO."
+                                ngbTooltip="Your User Access Token after signing up at for an account at Facebook Developers Portal"
+                                placement="top">
+                                <i class="fa fa-info-circle text-gray-400 fs-6"></i>
+                            </span>                            
+                        </label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="password"
+                                formControlName="whatsapp_access_token"
+                                autocomplete="off"
+                                [class.is-invalid]="isControlInvalid('whatsapp_access_token')"
+                                [class.is-valid]="isControlValid('whatsapp_access_token')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                            <div class="d-flex align-items-center mt-6">
+                                <div class="flex-grow-1">
+                                    <span class="fs-6 fw-semibold text-gray-800 d-block">Tokens de acesso do aplicativo</span>
+                                    <span class="fs-7 fw-semibold text-muted">Os tokens de acesso do aplicativo são usados​ para fazer solicitações para APIs do Facebook.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </ng-container>
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Version</label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="whatsapp_version"
+                            [class.is-invalid]="isControlInvalid('whatsapp_version')"
+                            [class.is-valid]="isControlValid('whatsapp_version')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>     
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        Number ID of the WhatsApp Registered Phone
+                        <span 
+                            class="ms-1" 
+                            aria-label="ID of the phone number connected to the WhatsApp Business API"
+                            ngbTooltip="ID of the phone number connected to the WhatsApp Business API."
+                            placement="top">
+                            <i class="fa fa-info-circle text-gray-400 fs-6"></i>
+                        </span>                          
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="whatsapp_number_id"
+                            [class.is-invalid]="isControlInvalid('whatsapp_number_id')"
+                            [class.is-valid]="isControlValid('whatsapp_number_id')"
+                        />  
+                        <span class="form-text text-muted">If you are unsure about it, you can use a GET Phone Number ID request to retrieve it from WhatsApp API ( https://developers.facebook.com/docs/whatsapp/business-management-api/manage-phone-numbers )'</span>
+                        <div class="invalid-feedback" *ngIf="controlHasError('pattern', 'whatsapp_number_id')">Only Numbers</div>                         
+                    </div>
+                </div>  
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        WhatsApp Business Account ID
+                        <span 
+                            class="ms-1" 
+                            aria-label="Your WhatsApp Business Account (WABA) ID"
+                            ngbTooltip="Your WhatsApp Business Account (WABA) ID"
+                            placement="top">
+                            <i class="fa fa-info-circle text-gray-400 fs-6"></i>
+                        </span>                         
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="whatsapp_business_id"
+                            [class.is-invalid]="isControlInvalid('whatsapp_business_id')"
+                            [class.is-valid]="isControlValid('whatsapp_business_id')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                        <div class="invalid-feedback" *ngIf="controlHasError('pattern', 'whatsapp_business_id')">Only Numbers</div>                         
+                    </div>
+                </div>   
+                <div class="form-group row mb-4">
+                    <div class="col-lg-9 ms-auto">
+                        <h2 class="fw-bold fs-2">Envie mensagens com a API</h2>
+                        <p class="text-muted">Para enviar uma mensagem de teste, adicione um telefone.</p>
+                    </div>
+                </div>                                                                                                                                                                                                            
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end" for="send">Send Test Email</label>
+                    <div class="col-lg-9">
+                        <div class="d-flex">
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon3">+55</span>
+                                <input 
+                                    id="send" 
+                                    type="email" 
+                                    class="form-control  form-control-lg me-3 flex-grow-1"
+                                    name="test_number" placeholder="Phone Number" 
+                                    [class.is-invalid]="isControlInvalid('test_number')"
+                                    [class.is-valid]="isControlValid('test_number')"                                
+                                    formControlName="test_number" />
+                                </div>     
+                                <button type="button" class="btn btn-lg btn-light btn-active-light-primary fw-bold flex-shrink-0" (click)="test_template()">Send</button>  
+                        </div>                 
+                        <div class="invalid-feedback" *ngIf="controlHasError('pattern', 'test_number')">Only Numbers</div>                         
+                    </div>
+                </div>   
+                <div class="form-group row mb-8">
+                    <div class="col-lg-9 ms-auto">
+                        <div class="notice d-flex align-items-center bg-light-primary rounded border-primary border border-dashed p-5">
+                            <span
+                                [inlineSVG]="'./assets/media/icons/duotune/general/gen048.svg'"
+                                class="svg-icon svg-icon-2hx svg-icon-gray me-4">
+                            </span>   
+                            <div class="d-flex flex-column">
+                                <h4 class="mb-1 text-dark">Free API</h4>
+                                <span>As empresas são cobradas por conversa, o que inclui todas as mensagens entregues em uma sessão de 24 horas. As primeiras mil conversas de cada mês são gratuitas. Se você quiser enviar mais de 1.000 conversas, será necessário adicionar um cartão de crédito à conta. Para mais informações, consulte <a href="https://developers.facebook.com/micro_site/url/?click_from_context_menu=true&country=BR&destination=https%3A%2F%2Fwww.facebook.com%2Fbusiness%2Fhelp%2F488291839463771&event_type=click&last_nav_impression_id=0mcIyhjAxPQjid5Al&max_percent_page_viewed=90&max_viewport_height_px=930&max_viewport_width_px=1920&orig_http_referrer=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fwhatsapp%2Fcloud-api%2Fget-started&orig_request_uri=https%3A%2F%2Fdevelopers.facebook.com%2Fajax%2Fdocs%2Fnav%2F%3Fpath1%3Dwhatsapp%26path2%3Dcloud-api%26path3%3Dget-started&region=latam&scrolled=true&session_id=11c21WJDBfZ8RbVL6&site=developers" target="_blank">Add a Credit Card to Your WhatsApp Business Platform Account <i class="far fa-arrow-up-right-from-square"></i></a></span>
+                            </div>
+                        </div>     
+                    </div>               
+                </div>                                                                                
+            </form>
+            <div class="card-footer d-flex justify-content-end py-6 px-0" [formGroup]="formGroup">
+                <button type="submit" class="btn btn-light btn-active-light-primary fw-bold me-2">
+                    {{ 'btn.cancelBtn' | translate }}
+                </button>          
+                <button 
+                    type="submit" 
+                    [disabled]="formGroup.invalid" 
+                    (click)="onSubmit()" 
+                    class="btn btn-primary fw-bold">
+                    <ng-container>{{ 'btn.saveBtn' | translate }}</ng-container>               
+                    <ng-container *ngIf="isLoading$ | async">   
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Loading...{{ " " }}
+                            <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>                        
+                    </ng-container>                    
+                </button>
+            </div>             
+        </div>             
+    </ng-container>
+</div>

@@ -1,0 +1,76 @@
+<div 
+    class="card card-flush"
+    [ngClass]="{'overlay overlay-block': settingService.isLoading$ | async}"> 
+    <ng-container *ngIf="settingService.isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>    
+    <ng-container *ngIf="settingService.settings$ | async as settings">
+        <div class="card-header">
+            <div class="card-title fs-3 fw-bolder">Google</div>
+        </div> 
+        <div class="card-body p-9">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Google Analytics View ID</label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="google_property_id"
+                            [class.is-invalid]="isControlInvalid('google_property_id')"
+                            [class.is-valid]="isControlValid('google_property_id')"
+                        />  
+                        <span class="form-text text-muted">A valid view ID for the viewId field.</span>
+                    </div>
+                </div>                  
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Google API Key</label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="google_api_key"
+                            [class.is-invalid]="isControlInvalid('google_api_key')"
+                            [class.is-valid]="isControlValid('google_api_key')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>  
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Google API Client ID</label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="google_client_id"
+                            [class.is-invalid]="isControlInvalid('google_client_id')"
+                            [class.is-valid]="isControlValid('google_client_id')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>                   
+            </form>
+            <div class="card-footer d-flex justify-content-end py-6 px-0" [formGroup]="formGroup">
+                <button type="submit" class="btn btn-light btn-active-light-primary fw-bold me-2">
+                    {{ 'btn.cancelBtn' | translate }}
+                </button>          
+                <button 
+                    type="submit" 
+                    [disabled]="formGroup.invalid" 
+                    (click)="onSubmit()" 
+                    class="btn btn-primary fw-bold">
+                    <ng-container>{{ 'btn.saveBtn' | translate }}</ng-container>               
+                    <ng-container *ngIf="isLoading$ | async">   
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Loading...{{ " " }}
+                            <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>                        
+                    </ng-container>                    
+                </button>
+            </div>             
+        </div>             
+    </ng-container>
+</div>

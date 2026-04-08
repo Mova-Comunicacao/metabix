@@ -1,0 +1,281 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">
+        {{ 'title.propertyDetailsH3' | translate }}
+      <span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+    </h3>
+    <div class="d-flex flex-wrap my-2">
+        <div class="me-4">
+            <div ngbDropdown container="body" role="dropdown" id="action" aria-label="Button group with nested dropdown">
+                <button
+                    ngbDropdownToggle
+                    type="button"
+                    class="btn btn-flex bg-body btn-color-gray-700 btn-active-color-primary fw-bolder">
+                    <span
+                        [inlineSVG]="'./assets/media/icons/duotune/general/gen031.svg'"
+                        class="svg-icon svg-icon-3 svg-icon-muted me-1">
+                    </span>              
+                    {{ 'btn.filterBtn' | translate }}
+                </button>
+                <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" ngbDropdownMenu>
+                    <div class="px-7 py-5">
+                        <div class="fs-5 text-dark fw-bolder">{{ 'title.filterOptionTitle' | translate }}</div>
+                    </div> 
+                    <div class="separator border-gray-200"></div>
+                    <div class="form form-label-right px-7 py-5">
+                        <div class="mb-10" [formGroup]="searchGroup">
+                            <label class="form-label fw-bold">Search:</label>
+                            <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
+                                <span class="svg-icon svg-icon-1 position-absolute ms-6"
+                                    [inlineSVG]="'./assets/media/icons/duotune/general/gen021.svg'"> 
+                                </span>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-control-solid ps-15"
+                                    name="search_string"
+                                    formControlName="search_string"
+                                    placeholder="Search"
+                                />
+                            </div>                            
+                        </div>                          
+                        <div class="mb-10" [formGroup]="filterGroup">
+                            <label class="form-label fw-bold">{{ 'form.categoriesField' | translate }}:</label>
+                            <div>
+                                <select 
+                                    class="form-select form-select-solid form-select-lg" 
+                                    placeholder="Filtrar por Categorias" 
+                                    name="category_id" 
+                                    formControlName="category_id">
+                                    <option value="0">{{ 'form.allField' | translate }}</option>
+                                    <ng-container *ngFor="let cat of categoriesService.items$ | async">
+                                        <option [value]="cat.id">{{ cat.name }}</option>
+                                    </ng-container>
+                                </select>                        
+                            </div>
+                        </div>                                           
+                    </div>                       
+                </div>
+            </div>
+        </div>
+        <button 
+            type="button"
+            class="btn btn-primary fw-bolder"
+            [routerLink]="['add'] | localize">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>        
+    </div> 
+</div>
+<div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5 border-0">
+        <div class="card-title">
+            <h3 class="card-label fw-bolder fs-3 mb-1">{{ 'nav.postNav' | translate }}</h3>
+        </div>
+        <div class="card-toolbar">
+            <ng-container *ngIf="grouping.getSelectedRowsCount()">
+                <div class="form">
+                    <div class="row d-flex align-items-center form-group-actions mb-2">
+                        <div class="col-xl-12">
+                            <div class="form-group form-group-inline">
+                                <div class="form-label form-label-no-wrap">
+                                    <label class="font-bold font-danger">
+                                        <span>Selected records count:
+                                            <b>{{ grouping.getSelectedRowsCount() }}</b>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger fw-bolder font-size-sm mr-1"
+                                        (click)="deleteSelected()">
+                                        <i class="fa fa-trash"></i> {{ 'btn.deleteAllBtn' | translate }}
+                                    </button>
+                                        &nbsp;
+                                    <button
+                                        type="button"
+                                        class="btn btn-light-primary fw-bolder font-size-sm"
+                                        (click)="updateStatusForSelected()">
+                                        <i class="fa fa-sync-alt"></i> {{ 'btn.updateStatusBtn' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>   
+        </div>
+    </div>
+    <div class="card-body pt-0">            
+        <div class="table-responsive">
+            <table
+                class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+                <thead>
+                    <tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+                        <th class="w-10px pe-1">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                <input
+                                    type="checkbox"
+                                    (click)="grouping.selectAllRows()"
+                                    [checked]="grouping.checkAreAllRowsSelected()"
+                                    class="form-check-input" />
+                                    <span></span>
+                            </div>
+                        </th>
+                        <th class="min-w-200px sorting">
+                            {{ 'table.tab_name' | translate }}
+                            <app-sort-icon
+                                column="name"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>                         
+                        <th class="min-w-150px">
+                            {{ 'table.tab_description' | translate }}
+                        </th>                                                                  
+                        <th class="min-w-100px sorting">
+                            {{ 'table.tab_dateCreated' | translate }}
+                            <app-sort-icon
+                                column="date"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>
+                        <th class="min-w-100px">
+                            {{ 'table.tab_createdBy' | translate }}
+                        </th>                        
+                        <th class="text-end min-w-100px sorting">
+                            {{ 'table.tab_status' | translate }}
+                            <app-sort-icon
+                                column="status"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>  
+                        <th></th>       
+                    </tr>                                                                                           
+                </thead>
+                <tbody>
+                    <tr *ngFor="let post of posts.items$ | async; index as i" class="fw-semibold text-gray-600">
+                        <td>
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                <input
+                                    type="checkbox"
+                                    (click)="grouping.selectRow(post.id)"
+                                    [checked]="grouping.isRowSelected(post.id)"
+                                    class="form-check-input" />
+                                <span></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">	                             
+                                <div class="d-flex justify-content-start flex-column">									
+                                    <div class="text-dark fw-bolder text-hover-primary fs-6">
+                                        <a [routerLink]="['edit/', post.id] | localize">{{ post.name | truncatetext:25 }}</a>
+                                    </div>	
+                                    <span class="text-muted fw-bold text-muted d-block fs-7">
+                                        <ng-container *ngFor="let category of post?.categories">
+                                            <span class="badge badge-light me-1">
+                                                {{ category.name }}
+                                            </span>
+                                        </ng-container>
+                                    </span>								
+                                </div>
+                            </div>                        
+                        </td>     
+                        <td class="text-muted">
+                            <div [innerHtml]="post.description | safe:'html'"></div>
+                        </td>   
+                        <!--      
+                        <td class="fw-bolder">
+                            <span 
+                                class="badge py-3 px-4 fs-7" 
+                                [class.badge-light-success]="post.launching == 0"
+                                [class.badge-light-warning]="post.launching == 1">
+                                <ng-container *ngIf="post.launching == 0">{{ 'form.statusTypeField0' | translate }}</ng-container>
+                                <ng-container *ngIf="post.launching == 1">{{ 'form.statusTypeField1' | translate }}</ng-container>
+                            </span>
+                        </td>   
+                        -->                                                            
+                        <td class="fw-bold text-muted">
+                            {{ post.date | datelocale }}
+                        </td>  
+                        <td class="fw-bold text-muted">
+                            {{ post.staff?.fullname }}
+                        </td>  
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end">
+                                <div class="form-check form-switch form-check-custom form-check-light form-check-solid">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input w-40px h-25px"
+                                        [value]="post.id"
+                                        (change)="changeStatus($event)"
+                                        [checked]="post.active == 1 ? true : false"
+                                    />
+                                    <label class="form-check-label" htmlFor="slackswitch"></label>
+                                </div>	
+                            </div>			                                                                          
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex align-items-center justify-content-end">                            
+                                <div ngbDropdown container="body" role="dropdown" id="action" aria-label="Button group with nested dropdown">
+                                    <button type="button" class="btn btn-light btn-active-light-primary btn-sm" aria-labelledby="action" ngbDropdownToggle>
+                                        {{ 'table.tab_action' | translate }}
+                                        <span class="svg-icon svg-icon-5 m-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                                    <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                                </g>
+                                            </svg>
+                                        </span>                                        
+                                    </button>
+                                    <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu>
+                                        <div class="menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-6">
+                                            <!--Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a class="menu-link px-3 cursor-pointer" [routerLink]="['edit/' + post.id] | localize">
+                                                    {{ 'btn.editBtn' | translate }}
+                                                </a>
+                                            </div>
+                                            <!--Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a class="menu-link px-3 text-danger bg-hover-light-danger cursor-pointer" (click)="delete(post.id)">
+                                                    {{ 'btn.deleteBtn' | translate }}
+                                                </a>
+                                            </div>                                
+                                        </div>                                       
+                                    </div>
+                                </div> 
+                                <!--
+                                    <div 
+                                    class="dropdown dropdown-inline" ngbDropdown 
+                                    container="body">
+                                    <button type="button" class="btn btn-icon btn-active-color-primary btn-sm ms-3" ngbDropdownToggle>
+                                        <i class="fa-solid fa-ellipsis-v fs-3"></i>
+                                    </button>            
+                                    <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu>
+                                        <app-action [post]="post"></app-action>    
+                                    </div>
+                                </div>                                     
+                                -->  
+                            </div>                                        
+                        </td>                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <app-paginator
+            class="d-flex justify-content-between align-items-center flex-wrap"
+            [paginator]="paginator"
+            [isLoading]="isLoading"
+            (paginate)="paginate($event)">
+        </app-paginator>        
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div 
+    class="card-body p-9"
+    [ngClass]="{'overlay overlay-block': isLoading}">
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>     
+    <div class="d-flex justify-content-between align-items-center mb-7">
+        <h3 class="fw-bold text-dark fs-3 mb-0">{{ 'title.imagesTitle' | translate }}</h3>
+        <button title="Upload Image" (click)="upload()" class="btn btn-light-primary fw-bolder">
+            <i class="fa fa-upload"></i> {{ 'btn.uploadBtn' | translate }}
+        </button>
+    </div>
+    <div class="row">
+        @for(pic of (pictures$ | async); track pic.id) {
+            <div class="col-md-4 col-lg-6 col-xxl-4 mb-5">
+                <!--Card-->
+                <div class="card overlay overflow-hidden">
+                    <div class="card-body p-0">
+                        <div class="overlay">
+                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-275px"
+                                [style.backgroundImage]="'url('+ folder + pic.file_name +')'">
+                            </div>
+                            <div class="overlay-layer bg-dark bg-opacity-25 align-items-end justify-content-center">
+                                <div class="d-flex justify-content-end flex-grow-1 flex-center p-5">
+                                    <button (click)="deleteImage(pic.id)" class="btn btn-light-danger btn-icon">
+                                        <i class="fa fa-trash icon-lg"></i>
+                                    </button>
+                                </div>
+                            </div>  
+                        </div>                              
+                    </div>
+                </div>
+            </div>  
+        } @empty {
+            <div class="col-lg-12 col-xl-12">
+                <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-8">
+                    <!--Wrapper-->
+                    <div class="d-flex flex-stack flex-grow-1">
+                        <!--Content-->
+                        <div class="fw-bold">
+                            <h4 class="text-gray-800 fw-bolder mb-3">{{ 'form.noPicturesUploaded' | translate }}</h4>
+                            <div class="fs-6 text-gray-600">Start creating new folders or uploading a new file!</div>
+                        </div>
+                    </div>
+                </div> 
+            </div>                                             
+        }
+    </div>
+</div>

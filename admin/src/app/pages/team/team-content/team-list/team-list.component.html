@@ -1,0 +1,140 @@
+<div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-title">
+            <h3 class="card-label fw-bolder fs-3 mb-1">{{'nav.teamNav' | translate }}</h3>
+        </div>
+        <div class="card-toolbar"></div>
+    </div>
+    <div class="card-body pt-0"    
+        [ngClass]="{'overlay overlay-block': isLoading}">
+        <ng-container *ngIf="isLoading">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>            
+        </ng-container>                             
+        <div class="table-responsive">
+            <table
+                class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+                <thead>
+                    <tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+                        <th class="w-70px text-center sorting">
+                            #
+                            <app-sort-icon
+                                column="order"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>                            
+                        </th>
+                        <th class="min-w-200px sorting">
+                            {{ 'table.tab_name' | translate }}
+                            <app-sort-icon
+                                column="name"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>   
+                        <th class="min-w-100px">
+                            {{ 'table.tab_email' | translate }}
+                        </th>       
+                        <th class="min-w-100px">
+                            {{ 'table.tab_phone' | translate }}
+                        </th>                                                 
+                        <th class="min-w-100px">
+                            {{ 'table.tab_createdBy' | translate }}
+                        </th>   
+                        <th class="min-w-100px sorting">
+                            {{ 'table.tab_dateCreated' | translate }}
+                            <app-sort-icon
+                                column="date"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>                         
+                        <th class="text-end">
+                            {{ 'table.tab_action' | translate }}
+                        </th>                        
+                    </tr>
+                </thead>    
+                <tbody
+                    cdkDropList
+                    [cdkDropListOrientation]="'vertical'"
+                    [cdkDropListData]="teams$ | async"
+                    (cdkDropListDropped)="dragDropped($event)">
+                    <tr 
+                        cdkDrag
+                        *ngFor="let team of teams$ | async; index as i" 
+                        class="fw-semibold text-gray-600">
+                        <td class="text-center">
+                            {{i+1}}
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">	
+                                <ng-container *ngIf="team.file_avatar">
+                                    <div class="symbol symbol-45px symbol-circle me-5">
+                                        <img style="object-fit: cover;" [src]="team.folder + team.file_avatar" [alt]="team.name">
+                                    </div>                                														
+                                </ng-container>
+                                <ng-container *ngIf="!team.file_avatar">
+                                    <div class="symbol symbol-45px symbol-circle me-5">
+                                        <img src="./assets/media/avatars/blank.png" />
+                                    </div>
+                                </ng-container>                                
+                                <div class="ms-5">									
+                                    <div class="text-dark fw-bolder text-hover-primary fs-6">
+                                        <a [routerLink]="['edit', team.id] | localize">{{ team.name }}</a>
+                                    </div>	
+                                    <span class="text-muted fs-7 fw-bold" [innerHTML]="team.description | truncatetext:50"></span>								
+                                </div>
+                            </div>                        
+                        </td>   
+                        <td class="fw-bold text-primary">
+                            {{ team.email }}
+                        </td>   
+                        <td class="fw-bold text-primary">
+                            {{ team.phonenumber }}
+                        </td>                                                   
+                        <td class="fw-bold text-muted">
+                            {{ team.staff?.fullname }}
+                        </td> 
+                        <td class="fw-bold text-primary">
+                            {{ team.date | datelocale }}
+                        </td>                          
+                        <td class="text-end">
+                            <div class="d-flex align-items-center justify-content-end flex-shrink-0">                                          
+                                <a
+                                    title="Edit"
+                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+                                    [routerLink]="['edit', team.id] | localize">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                                <a
+                                    title="Delete"
+                                    class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                    (click)="delete(team.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                            </div>
+                        </td>                                                                        
+                    </tr>
+                </tbody>          
+            </table>
+        </div>
+        <app-paginator
+            class="d-flex justify-content-between align-items-center flex-wrap"
+            [paginator]="paginator"
+            [isLoading]="isLoading"
+            (paginate)="paginate($event)">
+        </app-paginator>          
+    </div>
+</div>

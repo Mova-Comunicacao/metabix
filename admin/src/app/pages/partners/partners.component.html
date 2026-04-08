@@ -1,0 +1,123 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">
+        {{ 'title.propertyDetailsH3' | translate }}
+      	<span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+    </h3>
+    <div class="d-flex flex-wrap my-2">
+        <div class="me-4">
+        </div>
+        <button
+            type="button"
+            class="btn btn-primary fw-bolder"
+            (click)="create()">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>        
+    </div>    
+</div>
+<div class="card card-flush">
+    <div class="card-header border-0 pt-5">
+        <div class="card-title">
+            <h3 class="card-label fw-bolder fs-3 mb-1">{{ 'title.partnersHeadTitle' | translate }}</h3>
+        </div>
+        <div class="card-toolbar"></div>
+    </div>
+    <div 
+        class="card-body" 
+        [ngClass]="isLoading ? 'overlay overlay-block' : ''">
+        <ng-container *ngIf="isLoading">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>            
+        </ng-container>         
+        <div class="table-responsive">
+            <table class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+                <thead>
+                    <tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+                        <th>(ID)</th>
+                        <th>
+                            {{ 'table.tab_name' | translate }}   
+                            <app-sort-icon
+                                column="name"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>                                         
+                        </th>   
+                        <th>{{ 'table.tab_description' | translate }}</th> 
+                        <th>{{ 'table.tab_createdBy' | translate }}</th> 
+                        <th>
+                            {{ 'table.tab_dateCreated' | translate }}
+                            <app-sort-icon
+                                column="date"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>                             
+                        </th>                             
+                        <th class="text-end"></th>   
+                    </tr>                 
+                </thead>
+                <tbody 
+                    cdkDropList
+                    [cdkDropListData]="partners$ | async"
+                    [cdkDropListOrientation]="'vertical'"
+                    (cdkDropListDropped)="drop($event)">
+                    <tr *ngFor="let partner of partners$ | async" cdkDrag>
+                        <td>{{ partner.id }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">															
+                                <div class="ml-3">									
+                                    <div class="text-dark-75 fw-bold line-height-sm">
+                                        {{ partner.name }}
+                                    </div>	
+                                    <a class="text-muted fw-bold text-hover-primary"></a>								
+                                </div>
+                            </div>                        
+                        </td>              
+                        <td [innerHtml]="partner.description | truncatetext:50"></td>
+                        <td>
+                            <div class="fw-bold text-muted">{{ partner.staff?.fullname }}</div>
+                        </td>
+                        <td>
+                            <div class="fw-bolder text-primary mb-0">{{ partner.date | datelocale }}</div>
+                        </td> 
+                        <td class="text-end">
+                            <div class="d-flex align-items-center justify-content-end flex-shrink-0">                                          
+                                <a
+                                    title="Edit"
+                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+                                    (click)="edit(partner.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                                <a
+                                    title="Delete"
+                                    class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                    (click)="delete(partner.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                            </div>
+                        </td>               
+                    </tr>
+                </tbody>             
+            </table>
+        </div>
+        <app-paginator
+            class="d-flex justify-content-between align-items-center flex-wrap"
+            [paginator]="paginator"
+            [isLoading]="isLoading"
+            (paginate)="paginate($event)">
+        </app-paginator> 
+    </div>          
+</div>

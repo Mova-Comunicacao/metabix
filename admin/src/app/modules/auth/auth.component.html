@@ -1,0 +1,36 @@
+<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+  <!--Body-->
+  <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+    <!--Form-->
+    <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+      <!--Wrapper-->
+      <div class="p-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!--end::Form-->
+
+    <!--Footer-->
+    <div class="d-flex flex-center flex-wrap px-5">
+      <!--Links-->
+      <div class="d-flex fw-semibold text-primary fs-base">
+        <a href="#" class="px-5" target="_blank">Terms</a>
+
+        <a href="#" class="px-5" target="_blank">Plans</a>
+
+        <a href="#" class="px-5" target="_blank">Contact Us</a>
+      </div>
+    </div>
+  </div>
+
+  <!--Aside-->
+  <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2"
+    [ngStyle]="{'background-image': 'url(./assets/media/misc/auth-bg.png)'}">
+    <!--Content-->
+    <div class="d-flex flex-column flex-center py-15 px-5 px-md-15 w-100">
+      <!--Image-->
+      <img class="mx-auto w-300px w-md-100 w-xl-600px mb-10 mb-lg-20" src="./assets/media/misc/auth-screens.png"
+        alt="" />
+    </div>
+  </div>
+</div>

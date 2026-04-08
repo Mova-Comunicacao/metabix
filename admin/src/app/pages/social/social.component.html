@@ -1,0 +1,106 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">
+        {{ 'title.propertyDetailsH3' | translate }}
+      <span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+    </h3>
+    <div class="d-flex flex-wrap my-2">
+        <button
+            type="button"
+            class="btn btn-primary fw-bolder"
+            (click)="create()">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>        
+    </div>    
+</div>
+<div class="card mb-5 mb-xxl-8">
+    <div class="card-header border-0 py-5">
+      <div class="card-title">
+        <h3 class="card-label fw-bolder fs-3 mb-1">Redes Sociais</h3>
+      </div>
+      <div class="card-toolbar"></div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+            <thead>
+                <tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+                    <th class="w-70px text-center">#</th>
+                    <th class="w-200px">{{ 'table.tab_name' | translate }}</th>   
+                    <th>{{ 'table.tab_createdBy' | translate }}</th> 
+                    <th>{{ 'table.tab_dateCreated' | translate }}</th>                             
+                    <th>{{ 'table.tab_status' | translate }}</th> 
+                    <th class="text-end"></th>   
+                </tr>                 
+            </thead>
+            <tbody
+                cdkDropList
+                [cdkDropListData]="socials$ | async"
+                [cdkDropListOrientation]="'vertical'"
+                (cdkDropListDropped)="drop($event)">
+                <tr *ngFor="let social of socials$ | async" cdkDrag>
+                    <td class="text-center">{{ social.id }}</td>
+                    <td class=" pl-0 py-8">
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-45px me-5">
+                                <span 
+                                    class="btn btn-md btn-icon btn-{{ social.name }} btn-pill">
+                                    <i class="fa-brands fa-{{ social.name }} fs-1"></i>
+                                </span>   
+                            </div>
+                            <div>
+                                <a [href]="social.link" class="text-dark-75 fw-bolder text-hover-primary mb-1 fs-lg">
+                                    {{ social.name }}
+                                </a>
+                                <span class="text-muted fw-bold d-block"></span>
+                            </div>
+                        </div>
+                    </td>    
+                    <td class="">
+                        <div class="fw-bold text-muted">{{ social.staff?.fullname }}</div>
+                    </td>                    
+                    <td class="">
+                        <div class="fw-bolder text-primary mb-0">{{ social.date | datelocale }}</div>
+                    </td> 
+                    <td>
+                        <div class="form-check form-switch form-check-custom form-check-light form-check-solid">
+                            <input
+                                type="checkbox"
+                                class="form-check-input w-40px h-25px"
+                                [value]="social.id"
+                                (change)="changeStatus($event)"
+                                [checked]="social.active == 1 ? true : false"
+                            />
+                            <label class="form-check-label" htmlFor="slackswitch"></label>
+                        </div>	                         
+                    </td>          
+                    <td class="">      
+                        <div class="d-flex justify-content-end flex-shrink-0">                 
+                            <a
+                                title="Edit"
+                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-3"
+                                (click)="edit(social.id)">
+                                <span
+                                    [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                    class="svg-icon svg-icon-3">
+                                </span>
+                            </a>
+                            <a
+                                title="Delete"
+                                class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                (click)="delete(social.id)">
+                                <span
+                                    [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                    class="svg-icon svg-icon-3">
+                                </span>
+                            </a>
+                        </div>
+                    </td>               
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+</div>

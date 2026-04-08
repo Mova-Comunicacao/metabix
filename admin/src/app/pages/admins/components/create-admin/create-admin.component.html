@@ -1,0 +1,184 @@
+<div class="modal-header pb-0 border-0 ">
+    <div class="modal-title h4">{{ 'nav.editAdminNav' | translate }}</div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>       
+</div>      
+<div 
+    class="modal-body py-10 px-lg-17"
+    [ngClass]="{'overlay overlay-block': adminService.isLoading$ | async}">
+    <ng-container *ngIf="adminService.isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div> 
+    </ng-container>         
+    <div 
+        id="kt_modal_update_contact_scroll"
+        data-kt-scroll="true"
+        data-kt-scroll-activate="{default: false, lg: true}"
+        data-kt-scroll-max-height="auto"
+        data-kt-scroll-dependencies="#kt_modal_update_contact_scroll"
+        data-kt-scroll-wrappers="#kt_modal_update_contact_scroll"
+        data-kt-scroll-offset="300px"
+        style="max-height: 624px;"
+        class="d-flex flex-column scroll-y me-n7 pe-7">           
+        <!-- Alert error-->
+        <ng-container *ngIf="hasError">
+            <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+                <span 
+                    [inlineSVG]="'./assets/media/icons/duotune/general/gen048.svg'"
+                    class="svg-icon svg-icon-2hx svg-icon-light me-3">
+                </span>
+                <!--Wrapper-->
+                <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                    <!--Title-->
+                    <h4 class="mb-1 text-light">Error</h4>
+                    <!--Content-->
+                    <span>{{ hasError }}</span>
+                </div>                        
+            </div>
+        </ng-container>                        
+        <form action="#" class="form form-label fs-6 fw-bold mb-2-right" [formGroup]="formGroup">             
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.statusField' | translate }}</label>
+                    <select 
+                        formControlName="active"
+                        class="form-select form-select-solid form-select-lg fw-bold" 
+                        [class.is-invalid]="isControlInvalid('active')">
+                        <option value="1">{{ 'form.statusActiveField' | translate }}</option>
+                        <option value="0">{{ 'form.statusDeactiveField' | translate }}</option>
+                    </select>  
+                </div>    
+            </div>    
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'profile.formType' | translate }}</label>
+                    <select 
+                        formControlName="role"
+                        class="form-select form-select-solid form-select-lg fw-bold" 
+                        [class.is-invalid]="isControlInvalid('role')">
+                        <option value="0">{{ 'profile.formTypeAdmin' | translate }}</option>
+                        <option value="1">{{ 'profile.formTypeSupereditor' | translate }}</option>
+                        <option value="2">{{ 'profile.formTypeSupervisor' | translate }}</option>                          
+                    </select>   
+                </div>
+            </div>                              
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.firstNameField' | translate }}</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" 
+                        name="firstname"
+                        placeholder="Nome" 
+                        autocomplete="off" 
+                        [class.is-invalid]="isControlInvalid('firstname')"
+                        [class.is-valid]="isControlValid('firstname')" 
+                        formControlName="firstname" 
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('firstname')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'firstname')">{{ 'form.propertyNameHelper' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'firstname')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>
+                </div>
+            </div>
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.lastNameField' | translate }}</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" 
+                        name="lastname"
+                        [placeholder]="'form.lastNameField' | translate" 
+                        autocomplete="off" 
+                        [class.is-invalid]="isControlInvalid('lastname')"
+                        [class.is-valid]="isControlValid('lastname')" 
+                        formControlName="lastname" 
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('lastname')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'lastname')">{{ 'form.propertyNameHelper' | translate }}</div>
+                </div>                    
+            </div>
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.emailAddressField' | translate }}</label>
+                    <input type="email" class="form-control form-control-lg form-control-solid" 
+                        name="email" 
+                        placeholder="E-mail"
+                        autocomplete="off" 
+                        [class.is-invalid]="isControlInvalid('email')"
+                        [class.is-valid]="isControlValid('email')" 
+                        formControlName="email" 
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('email')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'email')">{{ 'form.propertyNameHelper' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('email', 'email')">{{ 'form.emailReq' | translate }}</div>
+                </div>
+            </div>                
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.passwordField' | translate }}</label>
+                    <input type="password"
+                        class="form-control form-control-lg form-control-solid"
+                        [placeholder]="'form.passwordField' | translate"
+                        autocomplete="off"
+                        formControlName="password"
+                        [class.is-invalid]="isControlInvalid('password')"
+                        [class.is-valid]="isControlValid('password')" 
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('password')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'password')">{{ 'form.passwordMismatch' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'password')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                </div>
+            </div>
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label fs-6 fw-bold mb-2">{{ 'form.rpasswordField' | translate }}</label>
+                    <input type="password"
+                        class="form-control form-control-lg form-control-solid"
+                        [placeholder]="'form.rpasswordField' | translate"
+                        autocomplete="off"
+                        formControlName="cPassword"
+                        [class.is-invalid]="isControlInvalid('cPassword')"
+                        [class.is-valid]="isControlValid('cPassword')" 
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('cPassword')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('ConfirmPassword', 'cPassword')">{{ 'form.passwordMismatch' | translate }}</div> 
+                </div>
+            </div>   
+            <div class="form-group row mb-7">
+                <div class="d-flex flex-stack">
+                    <!--Label-->
+                    <div class="fw-bold me-5">
+                        <label class="fs-6">Notificar Admin</label>
+                        <div class="fs-7 text-muted">Allow Notifications by Email</div>
+                    </div>
+                    <!--Checkboxes-->
+                    <div class="d-flex align-items-center">
+                        <!--Checkbox-->
+                        <label class="form-check form-check-custom form-check-solid me-10">
+                            <input 
+                                class="form-check-input h-20px w-20px" 
+                                type="checkbox" 
+                                name="send_mail" 
+                                formControlName="send_mail"
+                                value="true" 
+                                checked="checked"
+                                (change)="toggleVisibility($event)">
+                            <span class="form-check-label fw-bold">Enviar Email</span>
+                        </label>
+                    </div>
+                </div>                   
+            </div>                          
+        </form>    
+    </div>    
+</div>  
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate fw-bold me-2" (click)="modal.dismiss()">
+        {{ 'btn.cancelBtn' | translate }}
+    </button>
+        <button type="submit" class="btn btn-primary btn-elevate fw-bold" (click)="save()"
+        [disabled]="formGroup.invalid">
+        {{ 'btn.saveBtn' | translate }}
+    </button>
+</div>      

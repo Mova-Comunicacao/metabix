@@ -1,0 +1,105 @@
+//
+// Draggable plugin customization: https://shopify.github.io/draggable
+//
+
+.draggable-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.draggable-box {
+    cursor: grab;
+    cursor: -moz-grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    transition: 
+        box-shadow 200ms cubic-bezier(0, 0, 0.2, 1), 
+        transform 250ms cubic-bezier(0, 0, 0.2, 1);
+
+    img { pointer-events: none; -webkit-user-drag: none; }
+}
+
+.draggable-box:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    opacity: 0.85;
+}
+
+.cdk-drag-preview { 
+    box-sizing: border-box;    
+    opacity: 1;
+    z-index: 1000;
+    pointer-events: none;
+    will-change: transform;
+    @include border-radius($border-radius);
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.1),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}  
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}  
+
+.cdk-drag.cdk-drag-dragging {
+  opacity: 0 !important;
+}
+
+.cdk-drag-receiver-hidden {
+    visibility: hidden; 
+}
+
+.cdk-drag-placeholder {
+    background-color: var(--#{$prefix}gray-100);
+    border: 2px dashed var(--#{$prefix}gray-300) !important;
+    border-radius: $border-radius;
+    min-height: 225px;
+    opacity: .35;
+    transition: 
+        transform 250ms cubic-bezier(0, 0, 0.2, 1), 
+        opacity 250ms cubic-bezier(0, 0, 0.2, 1);
+} 
+
+.cdk-drag-animating,
+.cdk-drop-list,
+.cdk-drop-list-dragging * div:not(.cdk-drag-placeholder) {   
+    transition: 
+        transform 150ms cubic-bezier(0, 0, 0.2, 1), 
+        opacity 150ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.table tbody.cdk-drop-list-dragging > tr td {
+    border: none;
+}
+.table tbody.cdk-drop-list-dragging > tr {
+    border: none;
+    border-top: 2px dashed var(--#{$prefix}gray-300) !important;
+    border-bottom: 2px dashed var(--#{$prefix}gray-300) !important;
+}
+
+.table tbody.cdk-drop-list-dragging tr:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+} 
+
+.draggable--original,
+.draggable-source--is-dragging.draggable--over {
+  opacity: 1 !important;
+}
+
+.draggable,
+.draggable .draggable-handle {
+    cursor: default;
+}
+
+.draggable.draggable-mirror {
+    opacity: 0.8;
+    border: none;
+}

@@ -1,0 +1,62 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <div class="d-flex flex-wrap align-items-center my-2">
+        <h3 class="fw-bolder my-2">
+            {{ 'title.propertyDetailsH3' | translate }}
+            <span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+        </h3>
+    </div>
+    <div class="d-flex flex-wrap my-2">
+        <ul class="nav nav-pills me-6 mb-2 mb-sm-0">
+            <li class="nav-item m-0"  role="presentation">
+                <a 
+                    (click)="setActiveTab(0)"
+                    [ngClass]="getActiveTabCSSClass(0)"
+                    class="btn btn-icon btn-light btn-color-muted btn-active-primary me-3"
+                    role="tab">
+                    <span 
+                        [inlineSVG]="'./assets/media/icons/duotune/general/gen024.svg'"
+                        class="svg-icon svg-icon-3">
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item m-0"  role="presentation">
+                <a 
+                    (click)="setActiveTab(1)"
+                    [ngClass]="getActiveTabCSSClass(1)"
+                    class="btn btn-icon btn-light btn-color-muted btn-active-primary me-3"
+                    role="tab">
+                    <span 
+                        [inlineSVG]="'./assets/media/icons/duotune/abstract/abs015.svg'"
+                        class="svg-icon svg-icon-3">
+                    </span>
+                </a>
+            </li>            
+        </ul>
+        <button 
+            type="button"
+            class="btn btn-primary fw-bolder"
+            [routerLink]="['add'] | localize">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>         
+    </div>
+</div>
+<ng-container *ngIf="activeTabId === tabs.CARD_TAB">
+    <div class="tab-content pt-3">
+        <!-- Card -->
+        <div class="tab-pane" [ngClass]="getActiveTabCSSClass(0)">    
+            <app-team-card></app-team-card>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="activeTabId === tabs.TABLE_TAB">
+    <div class="tab-content pt-3">
+        <!-- Table -->
+        <div class="tab-pane" [ngClass]="getActiveTabCSSClass(1)">    
+            <app-team-list></app-team-list>
+        </div>
+    </div>
+</ng-container>

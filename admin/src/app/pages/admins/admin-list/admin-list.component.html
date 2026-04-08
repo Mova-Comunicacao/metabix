@@ -1,0 +1,118 @@
+<div class="card mb-5 mb-xxl-8">
+    <div class="card-header border-0 pt-5">
+      <div class="card-title">
+        <h3 class="card-label fw-bolder fs-3 mb-1">Admins</h3>
+      </div>
+      <div class="card-toolbar">
+        <button
+          type="button"
+          class="btn btn-primary fw-bolder"
+          (click)="create()">
+          <span
+            [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+            class="svg-icon svg-icon-3 svg-icon-white">
+          </span>     
+          {{ 'btn.addBtn' | translate }}
+        </button>
+      </div>
+    </div>
+	<div class="card-body" [ngClass]="isLoading ? 'overlay overlay-block' : ''">
+		<!--Overlay Layer-->
+		<ng-container *ngIf="isLoading">
+			<div class="overlay-layer bg-dark bg-opacity-5">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		</ng-container>		
+        <div class="table-responsive angular-bootstrap-table">
+            <table class="table table-head-custom align-middle table-row-dashed fs-6 gy-5">
+              <thead>
+                <tr class="fw-bolder text-muted">
+                  <th>#</th>
+                  <th>{{ 'table.tab_user' | translate }}</th>
+                  <th>{{ 'table.tab_superUser' | translate }}</th>
+                  <th>{{ 'table.tab_email' | translate }}</th>
+                  <th>{{ 'table.tab_phone' | translate }}</th>
+                  <th>{{ 'table.tab_dateCreated' | translate }}</th>
+                  <th>{{ 'table.tab_status' | translate }}</th>
+                  <th class="min-w-100px text-end">{{ 'table.tab_action' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let admin of adminService.items$ | async">
+                    <td>{{ admin.staffid }}</td>
+                    <td>                  
+                        <div class="d-flex align-items-center">								
+                            <div class="symbol symbol-45px me-5 symbol-circle">
+								<span 
+									class="symbol-label text-primary fw-bold fs-h4"
+									*ngIf="!admin.avatar || admin.avatar === null">
+									{{ admin.firstname[0] }}
+								</span>								                               						
+                                <span class="symbol-label" *ngIf="admin.avatar" [style.backgroundImage]="'url('+admin.avatar +')'"></span>
+                            </div>								
+                            <div class="d-flex justify-content-start flex-column">									
+                                <a [routerLink]="['edit/', admin.staffid] | localize" href class="text-dark fw-bolder text-hover-primary fs-6">
+                                    {{ admin.firstname }} {{ admin.lastname }}
+                                </a>									
+                                <a class="text-muted fw-bold text-muted d-block fs-7">
+                                    {{ admin.role?.name }}
+                                    <!--
+                                        <ng-container *ngIf="admin.role == 0">{{ 'profile.formTypeAdmin' | translate }}</ng-container>
+                                        <ng-container *ngIf="admin.role == 1">{{ 'profile.formTypeSupereditor' | translate }}</ng-container>
+                                        <ng-container *ngIf="admin.role == 2">{{ 'profile.formTypeSupervisor' | translate }}</ng-container>
+                                    -->
+								</a>
+                            </div>
+                        </div>                        
+                    </td>
+                    <td>
+                      <div class="fw-bolder text-muted">				  
+						<ng-container *ngIf="admin.admin == 0">{{ 'form.yesField' | translate }}</ng-container>
+						<ng-container *ngIf="admin.admin == 1">{{ 'form.noField' | translate }}</ng-container>
+                      </div>
+                    </td>                  
+                    <td>
+                      <div class="fw-bolder">{{ admin.email }}</div></td>
+                    <td>
+                      <div class="fw-bolder text-muted">{{ admin.phone }}</div></td>
+                    <td>
+                      <div class="fw-bolder text-primary mb-0">
+                        {{ admin.date | datelocale }}
+                      </div>
+                    </td>
+                    <td>
+						<span 
+							class="badge py-3 px-4 fs-7" 
+							[class.badge-light-success]="admin.active == 1"
+							[class.badge-light-warning]="admin.active == 0">		
+                            <ng-container *ngIf="admin.active == 1">{{ 'form.statusActiveField' | translate }}</ng-container>
+                            <ng-container *ngIf="admin.active == 0">{{ 'form.statusDeactiveField' | translate }}</ng-container>                            
+                        </span>                
+                    </td>
+                    <td>
+						<div class="d-flex justify-content-end flex-shrink-0">
+                        <a
+                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mx-3"
+                          [routerLink]="['edit/', admin.staffid] | localize">
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                            class="svg-icon svg-icon-3">
+                          </span>
+                        </a>
+                        <a
+                          class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                          (click)="delete(admin.staffid)">
+                          <span
+                            [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                            class="svg-icon svg-icon-3">
+                          </span>
+                        </a>
+						</div>
+                    </td>                       
+                </tr>
+            </tbody>            
+        </table>        
+    </div>
+</div>

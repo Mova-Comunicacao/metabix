@@ -1,0 +1,51 @@
+<div
+    id="kt_drawer_chat"
+    class="bg-white"
+    data-kt-drawer="true"
+    data-kt-drawer-name="chat"
+    data-kt-drawer-activate="true"
+    data-kt-drawer-overlay="true"
+    data-kt-drawer-width="{default:'350px', 'md': '550px'}"
+    data-kt-drawer-direction="end"
+    data-kt-drawer-toggle="#kt_drawer_chat_toggle"
+    data-kt-drawer-close="#kt_drawer_chat_close">
+    <div class="card w-100 rounded-0" id="kt_drawer_chat_messenger">
+        <div class="card-header pe-5" id="kt_drawer_chat_messenger_header">
+            <div class="card-title">
+                <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="fw-bolder d-flex align-items-center fs-2"> 
+                        Assistente Mova <span class="badge badge-light-info fw-bolder fs-8 px-2 py-1 ms-2">Beta</span>
+                    </div>                    
+                    <div class="mb-0 lh-1">
+                        <span class="fs-7 fw-bold text-gray-400">{{ 'assistant.writing_translation_assistant' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-toolbar">
+                <div 
+                    ngbDropdown
+                    class="dropdown me-2">
+                    <button
+                        class="btn btn-icon btn-sm btn-active-light-primary"
+                        ngbDropdownToggle>
+                        <app-keenicon name="setting" class="fs-1"></app-keenicon>
+                    </button>
+                    <app-assistant-config 
+                        ngbDropdownMenu
+                        [textPreset]="currentTextPreset"
+                        (textPresetChange)="onTextPresetChange($event)">
+                    </app-assistant-config>
+                </div>
+                <div
+                    class="btn btn-icon btn-sm btn-close btn-active-light-primary"
+                    id="kt_drawer_chat_close">
+                    <app-keenicon name="cross" class="fs-1"></app-keenicon>
+                </div>
+            </div>
+        </div>
+        <app-assistant-chat-inner 
+            [isDrawer]="true"
+            [textPreset]="currentTextPreset">
+        </app-assistant-chat-inner>
+    </div>
+</div>

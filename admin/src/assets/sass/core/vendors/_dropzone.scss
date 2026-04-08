@@ -1,0 +1,123 @@
+//
+// Dropzone
+//
+
+.dropzone.flex > .dz-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    -webkit-box-flex: 1;
+}
+  
+.dropzone.flex {
+    align-items: inherit;
+    align-content: inherit;
+    justify-content: inherit;
+    -webkit-box-align: inherit;
+    -webkit-box-pack: inherit;
+}
+
+.dropzone {
+
+    .dz-clickable {
+        cursor: pointer;
+    }
+
+    .dz-clickable * {
+        cursor: default;
+    }
+
+    .dz-wrapper {
+        min-height: auto;
+        padding: 1.5rem 1.75rem;
+        text-align: center;
+        cursor: pointer;
+        border: 1px dashed var(--#{$prefix}primary);
+        background-color: var(--#{$prefix}primary-light);
+        border-radius: $border-radius !important;
+    }
+
+    .dz-message {
+        margin: 0;
+        display: flex;
+        text-align: left;
+    }
+
+    .dz-text {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        padding: 8px 16px;
+        text-align: center;
+        transform: translateY(-50%);
+    }   
+    
+    .dz-image {
+        position: relative;
+        overflow: hidden;
+        margin: 0 1.5rem 0 0;
+    }   
+
+    .dz-image-preview {
+        position: relative;
+    }
+
+    .dz-preview {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;     
+        position: relative;  
+        width: 100%;
+        height: 100%;      
+    }
+
+    .dz-single {   
+        position: relative;
+        border-radius: $border-radius !important;
+        background-color: var(--#{$prefix}primary-light);
+        margin: 0.75rem 0;           
+    }
+
+    .dz-single .dz-preview {
+        border-radius: $border-radius !important;
+        padding: 1.25rem;
+    }
+
+    .dz-single .dz-preview .dz-image {
+        border-radius: $border-radius !important;
+        z-index: 1;
+    }
+
+    .dz-single .dz-preview .dz-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;      
+        width: 100%;    
+    }
+
+    .dz-single .dz-preview .dz-image img {
+        width: 80px;
+        height: auto;
+        max-height: 80px;
+        object-fit: cover;
+        -o-object-fit: cover;        
+    }    
+    
+    .dz-remove {
+        $size: 2.25rem;
+        display: flex;
+		justify-content: center;
+		align-items: center;
+		height: $size;
+		width: $size;
+		font-size: 1rem;
+        white-space: nowrap;  
+        position: absolute;
+        z-index: 2;
+        background-color: var(--#{$prefix}body-bg) !important;        
+        box-shadow: var(--#{$prefix}box-shadow);        
+		border-radius: 100%;
+        top: -(divide($size,4));
+        right: -(divide($size,4));
+    }    
+}

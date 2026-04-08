@@ -1,0 +1,114 @@
+<ng-container *ngIf="staff">
+    <div class="card mb-5 mb-xxl-8 py-5" [formGroup]="formGroup">
+        <!--Header-->
+        <div class="card-header border-0 cursor-pointer3">
+            <div class="card-title align-items-start flex-column">
+                <h3 class="card-label fw-bolder text-dark">{{ 'profile.myProfileH3' | translate }}</h3>
+                <span class="text-muted fw-bold fs-6 mt-1">{{ 'profile.updateEmailModalInfo' | translate }}</span>
+            </div>
+            <div class="card-toolbar"></div>
+        </div>
+        <!--Form-->
+        <div class="form">
+            <div class="card-body border-top p-9">
+                <!--Heading-->
+                <div class="row">
+                    <label class="col-xl-4"></label>
+                    <div class="col-lg-8">
+                        <h5 class="fw-bold mb-6">{{ 'profile.formTitle' | translate }}</h5>
+                    </div>
+                </div>
+                <!--Form Group-->
+                <div class="form-group row mb-7">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6">Username</label>
+                    <div class="col-lg-8">
+                        <div>
+                            <input class="form-control form-control-lg form-control-solid" 
+                                type="text" 
+                                formControlName="username"
+                                [class.is-invalid]="isControlInvalid('username')" 
+                                [class.is-valid]="isControlValid('username')" 
+                                />
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-group row mb-7">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6 required">{{ 'profile.formEmail' | translate }}</label>
+                    <div class="col-lg-8">
+                      <div class="input-group input-group-lg input-group-solid">
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <input 
+                            type="email" 
+                            formControlName="email" 
+                            [placeholder]="'profile.formEmail' | translate"
+                            [class.is-invalid]="isControlInvalid('email')"
+                            [class.is-valid]="isControlValid('email')" 
+                            class="form-control form-control-lg form-control-solid" 
+                        />
+                      </div>
+                      <span class="form-text text-muted">{{ 'profile.formEmailInfo' | translate }}</span>
+                    </div>
+                </div>  
+                <div class="row">
+                    <label class="col-lg-4"></label>
+                    <div class="col-lg-8">
+                      <h5 class="fw-bold mt-10 mb-6">{{ 'profile.formChangeTypeTitle' | translate }}</h5>
+                    </div>
+                </div>                
+                <div class="form-group row mb-7">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6">{{ 'profile.formType' | translate }}</label>
+                    <div class="col-lg-8">
+                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="role">
+                            <ng-container *ngIf="(staff.role == 0 || staff.role == 1) && staff.admin == 0">
+                                <option value="0">{{ 'profile.formTypeAdmin' | translate }}</option>
+                            </ng-container>
+                            <option value="1">{{ 'profile.formTypeSupereditor' | translate }}</option>
+                            <option value="2">{{ 'profile.formTypeSupervisor' | translate }}</option>                          
+                        </select>   
+                    </div>
+                </div> 
+                <div class="form-group row mb-7">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6">{{ 'form.languageField' | translate }}</label>
+                    <div class="col-lg-8">
+                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="default_language">
+                            <option value="portuguese">{{ 'form.optionPortuguese' | translate }}</option>
+                            <option value="english">{{ 'form.optionEnglish' | translate }}</option>
+                            <option value="spanish">{{ 'form.optionSpanish' | translate }}</option>
+                        </select> 
+                        <span class="form-text text-muted">{{ 'form.localizationHelper' | translate }}</span> 
+                    </div>    
+                </div> 
+                <div class="form-group row mb-7">
+                    <label class="col-lg-4 col-form-label fw-bold fs-6">{{ 'profile.formTypeSupereditor' | translate }}</label>
+                    <div class="col-lg-8">
+                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="admin">
+                            <ng-container *ngIf="staff.admin === 1">
+                                <option value="1">{{ 'profile.formYes' | translate }}</option>
+                            </ng-container>
+                            <option value="0">{{ 'profile.formNo' | translate }}</option>
+                        </select>  
+                    </div>    
+                </div>                                     
+            </div>   
+            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                <button type="reset" class="btn btn-light btn-active-light-primary me-2" (click)="cancel()">
+                    {{ 'btn.resetBtn' | translate }}
+                </button>                
+                <button type="submit" [disabled]="formGroup.invalid" class="btn btn-primary" (click)="save()">
+                    <ng-container *ngIf="!isLoading">{{ 'btn.saveChangesBtn' | translate }}</ng-container>               
+                    <!--Loading -->
+                    <ng-container *ngIf="isLoading">   
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Loading...{{ " " }}
+                            <span
+                              class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>                        
+                    </ng-container>                      
+                </button>                
+            </div>   
+        </div>
+    </div>
+</ng-container>

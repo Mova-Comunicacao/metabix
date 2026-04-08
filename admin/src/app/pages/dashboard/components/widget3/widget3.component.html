@@ -1,0 +1,60 @@
+<div class="card card-flush h-xl-100 mb-5 mb-xl-10">   
+    <!-- Header -->
+    <div class="card-header border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder text-dark">
+                {{ 'dashboard.techTitle' | translate }}
+            </span>
+            <span class="text-gray-400 mt-1 fw-semibold fs-6">
+                {{ start_date | date:'longDate':'-0300':'pt-BR' }} à {{ end_date | date:'longDate':'-0300':'pt-BR' }}
+            </span>
+        </h3>
+        <div class="card-toolbar">
+			<div
+				ngbDropdown
+				class="dropdown">		
+				<button
+					type="button"
+					class="btn btn-sm btn-icon btn-light btn-color-muted btn-active-light-primary py-2 px-4"
+					ngbDropdownToggle>
+					<i class="fa fa-ellipsis fs-3"></i>  
+				</button>	
+				<app-dropdown 
+					ngbDropdownMenu
+					[metrics]="metrics"
+					[dimensions]="dimensions"
+					[dimensionsData]="dimensionsData"
+					(outMetrics)="metricChange([$event])"
+                    (outDimensions)="dimensionChange([$event])">
+				</app-dropdown>	
+			</div>
+        </div>
+    </div>
+    <!-- Body -->
+    <div 
+        class="card-body cursor-default"
+        [ngClass]="{'overlay overlay-block': isLoading}">    
+        <ng-container *ngIf="isLoading">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>         
+        </ng-container>          
+        <div
+            #chart
+            class="mixed-widget-5-chart card-rounded-bottom"
+            [style.height]="chartHeight">
+            <apx-chart 
+                style="position: relative;"
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [plotOptions]="chartOptions.plotOptions"
+                [labels]="chartOptions.labels"
+                [legend]="chartOptions.legend"
+                [colors]="chartOptions.colors"
+                [responsive]="chartOptions.responsive">
+            </apx-chart>
+        </div>
+    </div>
+</div>

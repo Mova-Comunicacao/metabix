@@ -1,0 +1,66 @@
+<!--App-->
+<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+    <!--Page-->
+    <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+        <!--Header-->
+        <ng-container *ngIf="appHeaderDisplay">
+            <app-header 
+                id="kt_app_header" class="app-header" 
+                [ngClass]="appHeaderDefaultClass" 
+                data-kt-sticky="true"
+                data-kt-sticky-activate="{default: true, lg: true}" 
+                data-kt-sticky-name="app-header-minimize" 
+                data-kt-sticky-offset="{default: '200px', lg: '0'}" 
+                data-kt-sticky-animation="false">
+            </app-header>            
+        </ng-container>
+        <!--Wrapper-->
+        <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+            <!--sidebar-->
+            <ng-container *ngIf="appSidebarDisplay">
+                <app-sidebar 
+                    #ktSidebar
+                    id="kt_app_sidebar" 
+                    class="app-sidebar flex-column" 
+                    [ngClass]="appSidebarDefaultClass">
+                </app-sidebar>
+            </ng-container>   
+            <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <!--Content wrapper-->
+                <div class="d-flex flex-column flex-column-fluid">
+                    <ng-container *ngIf="appToolbarDisplay">
+                        <app-toolbar 
+                            id="kt_app_toolbar"
+                            class="app-toolbar" 
+                            [ngClass]="appToolbarCSSClass"
+                            [appToolbarLayout]="appToolbarLayout">
+                        </app-toolbar>
+                    </ng-container>                      
+                    <app-content 
+                        id=" kt_app_content" class="app-content" 
+                        [ngClass]="contentCSSClasses"
+                        [contentContainerCSSClass]="contentContainerCSSClass" 
+                        [appContentContiner]="appContentContiner" 
+                        [appContentContainerClass]="appContentContainerClass">
+                    </app-content>     
+                    <!-- Assitant -->
+                    <button class="btn btn-icon btn-lg btn-circle btn-dark app-assistant p-8" id="kt_drawer_chat_toggle">
+                        <app-keenicon name="emoji-happy" class="fs-2x">Assistant</app-keenicon>
+                    </button>                                         
+                </div>
+                <!--Footer-->
+                <ng-container *ngIf="appFooterDisplay">
+                    <app-footer 
+                        id="kt_app_footer"
+                        class="app-footer" 
+                        [ngClass]="appFooterCSSClass"
+                        [appFooterContainerCSSClass]="appFooterContainerCSSClass">
+                    </app-footer>
+                </ng-container>                
+            </div>            
+        </div>        
+    </div>
+</div>
+<app-scripts-init></app-scripts-init>
+<!-- Assistant -->
+<app-assistant-chat></app-assistant-chat>

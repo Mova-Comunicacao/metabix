@@ -1,0 +1,37 @@
+<!-- Paginator -->
+<div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-start">
+  <ng-pagination
+    [collectionSize]="paginator.total"
+    [(page)]="paginator.page"
+    [maxSize]="4"
+    [rotate]="true"
+    [boundaryLinks]="true"
+    [pageSize]="paginator.pageSize"
+    (pageChange)="pageChange($event)">
+  </ng-pagination>
+</div>
+<div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-end">
+  <!-- loading -->
+  <div class="d-flex align-items-center" *ngIf="isLoading">
+    <div class="spinner-border spinner-md text-primary" role="status"></div>    
+    <div class="mx-2 text-muted">Loading...</div>
+  </div>   
+  <!-- pageSize -->
+  <label>
+    <select
+      class="form-select form-select-md form-select-solid"
+      [(ngModel)]="paginator.pageSize"
+      (change)="sizeChange()">
+      <option *ngFor="let ps of pageSizes">
+        {{ ps }}
+      </option>
+    </select>
+  </label>
+  <!--
+    <span class="fw-bold text-muted action-total" role="status" aria-live="polite">
+      &nbsp;Showing rows {{ paginator.page }} to
+      &nbsp;{{ paginator.pageSize }} of
+      &nbsp;{{ paginator.total }}
+    </span> 
+  -->
+</div>

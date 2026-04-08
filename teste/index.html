@@ -1,0 +1,237 @@
+
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mockup 3D Interativo — Produto</title>
+    <style>
+      html, body { height: 100%; margin: 0; background: #0b0c10; color: #e6e6e6; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, 'Apple Color Emoji', 'Segoe UI Emoji'; }
+      #app { position: fixed; inset: 0; display: grid; grid-template-rows: 1fr auto; }
+      #canvas { width: 100%; height: 100%; display: block; }
+      .ui { padding: 10px 14px; display: flex; gap: 10px; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); border-top: 1px solid rgba(255,255,255,0.06); }
+      .left, .right { display: flex; gap: 10px; align-items: center; }
+      button, input[type="range"] {
+        -webkit-appearance: none; appearance: none;
+        background: #1b1e24; color: #e6e6e6; border: 1px solid #2a2f39;
+        padding: 8px 12px; border-radius: 12px; cursor: pointer; font-weight: 600;
+      }
+      input[type="range"] { width: 180px; padding: 6px; }
+      a.link { color: #9ad0ff; text-decoration: none; }
+      .hint { opacity: .7; font-size: 12px; }
+    </style>
+    
+<script src="https://unpkg.com/three@0.161.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.161.0/examples/js/controls/OrbitControls.js"></script>    
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="canvas"></canvas>
+      <div class="ui">
+        <div class="left">
+          <button id="toggle-rotate">⏸︎ Pausar rotação</button>
+          <label class="hint">Arraste para girar • Scroll para zoom</label>
+        </div>
+        <div class="right">
+          <label class="hint">Altura</label>
+          <input id="height" type="range" min="1.5" max="3.0" step="0.01" value="2.2">
+          <label class="hint">Diâmetro</label>
+          <input id="diameter" type="range" min="1.0" max="2.6" step="0.01" value="1.6">
+        </div>
+      </div>
+    </div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"
+  }
+}
+</script>    
+    <script type="module">
+
+      import * as THREE from 'three';
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+      const canvas = document.getElementById('canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.shadowMap.enabled = true;
+
+      const scene = new THREE.Scene();
+
+      // Camera
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100);
+      camera.position.set(0, 0.9, 3.5);
+
+      // Lights
+      const amb = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(amb);
+      const dir = new THREE.DirectionalLight(0xffffff, 1.2);
+      dir.position.set(2, 4, 3);
+      dir.castShadow = true;
+      scene.add(dir);
+
+      // Subtle floor
+      const floorGeo = new THREE.CircleGeometry(6, 64);
+      const floorMat = new THREE.MeshStandardMaterial({ color: 0x0e1116, roughness: 0.95, metalness: 0.0 });
+      const floor = new THREE.Mesh(floorGeo, floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -1.1;
+      scene.add(floor);
+
+      // Controls
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.enablePan = false;
+      controls.minDistance = 1.5;
+      controls.maxDistance = 6;
+      controls.target.set(0, 0.4, 0);
+
+      // Load front/back images
+      const loader = new THREE.TextureLoader();
+      Promise.all([
+        new Promise((res) => loader.load('./front.png', (t) => res(t))),
+        new Promise((res) => loader.load('./back.png', (t) => res(t))),
+      ]).then(([frontTex, backTex]) => {
+        frontTex.colorSpace = THREE.SRGBColorSpace;
+        backTex.colorSpace = THREE.SRGBColorSpace;
+
+        // Compose both images into a single 2:1 canvas texture (panoramic)
+        const pano = composePanorama(frontTex.image, backTex.image);
+        const panoTex = new THREE.CanvasTexture(pano);
+        panoTex.colorSpace = THREE.SRGBColorSpace;
+        panoTex.wrapS = THREE.RepeatWrapping;
+        panoTex.wrapT = THREE.ClampToEdgeWrapping;
+
+        // Cylinder (approximate product)
+        const H = parseFloat(document.getElementById('height').value);
+        const D = parseFloat(document.getElementById('diameter').value);
+
+        const cyl = makeCylinder(D, H, panoTex);
+        scene.add(cyl);
+
+        // UI
+        const toggleBtn = document.getElementById('toggle-rotate');
+        let spinning = true;
+        toggleBtn.addEventListener('click', () => {
+          spinning = !spinning;
+          toggleBtn.textContent = spinning ? '⏸︎ Pausar rotação' : '▶︎ Retomar rotação';
+        });
+
+        function resize() {
+          const w = window.innerWidth, h = window.innerHeight;
+          renderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        window.addEventListener('resize', resize);
+
+        // Sliders for quick proportion tweaks
+        const heightEl = document.getElementById('height');
+        const diamEl = document.getElementById('diameter');
+        function updateGeom() {
+          const H2 = parseFloat(heightEl.value);
+          const D2 = parseFloat(diamEl.value);
+          const newCyl = makeCylinder(D2, H2, panoTex);
+          cyl.geometry.dispose();
+          cyl.geometry = newCyl.geometry;
+          cyl.position.y = newCyl.position.y;
+        }
+        heightEl.addEventListener('input', updateGeom);
+        diamEl.addEventListener('input', updateGeom);
+
+        // Animate
+        const clock = new THREE.Clock();
+        function tick() {
+          const dt = clock.getDelta();
+          controls.update();
+          if (spinning) cyl.rotation.y += dt * 0.6;
+          renderer.render(scene, camera);
+          requestAnimationFrame(tick);
+        }
+        tick();
+      });
+
+      // Build the cylinder mesh
+      function makeCylinder(diameter, height, texture) {
+        const radius = diameter / 2;
+        const radialSegments = 256;
+        const heightSegments = 2;
+
+        const geo = new THREE.CylinderGeometry(radius * 0.9, radius, height, radialSegments, heightSegments, true);
+        // Adjust UVs so the equirect-like pano maps correctly
+        geo.computeBoundingBox();
+        const uvs = geo.attributes.uv;
+        for (let i = 0; i < uvs.count; i++) {
+          const u = uvs.getX(i);
+          const v = uvs.getY(i);
+          // Keep as-is; our panorama already places front/back at 0°/180°
+          uvs.setXY(i, u, v);
+        }
+
+        const mat = new THREE.MeshStandardMaterial({
+          map: texture,
+          roughness: 0.55,
+          metalness: 0.0,
+          side: THREE.DoubleSide,
+        });
+
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.position.y = height * 0.0; // centered
+        return mesh;
+      }
+
+      // Compose a panoramic texture: right half = FRONT, left half = BACK.
+      // Each image is centered and "cover-fitted" into its half.
+      function composePanorama(frontImg, backImg) {
+        const W = 4096, H = 2048;
+        const half = W / 2;
+
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const ctx = c.getContext('2d');
+
+        // Optional transparent background
+        ctx.clearRect(0, 0, W, H);
+
+        // Helper to draw image cover-fit into a target rect
+        function drawCover(img, x, y, w, h) {
+          const ir = img.width / img.height;
+          const tr = w / h;
+          let dw, dh, dx, dy;
+          if (ir > tr) {
+            // image is wider -> fit by height
+            dh = h;
+            dw = h * ir;
+            dx = x + (w - dw) / 2;
+            dy = y;
+          } else {
+            // image is taller -> fit by width
+            dw = w;
+            dh = w / ir;
+            dx = x;
+            dy = y + (h - dh) / 2;
+          }
+          ctx.drawImage(img, dx, dy, dw, dh);
+        }
+
+        // Left half -> BACK (so it lands at 180°)
+        drawCover(backImg, 0, 0, half, H);
+        // Right half -> FRONT (so it lands at 0°)
+        drawCover(frontImg, half, 0, half, H);
+
+        // Slight blur at seam (optional — commented out)
+        // ...
+
+        return c;
+      }
+    </script>
+  </body>
+</html>

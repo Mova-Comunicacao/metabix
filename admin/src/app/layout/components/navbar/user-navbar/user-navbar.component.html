@@ -1,0 +1,105 @@
+<ng-container *ngIf="staff">
+    <div class="menu-item px-3">
+        <div class="menu-content d-flex align-items-center px-3">
+            <div class="symbol symbol-50px me-5">
+                <img *ngIf="staff.avatar" [src]="staff.avatar" [alt]="staff.firstname">   
+                <span 
+                    class="symbol-label text-primary fw-bold fs-4"
+                    *ngIf="!staff.avatar || staff.avatar === null">
+                    {{ staff.firstname[0] }}
+                </span>		                         
+            </div>
+    
+            <div class="d-flex flex-column">
+                <span class="badge badge-light-success bg-transparent fw-bolder fs-8 px-0 py-1">
+                    <ng-container *ngIf="staff.role == 0">{{ 'profile.formRoleAdmin' | translate }}</ng-container>
+                    <ng-container *ngIf="staff.role == 1">{{ 'profile.formRoleSupereditor' | translate }}</ng-container>
+                    <ng-container *ngIf="staff.role == 2">{{ 'profile.formRoleSupervisor' | translate }}</ng-container>  
+                </span>
+                <div class="fw-bolder d-flex align-items-center fs-5">
+                    {{ staff.firstname }} {{ staff.lastname }}
+                </div>
+                <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
+                    {{ staff.email }}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="separator my-2"></div>
+    <div class="menu-item px-5">
+        <a [routerLink]="['/profile'] | localize" routerLinkActive="active" class="menu-link px-5">
+            {{ 'nav.myProfileNav' | translate }}
+        </a>
+    </div>    
+    <div class="menu-item px-5 my-1">
+        <a [routerLink]="['/admins'] | localize" routerLinkActive="active" class="menu-link px-5">
+            {{ 'nav.adminNav' | translate }}
+        </a>
+    </div>    
+    <div class="menu-item px-5 my-1">
+        <a [routerLink]="['']" routerLinkActive="active" class="menu-link px-5">
+          Account Settings
+        </a>
+    </div>
+    <div class="separator my-2"></div>
+    <div 
+        class="menu-item px-5"
+        data-kt-menu-trigger="hover"
+        data-kt-menu-placement="left-start"
+        data-kt-menu-flip="bottom">
+        <a class="menu-link px-5 cursor-pointer">
+            <span class="menu-title position-relative">
+                {{ 'lang.language' | translate }}
+                <ng-container *ngIf="getLang">
+                    <span
+                        class="
+                        fs-8
+                        rounded
+                        bg-light
+                        px-3
+                        py-2
+                        position-absolute
+                        translate-middle-y
+                        top-50
+                        end-0">
+                        {{ getLang.name }}{{ " " }}
+                        <img [src]="getFlag?.flag" [alt]="getLang.name" class="w-15px h-15px rounded-1 ms-2" />
+                    </span>
+                </ng-container>
+            </span>
+        </a>
+        <div class="menu-sub menu-sub-dropdown w-175px py-4">
+            <form [formGroup]="formGroup">
+                @for(lang of (languageService.language$ | async); track lang.name) {
+                    <div class="menu-item px-3 cursor-pointer">
+                        <input 
+                             type="radio"
+                             formControlName="active_language"
+                             [value]="lang.language" 
+                             [id]="lang.language"
+                             class="btn-check"
+                        />
+                        <label 
+                            class="menu-link d-flex flex-stack text-start p-6"
+                            [ngClass]="{'active': currentLang === lang.language}"
+                            [for]="lang.language">
+                            <div class="d-flex align-items-center me-2">
+                                <span class="symbol symbol-20px me-4">
+                                    <img class="rounded-1" [src]="lang.flag" [alt]="lang.name" />
+                                </span>
+                                <ng-container *ngIf="lang.language === 'portuguese'">{{ 'lang.portuguese' | translate }}</ng-container>
+                                <ng-container *ngIf="lang.language === 'english'">{{ 'lang.english' | translate }}</ng-container>
+                                <ng-container *ngIf="lang.language === 'spanish'">{{ 'lang.spanish' | translate }}</ng-container>                                                                                    
+                            </div>
+                        </label>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>    
+    <div class="menu-item px-5">
+        <a (click)="logout()" class="menu-link px-5 cursor-pointer"> 
+            {{ 'btn.logoutBtn' | translate }}
+        </a>
+    </div>    
+</ng-container>

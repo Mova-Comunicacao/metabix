@@ -1,0 +1,18 @@
+<ng-container *ngIf="isActive">
+  <ng-container *ngIf="activeDirection === 'asc'">
+    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr081.svg'"
+      class="svg-icon svg-icon-6 svg-icon-primary ms-1">
+    </span>
+  </ng-container>
+  <ng-container *ngIf="activeDirection === 'desc'">
+    <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr082.svg'"
+      class="svg-icon svg-icon-6 svg-icon-primary ms-1">
+  </span>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!isActive">
+  <span [inlineSVG]="'./assets/media/icons/duotune/general/gen063.svg'"
+    class="svg-icon svg-icon-6 svg-icon-primary ms-1 svg-icon-sort">
+  </span>
+</ng-container>

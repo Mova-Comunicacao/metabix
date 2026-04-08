@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <div class="modal-title h4">{{ 'title.statusUpdateTitle' | translate }}</div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>  
+  </div>
+  <div 
+    class="modal-body cursor-default"
+    [ngClass]="{'overlay overlay-block': isLoading}">
+    <ng-container *ngIf="isLoading">
+      <div class="overlay-layer bg-dark bg-opacity-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>   
+    </ng-container>   
+  
+    <div class="table-responsive angular-bootstrap-table">
+      <table class="table table-head-custom align-middle table-row-dashed fs-6 gy-5 overflow-hidden">
+        <thead>
+          <tr class="text-start text-muted fw-bolder text-uppercase fs-7 gs-0">
+            <th>#</th>
+            <th>{{ 'table.tab_name' | translate }}</th>
+            <th>{{ 'table.tab_status' | translate }}</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let post of posts">
+            <td>{{post.id}}</td>
+            <td>{{post.name}}</td>
+            <td>
+                <span class="badge py-3 px-4 fs-7" 
+                    [class.badge-light-success]="post.active == 1"
+                    [class.badge-light-danger]="post.active == 0">
+                    <ng-container *ngIf="post.active == 1">{{ 'form.statusActiveField' | translate }}</ng-container>
+                    <ng-container *ngIf="post.active == 0">{{ 'form.statusDeactiveField' | translate }}</ng-container>
+                </span>  
+            </td>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<div class="form modal-footer">
+    <div class="form-group me-2">
+        <select class="form-select form-select-solid form-select-md" [(ngModel)]="active" name="active">
+          <option value="0">{{ 'form.statusActiveField' | translate }}</option>
+          <option value="1">{{ 'form.statusDeactiveField' | translate }}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-light btn-elevate fw-bolder me-3" (click)="modal.dismiss()">
+          {{ 'btn.cancelBtn' | translate }}
+        </button>
+        <button type="button" class="btn btn-primary btn-elevate fw-bolder" (click)="updatePostStatus()">
+          {{ 'btn.updateBtn' | translate }}
+        </button>
+    </div>
+</div>

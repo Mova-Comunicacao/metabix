@@ -1,0 +1,113 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">
+        {{ 'title.propertyDetailsH3' | translate }}
+      	<span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+    </h3>
+    <div class="d-flex flex-wrap my-2">
+        <div class="me-4">
+        </div>
+        <button
+            type="button"
+            class="btn btn-primary fw-bolder"
+            (click)="create()">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>        
+    </div>    
+</div>
+<div class="card mb-5 mb-xxl-8">
+	<div class="card-header border-0 pt-5">
+		<div class="card-title">
+			<h3 class="card-label fw-bolder fs-3 mb-1">{{ 'nav.slideNav' | translate }}</h3>
+		</div>
+		<div class="card-toolbar"></div>
+	</div>
+	<div class="card-body" [ngClass]="isLoading ? 'overlay overlay-block' : ''">
+		<!--Overlay Layer-->
+		<ng-container *ngIf="isLoading">
+			<div class="overlay-layer bg-dark bg-opacity-5">
+				<div class="spinner-border text-primary" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		</ng-container>		
+		<div class="table-responsive angular-bootstrap-table">
+			<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4 draggable no-footer">
+				<thead>
+					<tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+						<th>#</th>
+						<th>{{ 'table.tab_name' | translate }}</th>   
+						<th>{{ 'table.tab_description' | translate }}</th> 
+						<th>{{ 'table.tab_createdBy' | translate }}</th> 
+						<th>{{ 'table.tab_lastUpdated' | translate }}</th>            
+						<th>{{ 'table.tab_status' | translate }}</th>                     
+						<th class="text-end"></th>   
+					</tr>                  
+				</thead>
+				<tbody
+					cdkDropList
+					[cdkDropListData]="slideService.items$ | async"
+					[cdkDropListOrientation]="'vertical'"
+					(cdkDropListDropped)="drop($event)">
+					<tr *ngFor="let slide of (slideService.items$ | async)" cdkDrag>
+						<td>{{ slide.id }}</td>
+						<td class="datatable-cell">
+							<div class="d-flex align-items-center">															
+								<div class="">									
+									<div class="text-dark-75 fw-bold line-height-sm">
+											{{ slide.name | truncatetext:25 }}
+									</div>	
+									<a class="text-muted fw-bold text-hover-primary"></a>								
+								</div>
+							</div>                        
+						</td>              
+						<td [innerHtml]="slide.description"></td>   
+						<td class="datatable-cell">
+							<div class="fw-bold text-muted">{{ slide.staff?.fullname }}</div>
+						</td>
+						<td class="datatable-cell">
+							<div class="fw-bolder text-primary mb-0">{{ slide.date | datelocale }}</div>
+						</td>             
+						<td>
+							<div class="form-check form-switch form-check-custom form-check-light form-check-solid">
+								<input
+									type="checkbox"
+									class="form-check-input w-40px h-25px"
+									[value]="slide.id"
+									(change)="changeStatus($event)"
+									[checked]="slide.active == 1 ? true : false"
+								/>
+								<label class="form-check-label" htmlFor="slackswitch"></label>
+							</div>				                               
+						</td>
+						<td class="datatable-cell">      
+							<div class="d-flex justify-content-end flex-shrink-0">     
+								<a
+									title="Edit"
+									class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mx-3"
+									[routerLink]="['edit/', slide.id] | localize">
+									<span
+										[inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+										class="svg-icon svg-icon-3">
+									</span>
+								</a>
+								<a
+									title="Delete"
+									class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+									(click)="delete(slide.id)">
+									<span
+										[inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+										class="svg-icon svg-icon-3">
+									</span>
+								</a>
+							</div>
+						</td>             
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

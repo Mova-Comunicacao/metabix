@@ -1,0 +1,396 @@
+<div class="d-flex flex-column flex-lg-row">
+    <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-body">
+                <ng-container *ngIf="staff">
+                    <div class="d-flex flex-center flex-column py-5">
+                        <!--Avatar-->
+                        <div class="symbol symbol-100px symbol-circle mb-7">
+                            <img *ngIf="!staff.avatar" [src]="'./assets/media/avatars/blank.png'" [alt]="staff.firstname">
+                            <img *ngIf="staff.avatar" [src]="staff.avatar" [alt]="staff.firstname">
+                        </div>
+                        <!--Name-->
+                        <a class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">
+                            {{ staff.firstname }}
+                            {{ staff.lastname }}
+                        </a>
+                        <!--Position-->
+                        <div class="mb-9">
+                            <!--Badge-->
+                            <div 
+                            class="badge badge-lg badge-light-primary d-inline">
+                                <ng-container *ngIf="staff?.role.roleid == 1">{{ 'profile.formTypeAdmin' | translate }}</ng-container>
+                                <ng-container *ngIf="staff?.role.roleid == 2">{{ 'profile.formTypeSupereditor' | translate }}</ng-container>
+                                <ng-container *ngIf="staff?.role.roleid == 3">{{ 'profile.formTypeSupervisor' | translate }}</ng-container>                                
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="d-flex flex-stack fs-4 py-3">
+                        <div class="fw-bold">{{ 'profile.personalInfoModalTitle' | translate }}</div>
+                    </div>
+                    <div class="separator"></div>
+                    <div id="kt_user_view_details">
+                        <div class="pb-5 fs-6">
+                            <!--Details item-->
+                            <div class="fw-bold mt-5">{{ 'form.usersFirstNameField' | translate }} ID</div>
+                            <div class="text-gray-600">ID-{{ staff.staffid }}</div>
+                            <!--Details item-->
+                            <div class="fw-bold mt-5">{{ 'form.emailAddressField' | translate }}</div>
+                            <div class="text-gray-600">
+                                <a href="#" class="text-gray-600 text-hover-primary">
+                                    {{ staff.email }}
+                                </a>
+                            </div>
+                            <!--Details item-->
+                            <div class="fw-bold mt-5">{{ 'form.addressField' | translate }}</div>
+                            <div class="text-gray-600">
+                                {{ staff.address }}
+                            </div>
+                            <!--Details item-->
+                            <div class="fw-bold mt-5">{{ 'form.languageField' | translate }}</div>
+                            <div class="text-gray-600">
+                                <ng-container *ngIf="staff.default_language === 'portuguese'">{{ 'form.optionPortuguese' | translate }}</ng-container>
+                                <ng-container *ngIf="staff.default_language === 'english'">{{ 'form.optionEnglish' | translate }}</ng-container>                                                           
+                            </div>
+                            <!--Details item-->
+                            <!-- 
+                                <div class="fw-bold mt-5">Last Login</div>
+                                <div class="text-gray-600">10 Nov 2022, 2:40 pm</div>
+                            -->
+                        </div>
+                    </div>
+                </ng-container>              
+            </div>
+        </div>
+    </div>
+    <div class="flex-lg-row-fluid ms-lg-15">
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8" role="tablist">
+            <li class="nav-item cursor-pointer" (click)="changeTab(tabs.PROFILE_TAB)">
+                <a
+                    class="nav-link text-active-primary pb-4"
+                    data-toggle="tab"
+                    role="tab"
+                    [attr.aria-selected]="activeTabId === tabs.PROFILE_TAB"
+                    [class.active]="activeTabId === tabs.PROFILE_TAB">
+                    <span class="nav-text fw-bolder">{{ 'profile.personalInfoModalTitle' | translate }}</span>
+                </a>
+            </li>
+            <li class="nav-item cursor-pointer" (click)="changeTab(tabs.ACCOUNT_TAB)">
+                <a
+                    class="nav-link text-active-primary pb-4"
+                    data-toggle="tab"
+                    role="button"
+                    [attr.aria-selected]="activeTabId === tabs.ACCOUNT_TAB"
+                    [class.active]="activeTabId === tabs.ACCOUNT_TAB">
+                    <span class="nav-text fw-bolder">{{ 'profile.updateEmailModalTitle' | translate }}</span>
+                </a>
+            </li> 
+            <li class="nav-item cursor-pointer" (click)="changeTab(tabs.CHANGE_PASSWORD_TAB)">
+                <a
+                    class="nav-link text-active-primary pb-4"
+                    data-toggle="tab"
+                    role="button"
+                    [attr.aria-selected]="activeTabId === tabs.CHANGE_PASSWORD_TAB"
+                    [class.active]="activeTabId === tabs.CHANGE_PASSWORD_TAB">
+                    <span class="nav-text fw-bolder">{{ 'profile.updatePasswordModalTitle' | translate }}</span>
+                </a>
+            </li>  
+            <li class="nav-item cursor-pointer" (click)="changeTab(tabs.PERMISSIONS_TAB)">
+                <a
+                    class="nav-link text-active-primary pb-4"
+                    data-toggle="tab"
+                    role="button"
+                    [attr.aria-selected]="activeTabId === tabs.PERMISSIONS_TAB"
+                    [class.active]="activeTabId === tabs.PERMISSIONS_TAB">
+                    <span class="nav-text fw-bolder">{{ 'profile.permissionsTitle' | translate }}</span>
+                </a>
+            </li>                
+            <li class="nav-item ms-auto">
+                <button type="button" class="btn btn-primary fw-bolder" 
+                    [routerLink]="['/admins'] | localize">
+                    <i class="fa fa-arrow-left icon-sm"></i>{{ 'btn.backBtn' | translate }}
+                </button>                       
+            </li>                                      
+        </ul>             
+        <div class="card card-flush mb-6 mb-xl-9">
+            <ng-container *ngIf="staff">
+                <div class="card-header card-header-tabs-line nav-tabs-line-3x">
+                    <!--Toolbar-->
+                    <div class="card-toolbar">
+                        <div class="card-title fs-3 fw-bolder">
+                            {{ 'profile.formTitle' | translate }}
+                        </div>   
+                    </div>      
+                </div>  
+                <div class="form" id="kt_form">
+                    <!--Body-->
+                    <div 
+                        class="card-body p-9"
+                        [ngClass]="{'overlay overlay-block': isLoading}">   
+                        <ng-container *ngIf="isLoading">
+                            <div class="overlay-layer bg-dark bg-opacity-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>            
+                        </ng-container>                           
+                        <ng-container *ngIf="activeTabId === tabs.PROFILE_TAB">
+                            <div class="tab-content">
+                                <form action="" [formGroup]="formGroup">
+                                    <div class="row">
+                                        <label class="col-3"></label>
+                                        <div class="col-9">
+                                            <h5 class="fw-bold mb-6">{{ 'profile.profileAvatarTitle' | translate }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-7">
+                                        <label class="col-form-label col-3 text-lg-right text-left">Avatar</label>
+                                        <div class="col-9">                                          
+                                            <div 
+                                                data-kt-image-input="true" 
+                                                class="image-input image-input-outline" 
+                                                [class.image-input-empty]="!staff.avatar"
+                                                [style.backgroundImage]="getAvatar()">
+                                                <!--Preview existing avatar-->
+                                                <div 
+                                                    class="image-input-wrapper w-125px h-125px bgi-position-center" 
+                                                    [style.backgroundImage]="getAvatar()">
+                                                </div>
+                                                <!--Label-->
+                                                <label 
+                                                class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow" 
+                                                [title]="'profile.selectNewAvatar' | translate" 
+                                                data-kt-image-input-action="change" 
+                                                [ngbTooltip]="'profile.selectNewAvatar' | translate">
+                                                <i class="fa fa-pencil fs-7"></i>
+                                                <!--Inputs-->
+                                                <input type="file" id="avatar" name="avatar" (change)="onSelectedAvatar($event)">
+                                            </label>
+                                            <!--Cancel-->
+                                            <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow" 
+                                                data-kt-image-input-action="cancel" 
+                                                [ngbTooltip]="'profile.removeAvatarBtn' | translate">
+                                                <i class="fa fa-close fs-6"></i>
+                                            </span>
+                                            <!--Remove-->
+                                            <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow" 
+                                                title="" 
+                                                data-kt-image-input-action="remove" 
+                                                [ngbTooltip]="'profile.removeAvatarBtn' | translate"
+                                                (click)="deleteAvatar()">
+                                                <i class="fa fa-close fs-6"></i>
+                                            </span>
+                                            </div>	                                
+                                            <br />
+                                            <ng-container *ngIf="settings.settings$ | async as set">
+                                                <div class="text-muted fs-7" >{{ 'form.allowedImagesTypesQuip' | translate }} {{ set.avatar_types }}</div>   
+                                            </ng-container>
+                                        </div>
+                                    </div>    
+                                    <div class="form-group row mb-7">
+                                        <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.firstNameField' | translate }}</label>
+                                        <div class="col-9">
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            type="text"
+                                            formControlName="firstname"
+                                            [class.is-invalid]="isControlInvalid('firstname')"
+                                            [class.is-valid]="isControlValid('firstname')"
+                                        />
+                                        </div>
+                                    </div>   
+                                    <div class="form-group row mb-7">
+                                        <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.lastNameField' | translate }}</label>
+                                        <div class="col-9">
+                                        <input class="form-control form-control-lg form-control-solid"
+                                            type="text"
+                                            formControlName="lastname"
+                                            [class.is-invalid]="isControlInvalid('lastname')"
+                                            [class.is-valid]="isControlValid('lastname')"
+                                        />
+                                        </div>
+                                    </div>  
+                                    <div class="row">
+                                    <label class="col-xl-3 col-lg-3"></label>
+                                    <div class="col-9">
+                                        <h5 class="fw-bold mt-10 mb-6">{{ 'profile.formUpdateInfo' | translate }}</h5>
+                                    </div>
+                                    </div>
+                                    <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.phoneField' | translate }}</label>
+                                    <div class="col-9">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-phone"></i>
+                                            </span>
+                                        <input type="text"
+                                            class="form-control form-control-lg form-control-solid" 
+                                            [placeholder]="'form.phoneField' | translate"
+                                            formControlName="phone"
+                                            [class.is-invalid]="isControlInvalid('phone')"
+                                            [class.is-valid]="isControlValid('phone')"
+                                        />
+                                        </div>
+                                        <span class="form-text text-muted">{{ 'profile.accountPhoneHelper' | translate }}</span>
+                                    </div>
+                                    </div> 
+                                    <ng-container *ngIf="!showChangeEmailForm">
+                                        <div class="d-flex flex-wrap align-items-center mb-10">
+                                        <div id="kt_signin_password" class="false">
+                                            <div class="fs-6 fw-bolder mb-1">{{ 'form.emailAddressField' | translate }}</div>
+                                            <div class="fw-bold text-gray-600">{{ staff.email }}</div>
+                                        </div>
+                                        <div id="kt_signin_password_button" class="ms-auto false">
+                                            <button
+                                            class="btn btn-light btn-active-light-primary"
+                                            (click)="toggleEmailForm(true)">
+                                            {{ 'profile.formUpdateEmail' | translate }}
+                                            </button>
+                                        </div>
+                                        </div>
+                                    </ng-container>							
+                                    <ng-container *ngIf="showChangeEmailForm">                        
+                                        <div class="form-group row mb-7">
+                                            <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.emailAddressField' | translate }}</label>
+                                            <div class="col-9">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <span class="input-group-text">
+                                                <i class="fa fa-at"></i>
+                                                </span>
+                                                <input 
+                                                    type="email"
+                                                    class="form-control input-group-lg input-group-solid"
+                                                    [placeholder]="'form.emailAddressField' | translate"
+                                                    formControlName="email"
+                                                    [class.is-invalid]="isControlInvalid('email')"
+                                                    [class.is-valid]="isControlValid('email')"                                     
+                                                />
+                                            </div>
+                                            <span class="form-text text-muted">{{ 'profile.accountEmailHelper' | translate }}</span>
+                                            </div>
+                                        </div>   
+                                    </ng-container>
+                                    <div class="form-group row mb-7">
+                                        <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.propertyAddressField' | translate }}</label>
+                                        <div class="col-9">
+                                            <div class="input-group input-group-lg input-group-solid">
+                                                <textarea type="text"
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    [placeholder]="'form.propertyAddressField' | translate"
+                                                    formControlName="address"
+                                                    [class.is-invalid]="isControlInvalid('address')"
+                                                    [class.is-valid]="isControlValid('address')">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </form>                                                  
+                            </div> 
+                        </ng-container>
+                        <ng-container *ngIf="activeTabId === tabs.ACCOUNT_TAB && staff">
+                            <div class="tab-content" [formGroup]="formGroup">
+                                <div class="row">
+                                    <label class="col-3"></label>
+                                    <div class="col-9">
+                                        <h5 class="fw-bold mb-6">{{ 'profile.formTitle' | translate }}</h5>
+                                    </div>
+                                </div>
+                                <!--Form Group-->
+                                <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">Username</label>
+                                    <div class="col-9">
+                                        <div>
+                                            <input class="form-control form-control-lg form-control-solid" 
+                                                type="text" 
+                                                formControlName="username"
+                                                [class.is-invalid]="isControlInvalid('username')" 
+                                                [class.is-valid]="isControlValid('username')" 
+                                                />
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.emailAddressField' | translate }}</label>
+                                    <div class="col-9">
+                                    <div class="input-group input-group-lg input-group-solid">
+                                        <span class="input-group-text">
+                                        <i class="fa fa-at"></i>
+                                        </span>
+                                        <input type="email" class="form-control form-control-lg form-control-solid" 
+                                            [placeholder]="'form.emailAddressField' | translate"
+                                            formControlName="email" 
+                                            [class.is-invalid]="isControlInvalid('email')"
+                                            [class.is-valid]="isControlValid('email')" 
+                                        />
+                                    </div>
+                                    <span class="form-text text-muted">{{ 'profile.formEmailInfo' | translate }}</span>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                    <label class="col-xl-3 col-lg-3"></label>
+                                    <div class="col-9">
+                                    <h5 class="fw-bold mt-10 mb-6">{{ 'profile.formChangeTypeTitle' | translate }}</h5>
+                                    </div>
+                                </div>                
+                                <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">{{ 'profile.formType' | translate }}</label>
+                                    <div class="col-9">
+                                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="role">
+                                            <option value="0">{{ 'profile.formTypeAdmin' | translate }}</option>
+                                            <option value="1">{{ 'profile.formTypeSupereditor' | translate }}</option>
+                                            <option value="2">{{ 'profile.formTypeSupervisor' | translate }}</option>                          
+                                        </select>   
+                                    </div>
+                                </div> 
+                                <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">{{ 'form.languageField' | translate }}</label>
+                                    <div class="col-9">
+                                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="default_language">
+                                            <option value="portuguese">{{ 'form.optionPortuguese' | translate }}</option>
+                                            <option value="english">{{ 'form.optionEnglish' | translate }}</option>
+                                        </select>  
+                                        <span class="form-text text-muted">{{ 'form.localizationHelper' | translate }}</span> 
+                                    </div>    
+                                </div> 
+                                <div class="form-group row mb-7">
+                                    <label class="col-form-label col-3 text-lg-right text-left">{{ 'profile.formTypeSupereditor' | translate }}</label>
+                                    <div class="col-9">
+                                        <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="admin">
+                                            <option value="0">{{ 'profile.formYes' | translate }}</option>
+                                            <option value="1">{{ 'profile.formNo' | translate }}</option>                                    
+                                        </select>  
+                                    </div>    
+                                </div>                         
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="activeTabId === tabs.CHANGE_PASSWORD_TAB && staff">
+                            <div class="tab-content">
+                                <app-password [staff]="staff"></app-password>
+                            </div>                   
+                        </ng-container>   
+                        <ng-container *ngIf="activeTabId === tabs.PERMISSIONS_TAB && staff">
+                            <div class="tab-content">   
+                                <app-permissions [staff]="staff" (permissionsValues)="permissionsValues($event)" (rolesValues)="rolesValues($event)"></app-permissions>
+                            </div>
+                        </ng-container>                                             
+                    </div>        
+                    <ng-container *ngIf="activeTabId !== tabs.CHANGE_PASSWORD_TAB">
+                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                            <button type="submit" [disabled]="formGroup.invalid" class="btn bt-lg btn-light-primary fw-bolder" (click)="save()">
+                                <ng-container *ngIf="!isLoading">{{ 'btn.saveBtn' | translate }}</ng-container>
+                                <!--Loading -->
+                                <ng-container *ngIf="isLoading">   
+                                    <span class="indicator-progress" [style.display]="'block'">
+                                        Loading...{{ " " }}
+                                        <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"
+                                        ></span>
+                                    </span>                        
+                                </ng-container>                            
+                            </button>
+                        </div>         
+                    </ng-container>         
+                </div>     
+            </ng-container>
+        </div>
+    </div>
+</div>

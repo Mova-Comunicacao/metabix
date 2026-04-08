@@ -1,0 +1,217 @@
+<div 
+    class="card card-flush"
+    [ngClass]="{'overlay overlay-block': isLoading}"> 
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>       
+    <ng-container *ngIf="settingService.settings$ | async as settings">
+        <div class="card-header">
+            <div class="card-title fs-3 fw-bolder">{{ 'settings.companyInfoTitle' | translate }}</div>
+        </div>      
+        <div class="card-body p-9">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">{{ 'form.languageField' | translate }}</label>
+                    <div class="col-lg-9">
+                        <select 
+                            class="form-select form-select-lg fw-bold" 
+                            formControlName="active_language">
+                            <ng-container *ngFor="let lang of languageService.language$ | async">
+                                <option [value]="lang.language">{{ lang.name }}</option>
+                            </ng-container>
+                        </select> 
+                        <span class="form-text text-muted">{{ 'form.localizationHelper' | translate }}</span> 
+                    </div>    
+                </div>                      
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.installUrlField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="main_domain"
+                            [class.is-invalid]="isControlInvalid('main_domain')"
+                            [class.is-valid]="isControlValid('main_domain')"
+                        />  
+                        <span class="form-text text-muted">{{ 'settings.installUrlHelper' | translate }}</span>
+                    </div>
+                </div>
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.siteNameField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="company_name"
+                            [class.is-invalid]="isControlInvalid('company_name')"
+                            [class.is-valid]="isControlValid('company_name')"
+                        />   
+                        <span class="form-text text-muted">{{ 'settings.siteNameHelper' | translate }}</span>
+                    </div>
+                </div>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.businessNameField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="business_name"
+                            [class.is-invalid]="isControlInvalid('business_name')"
+                            [class.is-valid]="isControlValid('business_name')"
+                        /> 
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>    
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.businessEmailField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">
+                                <i class="fa fa-at"></i>
+                            </span>                        
+                            <input class="form-control form-control-lg"
+                                type="email"
+                                formControlName="company_email"
+                                [class.is-invalid]="isControlInvalid('company_email')"
+                                [class.is-valid]="isControlValid('company_email')"
+                            />   
+                        </div>
+                        <span class="form-text text-muted">{{ 'settings.businessEmailHelper' | translate }}</span>
+                        <div class="valid-feedback" *ngIf="isControlValid('company_email')">Email was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'company_email')">{{ 'settings.businessEmalMsg' | translate }}</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('email', 'company_email')">{{ 'settings.adminEmailReq' | translate }}</div>                                                                     
+                    </div>
+                </div>                             
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.businessPhoneField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">
+                                <i class="fa fa-phone"></i>
+                            </span>               
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="company_phonenumber"
+                                [class.is-invalid]="isControlInvalid('company_phonenumber')"
+                                [class.is-valid]="isControlValid('company_phonenumber')"
+                            />      
+                        </div>                      
+                        <span class="form-text text-muted">{{ 'settings.contactPhoneHelper' | translate }}</span>
+                    </div>
+                </div> 
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                    {{ 'settings.contactPhoneField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>                           
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="company_alt_phonenumber"
+                                [class.is-invalid]="isControlInvalid('company_alt_phonenumber')"
+                                [class.is-valid]="isControlValid('company_alt_phonenumber')"
+                            />  
+                        </div>                          
+                    </div>
+                </div>     
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                    CEP
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="company_postal_code"
+                            [class.is-invalid]="isControlInvalid('company_postal_code')"
+                            [class.is-valid]="isControlValid('company_postal_code')"
+                        /> 
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>                      
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    City
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="company_city"
+                            [class.is-invalid]="isControlInvalid('company_city')"
+                            [class.is-valid]="isControlValid('company_city')"
+                        /> 
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>                                              
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.businessAddressField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control form-control-lg"
+                            type="text"
+                            formControlName="company_address"
+                            [class.is-invalid]="isControlInvalid('company_address')"
+                            [class.is-valid]="isControlValid('company_address')">
+                        </textarea>    
+                        <span class="form-text text-muted">{{ 'settings.businessAddressHelper' | translate }}</span>
+                    </div>
+                </div>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        {{ 'settings.descField' | translate }}
+                    </label>
+                    <div class="col-lg-9">  
+                        <quill-editor
+                            name="company_description"
+                            formControlName="company_description"
+                            [class.is-invalid]="isControlInvalid('company_description')"
+                            [class.is-valid]="isControlValid('company_description')"                            
+                            class="w-100">
+                            <div quill-editor-toolbar>                                      
+                                <span class="ql-formats">
+                                    <button class="ql-bold" [title]="'Bold'"></button>
+                                    <button class="ql-italic" [title]="'Italic'"></button>
+                                    <button class="ql-underline" [title]="'Undeline'"></button>
+                                </span>                            
+                                <span class="ql-formats">
+                                    <button class="ql-clean" [title]="'Clean'"></button>
+                                </span>
+                            </div>                                
+                        </quill-editor>      
+                    </div>
+                </div>                                                         
+            </form>
+            <p>&nbsp;</p>
+            <div class="card-footer d-flex justify-content-end py-6 px-0" [formGroup]="formGroup">
+                <button type="submit" class="btn btn-light btn-active-light-primary fw-bold me-2">
+                    {{ 'btn.cancelBtn' | translate }}
+                </button>       
+                <button type="submit" (click)="onSubmit()" class="btn btn-primary fw-bolder fs-5 px-4 py-5" [disabled]="formGroup.invalid">
+                    <ng-container *ngIf="isLoading$ | async">
+                      <span class="indicator-progress" [style.display]="'block'">
+                        Loading...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="!(isLoading$ | async)">
+                      <span class="indicator-label">{{ 'btn.saveBtn' | translate }}</span>
+                    </ng-container>
+                </button>                   
+            </div>               
+        </div>
+    </ng-container>
+</div>

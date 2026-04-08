@@ -1,0 +1,34 @@
+<div class="menu-item px-3">
+    <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">
+        {{ 'analytics.othersAnalyzesTitle' | translate }}
+    </div>
+</div>
+<div class="separator mb-3 opacity-75"></div>
+<div class="menu-item px-3">
+    <div class="menu-content fs-7 text-muted fw-semibold px-3 py-2">
+        Metric
+    </div>    
+    <select
+        class="form-select form-select-solid form-select-sm"
+        [(ngModel)]="metrics"
+        (change)="metricChange()">
+        <option *ngFor="let data of metricsData" [value]="data">
+            <ng-container *ngIf="data === 'activeUsers'">{{ 'analytics.activeUsers' | translate }}</ng-container>
+            <ng-container *ngIf="data === 'newUsers'">{{ 'analytics.newUsers' | translate }}</ng-container>
+            <ng-container *ngIf="data === 'sessions'">{{ 'analytics.sessions' | translate }}</ng-container>
+        </option>
+    </select>
+</div>
+<div class="menu-item px-3" *ngIf="dimensionsData">
+    <div class="menu-content fs-7 text-muted fw-semibold px-3 py-2">
+        Dimensions
+    </div>    
+    <select
+        class="form-select form-select-solid form-select-sm"
+        [(ngModel)]="dimensions"
+        (change)="dimensionChange()">
+        <option *ngFor="let report of dimensionsData" [value]="report">
+            {{ report }}
+        </option>
+    </select>
+</div>

@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <div class="modal-title h4">{{ 'title.uploadeadTitle' | translate }}</div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>            
+</div>
+<div 
+    class="modal-body"
+    [ngClass]="isLoading ? 'overlay overlay-block' : ''">
+    <!--Overlay Layer-->
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </ng-container>		      
+    <form action="#" class="form form-label-right" [formGroup]="formGroup" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="row">
+            <label class="col-3"></label>
+            <div class="col-9">
+                <!-- Alert error-->
+                <ng-container *ngIf="hasError">
+                    <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+                        <span 
+                            [inlineSVG]="'./assets/media/icons/duotune/general/gen048.svg'"
+                            class="svg-icon svg-icon-2hx svg-icon-light me-3">
+                        </span>
+                        <!--Wrapper-->
+                        <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                            <!--Title-->
+                            <h4 class="mb-1 text-light">Error</h4>
+                            <!--Content-->
+                            <span>{{ errorMessage }}</span>
+                        </div>                        
+                    </div>
+                </ng-container>                                
+            </div>
+        </div>              
+        <div class="form-group row mb-7">
+            <label class="col-lg-3 form-label">{{ 'form.propertyNameField' | translate }}</label>
+            <div class="col-lg-9">
+                <input 
+                    type="text"
+                    name="subject"
+                    class="form-control form-control-lg" 
+                    [class.is-invalid]="isControlInvalid('subject')"
+                    [class.is-valid]="isControlValid('subject')"                        
+                    formControlName="subject"
+                />
+                <div class="valid-feedback" *ngIf="isControlValid('subject')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                <div class="invalid-feedback" *ngIf="controlHasError('required', 'subject')">{{ 'form.propertyNameReq' | translate }}</div>                    
+            </div>
+        </div>
+        <div class="form-group row mb-7">
+            <label class="col-lg-3 form-label">{{ 'form.uploadField' | translate }}</label>
+            <div class="col-lg-9">
+                <div class="custom-file">
+                    <input class="form-control form-control-lg custom-file-input"
+                        type="file" 
+                        name="file"
+                        id="file"
+                        (change)="onSelectedFile($event)">
+                    <label class="custom-file-label" for="file"></label>
+                </div>     
+                <ng-container *ngIf="settings$ | async as set">
+                    <div class="text-muted fs-7" >{{ 'form.allowedImagesTypesQuip' | translate }} {{ set.site_pic_types }}</div>   
+                </ng-container>             
+                <div class="invalid-feedback" *ngIf="controlHasError('required', 'file')">{{ 'form.propertyfieldMsg' | translate }}</div>                                       
+            </div>
+        </div>           
+    </form>    
+</div>
+<div class="modal-footer" [formGroup]="formGroup">
+    <button type="button" class="btn btn-light btn-elevate" (click)="modal.close()">{{ 'btn.cancelBtn' | translate }}</button>
+    <button type="submit" class="btn btn-primary btn-elevate" (click)="onSubmit()" [disabled]="formGroup.invalid">{{ 'btn.uploadBtn' | translate }}</button>
+</div>    

@@ -1,0 +1,138 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">{{ 'title.propertyDetailsH3' | translate }}</h3>
+    <div class="d-flex flex-wrap my-2">
+        <div class="me-4"></div>
+        <button
+            type="button"
+            class="btn btn-primary fw-bolder"
+            (click)="create()">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>                        
+            {{ 'btn.addBtn' | translate }}
+        </button>        
+    </div>    
+</div>
+<div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-title">
+            <h3 class="card-label fw-bold fs-3 mb-1">{{'nav.categoriesNav' | translate }}</h3>
+        </div>
+        <div class="card-toolbar"></div>
+    </div>
+    <div 
+        class="card-body" 
+        [ngClass]="{'overlay overlay-block': isLoading}">
+        <ng-container *ngIf="isLoading">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>            
+        </ng-container>                
+        <div class="table-responsive">
+            <table
+                class="table align-middle table-row-dashed fs-6 gy-5 no-footer draggable">
+                <thead>
+                    <tr class="text-start text-uppercase text-gray-500 fw-bolder fs-7">
+                        <th class="w-70px text-center sorting">
+                            #
+                            <app-sort-icon
+                                column="order"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>                            
+                        </th>
+                        <th class="min-w-200px sorting">
+                            {{ 'table.tab_name' | translate }}
+                            <app-sort-icon
+                                column="name"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>   
+                        <th class="min-w-100px">
+                            {{ 'table.tab_createdBy' | translate }}
+                        </th>   
+                        <th class="min-w-100px sorting">
+                            {{ 'table.tab_dateCreated' | translate }}
+                            <app-sort-icon
+                                column="date"
+                                [activeColumn]="sorting.column"
+                                [activeDirection]="sorting.direction"
+                                (sort)="sort($event)">
+                            </app-sort-icon>
+                        </th>                         
+                        <th class="text-end">
+                            {{ 'table.tab_action' | translate }}
+                        </th>                        
+                    </tr>
+                </thead>    
+                <tbody
+                    cdkDropList
+                    [cdkDropListOrientation]="'vertical'"
+                    [cdkDropListData]="categories$ | async"
+                    (cdkDropListDropped)="dragDropped($event)">
+                    <tr 
+                        cdkDrag
+                        *ngFor="let category of categories$ | async; index as i" 
+                        class="fw-semibold text-gray-600" >
+                        <td class="text-center">
+                            {{i+1}}
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">								
+                                <div class="symbol symbol-circle symbol-35px me-5">
+                                    <span class="symbol-label" *ngIf="category.file_name" [style.backgroundImage]="'url('+ category.folder + category.file_name +')'"></span>
+                                </div>								
+                                <div class="d-flex justify-content-start flex-column">									
+                                    <div class="text-dark fw-bolder text-hover-primary fs-6">
+                                        <a (click)="edit(category.id)">{{ category.name }}</a>
+                                    </div>									
+                                    <span class="text-muted fs-7 fw-bold" [innerHTML]="category.description"></span>								
+                                </div>
+                            </div>                                                     
+                        </td>   
+                        <td class="fw-bold text-muted">
+                            {{ category.staff?.fullname }}
+                        </td> 
+                        <td class="fw-bold text-primary">
+                            {{ category.date | datelocale }}
+                        </td>                          
+                        <td class="text-end">
+                            <div class="d-flex align-items-center justify-content-end flex-shrink-0">                                          
+                                <a
+                                    title="Edit"
+                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+                                    (click)="edit(category.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                                <a
+                                    title="Delete"
+                                    class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                                    (click)="delete(category.id)">
+                                    <span
+                                        [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                        class="svg-icon svg-icon-3">
+                                    </span>
+                                </a>
+                            </div>
+                        </td>                                                                        
+                    </tr>
+                </tbody>          
+            </table>
+        </div>
+        <app-paginator
+            class="d-flex justify-content-between align-items-center flex-wrap"
+            [paginator]="paginator"
+            [isLoading]="isLoading"
+            (paginate)="paginate($event)">
+        </app-paginator>          
+    </div>
+</div>

@@ -1,0 +1,1 @@
+export { PartnerService } from './partners.service';

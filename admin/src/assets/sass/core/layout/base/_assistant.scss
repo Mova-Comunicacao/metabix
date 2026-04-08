@@ -1,0 +1,16 @@
+//
+// Assistant
+//
+
+// General mode
+.app-assistant { 
+    display: flex;
+    align-items: stretch;
+    position: fixed;
+    bottom: 40px;
+    right: 50px;    
+    background-color: var(--#{$prefix}app-hero-bg-color); 
+    box-shadow: var(--#{$prefix}app-hero-box-shadow); 
+    border-top: var(--#{$prefix}app-hero-border-top); 
+    border-bottom: var(--#{$prefix}app-hero-border-bottom); 
+}

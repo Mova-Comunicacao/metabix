@@ -1,0 +1,29 @@
+:host {
+	// show bootstrap dropdown arrow
+	.dropdown-toggle::after {
+		display: inline-block !important;
+	}
+
+    .custom-day {
+      text-align: center;
+      padding: 0.185rem 0.25rem;
+      display: inline-block;
+      height: 2rem;
+      width: 2rem;
+      font-weight: 600;
+      color: #B5B5C3;
+    }
+    .custom-day.focused {
+      outline: 0 !important;
+      background-color: #056EE9;
+      color: #FFF;
+    }
+    .custom-day.range, .custom-day:hover {
+      background-color: #056EE9;
+      color: #FFF;
+    }
+    .custom-day.faded {
+      background-color: #1B84FF;
+      color: #F9F9F9;
+    }    
+}

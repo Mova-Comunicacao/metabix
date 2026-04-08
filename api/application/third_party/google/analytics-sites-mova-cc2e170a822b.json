@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "analytics-sites-mova",
+  "private_key_id": "cc2e170a822b933b8b2af36e42132b6587b783ed",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1T6aNMVWT9s03\nECvKs4GydLVX4NM2VfG6VyPyYHRAHwf2jdti0cb3ZgWyCliD2rBNsVyXtfLiBBoD\nNzxc/7LyBSnXmU1xpiRkPtpRLq7KNKXy8AOG6ZrLIjrjQX1+5CN0fuyM6KHM1zeb\n/seCAFcctTWojBwtTSG4Jj+KKlCtvz9BlatxBCKpgfP2rKrbXBtLzArICWN4USKA\nr4OMk5CdkGfq4zzoDb7P4ZzHgtnzmN0jEcFhsN5GJ6xmf089p77CjziVspEOwvU8\nwbQmFVIP4JlDeQXR115UFJVP5DBwoy7MmfdUzQHU12EmDfp9rq0QROLYedl6GJDa\nhCIwY9sHAgMBAAECggEABhnC2pntyPDA+BQxgHNkE4NmXYTjqL6qbBxl7mJvUBIo\n8Lf67caSWriyXhPQwOy7ZVix2OIbiXmdSL1F6Pjhk/RJqmt30VX+W3pIyIzLSD8O\nZmbL5UyBOEpBa0eN/E1R/ToO7vpCl3Xfh2wwWTJRvAz6kvCxqN/8qwmQtlO1Bqyw\ncyK42g+SOYoTdmIB7N3On4AajeO8ljLhp/dLCu48Yhcwa2drbU6T0WpWKODFPzKB\nEIdmd7NIUgb6Ndn5cObMeT3roF6hRlfek6dr4Lbck23MtaVf+SwGP0bcWAtIfdeS\ntmkcSXtTxUS8A3PQokm4wJ4DNwXjEqaa429sR2mDIQKBgQDm46BEC984NUojkqiz\nk/JCRFq1gye6DcFjL+zQSxdLAcAUDeXkVg6v0egahjhfQ2PN/DzDoR6ueyjfzw2G\nula8Dy2xHmicZx14GEwg6mGTNKzuHUD7fsWm03YEyWe/M+v2VVZXw3j4MYxc/EWN\nioZ+54j4JmUC4CNYeOdN0y1b+wKBgQDJB66fSzkdq8ZTShsEFJAeM3CyTzrMatKA\nKZO3C1Zn7x4/yxjQKRTiz8CB0MXBNbWGvUzIQVRsVy7/6FscfscQ5HV2ap8kcC/2\nh94czakMRcwZIuzj0WC6GrpFjrBjtMffm4FnJPne+rwbbSLms7qzXEoqdZXjeZbG\nTsT/Wp3jZQKBgCuY+c8/iqPbdCdpbw+RtSIMNDCoFl1McaLgDtB6DWjtaK6gvTMz\niMxsT26Kv6RFXlgr8/FgwCFkQiCYwU4aa3xRRWh3fHtkAS2HMQDaIRihzrGbtoSG\nuJ26ukNHIJ77F+hIzuf9kh8ThBSe0ida6/CUmcl5voMffa0cD1kjsiH3AoGBAJaA\n2tpFbgBpvvRSUcGPR4pkxqWoLYQnIWt0NTPgGBN98O6ftfb6GrnoAd7ul28cL8gt\nZxOx3WuzJevPYI8H1y8ta0d5caXNHAt9EuwLiNk4VCIphKLW+Yy7P+OdfS9YhB9D\ng/DdvPiUTUpXPb7spgVsPdZl7A6+1AOpq1Dl3bkFAoGBAMK037WD8JGdEjo5SFpZ\nb2aOEbclTd1QB0pNYPWAndiQEVUwLahplSM1mzH0nkKXh7ajYgn6LE6AmOt4YyQk\ng8QGm88FpxV3J3FVaAl2lCS8oYlPPc8j17WA71Wja2vFtq32+1HP+5Kyh1Zpqbvz\niDEM0SoUJUR/q9KPLNQhOX6L\n-----END PRIVATE KEY-----\n",
+  "client_email": "analytics@analytics-sites-mova.iam.gserviceaccount.com",
+  "client_id": "108402822000776465495",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/analytics%40analytics-sites-mova.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,50 @@
+import { GroupingState } from './grouping.model';
+import { PaginatorState } from './paginator.model';
+import { SortState } from './sort.model';
+
+export interface ITableState {
+  filter: {} | any;
+  paginator: PaginatorState;
+  grouping: GroupingState;
+  sorting: SortState;
+  search_string: string;
+  entityId?: number;
+  language?: string;
+  userid?: number;
+}
+
+export interface TableResponseModel<T> {
+  items: T[];
+  total: number;
+}
+
+export interface ICreateAction {
+  create(): void;
+}
+
+export interface IEditAction {
+  edit(id: number): void;
+}
+
+export interface IDeleteAction {
+  delete(id: number): void;
+}
+
+export interface IDeleteSelectedAction {
+  grouping: GroupingState;
+  ngOnInit(): void;
+  deleteSelected(): void;
+}
+
+export interface IFetchSelectedAction {
+  grouping: GroupingState;
+  ngOnInit(): void;
+  fetchSelected(): void;
+}
+
+export interface IUpdateStatusForSelectedAction {
+  grouping: GroupingState;
+  ngOnInit(): void;
+  updateStatusForSelected(): void;
+}
+

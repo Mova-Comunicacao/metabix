@@ -1,0 +1,20 @@
+//
+// Vendors customization
+//
+
+////////////////////////////////////////////////////////////////
+///////////// DO NOT MODIFY BELOW INCLUDE ORDER ////////////////
+////////////////////////////////////////////////////////////////
+
+// Initialize
+@import "init";
+
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.bubble.css';
+@import 'quill/dist/quill.snow.css';
+// ng-select
+@import "@ng-select/ng-select/themes/default.theme.css";
+//@import "dropzone/dist/min/dropzone.min.css";
+
+// Plugins
+@import "./core/vendors/plugins";

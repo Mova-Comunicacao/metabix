@@ -1,0 +1,99 @@
+<div 
+    class="card card-flush mb-5 mb-xl-8"
+    [ngClass]="{'overlay overlay-block': isLoading$ | async}">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>         
+    </ng-container>      
+    <div class="card-header border-0 py-5">   
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder fs-3 mb-1">Estatística da página</span>
+            <span class="text-muted fw-bold fs-7">&nbsp;</span>
+        </h3>           
+        <div class="card-toolbar">
+			<div
+				ngbDropdown
+                display="dynamic"
+				class="dropdown">	            
+                <button type="button" class="btn btn-sm btn-light d-flex align-items-center px-4" ngbDropdownToggle>
+                    <div class="text-gray-600 fw-bold">
+                        {{ start_date | date:'mediumDate':'-0300':'pt-BR' }} à {{ end_date | date:'mediumDate':'-0300':'pt-BR' }}
+                    </div>
+                    <app-keenicon name="calendar" class="text-gray-500 lh-0 fs-1 ms-2 me-0"></app-keenicon>
+                </button>
+                <app-widget-dropdown ngbDropdownMenu></app-widget-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="card-body px-0 d-flex flex-column">
+        <div class="card-px py-5 flex-grow-1">
+            <div class="d-flex flex-wrap d-grid gap-5">
+                <div class="w-150px mb-0">
+                    <div class="border border-1 border-gray-200 py-3 px-6 mb-8 card-rounded d-flex align-items-start flex-column">
+                        <div class="d-flex flex-column my-6">
+                            <div class="mb-4">
+                                <app-keenicon name="people" class="fs-2hx text-danger"></app-keenicon>
+                            </div>                    
+                            <span class="fw-semibold fs-3x text-gray-700 lh-1 ls-n2">
+                                {{ metric?.activeUsers }}
+                            </span>
+                        </div>
+                        <span class="fs-6 fw-semibold text-gray-500">{{ 'analytics.activeUsers' | translate }}</span>
+                    </div>
+                </div>
+                <div class="w-150px mb-0">
+                    <div class="border border-1 border-gray-200 py-3 px-6 mb-8 card-rounded d-flex align-items-start flex-column">
+                        <div class="d-flex flex-column my-6">
+                            <div class="mb-4">
+                                <app-keenicon name="user" class="fs-2hx text-danger"></app-keenicon>
+                            </div>                    
+                            <span class="fw-semibold fs-3x text-gray-700 lh-1 ls-n2">
+                                {{ metric?.newUsers }}
+                            </span>
+                        </div>
+                        <span class="fs-6 fw-semibold text-gray-500">{{ 'analytics.newUsers' | translate }}</span>
+                    </div>
+                </div>    
+                <div class="w-150px mb-0">
+                    <div class="border border-1 border-gray-200 py-3 px-6 mb-8 card-rounded d-flex align-items-start flex-column">
+                        <div class="d-flex flex-column my-6">
+                            <div class="mb-4">
+                                <app-keenicon name="devices" class="fs-2hx text-danger"></app-keenicon>
+                            </div>                    
+                            <span class="fw-semibold fs-3x text-gray-700 lh-1 ls-n2">
+                                {{ metric?.screenPageViews }}
+                            </span>
+                        </div>
+                        <span class="fs-6 fw-semibold text-gray-500">{{ 'analytics.views' | translate }}</span>
+                    </div>
+                </div>      
+            </div>                
+        </div>
+        <ng-container>                  
+            <div
+                #chart
+                class="mixed-widget-6-chart card-rounded-bottom"
+                [style.height]="chartHeight">
+                <apx-chart 
+                    style="position: relative;"
+                    [series]="chartOptions.series"
+                    [chart]="chartOptions.chart"
+                    [xaxis]="chartOptions.xaxis"
+                    [yaxis]="chartOptions.yaxis"
+                    [dataLabels]="chartOptions.dataLabels"
+                    [stroke]="chartOptions.stroke"
+                    [legend]="chartOptions.legend"
+                    [fill]="chartOptions.fill"
+                    [states]="chartOptions.states"
+                    [tooltip]="chartOptions.tooltip"
+                    [colors]="chartOptions.colors"
+                    [markers]="chartOptions.markers"
+                    [plotOptions]="chartOptions.plotOptions">
+                </apx-chart>
+            </div>
+        </ng-container>
+    </div>
+</div>

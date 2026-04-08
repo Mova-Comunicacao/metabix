@@ -1,0 +1,151 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+    <h3 class="fw-bolder my-2">
+        <ng-container *ngIf="category">
+            <ng-container *ngIf="category.id">{{ 'title.editTitle' | translate }}</ng-container>
+            <ng-container *ngIf="!category.id">{{ 'title.createTitle' | translate }} {{'nav.categoriesNav' | translate }}</ng-container>
+            <ng-container *ngIf="category.id"> '{{category.name}}' </ng-container>
+        </ng-container>   
+      	<span class="fs-6 text-gray-400 fw-bold ms-1">&nbsp;</span>
+    </h3>
+    <div class="d-flex flex-wrap my-2">
+        <div class="me-4"></div>
+        <button type="button" class="btn btn-light-primary fw-bolder" 
+            [routerLink]="'/categories'">
+            <i class="fa fa-arrow-left icon-sm"></i>{{ 'btn.backBtn' | translate }}
+        </button>      
+    </div>    
+</div>
+<div class="d-flex flex-column flex-lg-row">
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+        <div class="card card-flush py-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">
+                        <ng-container *ngIf="category">
+                            <ng-container *ngIf="category.id">{{ 'title.editTitle' | translate }}</ng-container>
+                            <ng-container *ngIf="!category.id">{{ 'title.createTitle' | translate }}</ng-container>
+                            {{'nav.categoriesNav' | translate }}
+                        </ng-container>                
+                    </h3>
+                </div>
+                <div class="card-toolbar"></div>
+            </div>
+            <div 
+                class="card-body pt-0"
+                [ngClass]="{'overlay overlay-block': categoriesService.isLoading$ | async}">
+                <ng-container *ngIf="categoriesService.isLoading$ | async">
+                    <div class="overlay-layer bg-dark bg-opacity-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>            
+                </ng-container>   
+                <ng-container *ngIf="category">
+                    <form
+                        class="form form-label-right"
+                        [formGroup]="formGroup"
+                        (ngSubmit)="save()">
+                        <div class="form-group row mb-10">
+                            <label class="form-label required">{{ 'form.propertyNameField' | translate }}</label>
+                            <div>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-control-solid"
+                                    [placeholder]="'form.propertyNameField' | translate"
+                                    name="name"
+                                    [class.is-invalid]="isControlInvalid('name')"
+                                    [class.is-valid]="isControlValid('name')"
+                                    formControlName="name"
+                                /> 
+                                <span class="form-text text-muted">{{ 'form.propPictureTitleHelper' | translate }}</span>
+                                <div class="valid-feedback" *ngIf="isControlValid('name')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('required', 'name')">{{ 'form.propertyNameReq' | translate }}</div>                             
+                                <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'name')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                       
+                            </div>                   
+                        </div> 
+                        <div class="form-group row mb-10">                          
+                            <label class="form-label">{{ 'form.propertyDescField' | translate }}</label>
+                            <div >
+                                <quill-editor
+                                    name="description"
+                                    formControlName="description"
+                                    [class.is-invalid]="isControlInvalid('description')"
+                                    [class.is-valid]="isControlValid('description')"                                    
+                                    (onEditorChanged)="changedEditor($event)"
+                                    class="form-control-solid">
+                                    <div quill-editor-toolbar>
+                                        <span class="ql-formats">
+                                            <select class="ql-header">
+                                                <option value="1"></option>
+                                                <option value="2"></option>
+                                                <option value="3"></option>
+                                                <option value="4"></option>
+                                                <option selected="selected"></option>
+                                            </select>   
+                                        </span>                                        
+                                        <span class="ql-formats">
+                                            <button class="ql-bold" [title]="'Bold'"></button>
+                                            <button class="ql-italic" [title]="'Italic'"></button>
+                                            <button class="ql-underline" [title]="'Undeline'"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <button class="ql-blockquote" [title]="'Blockquote'"></button>
+                                        </span>                                
+                                        <span class="ql-formats">
+                                            <button class="ql-clean" [title]="'Clean'"></button>
+                                        </span>
+                                    </div>                                
+                                </quill-editor>
+                                <span class="form-text text-muted">{{ 'form.propertyDescHelper' | translate }}</span>
+                                <div class="valid-feedback" *ngIf="isControlValid('description')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">{{ 'form.propertyNameReq' | translate }}</div>                             
+                                <div class="invalid-feedback" *ngIf="controlHasError('minlength', 'description')">{{ 'form.propertyMinimumReq' | translate:{min: '3'} }}</div>                               
+                                <div class="invalid-feedback" *ngIf="controlHasError('maxLength', 'description')">{{ 'form.propertyMaximumReq' | translate:{max: '250'} }}</div>                            
+                            </div>
+                        </div>    
+                        <div class="d-flex justify-content-end">
+                            <div class="form-group row mb-0"> 
+                                <div class="col-lg-12 col-xl-12">
+                                    <button class="btn btn-light me-5"
+                                        [routerLink]="'/categories'">
+                                        {{ 'btn.cancelBtn' | translate }}
+                                    </button>
+                                    <div class="btn-group">
+                                        <button type="submit" [disabled]="formGroup.invalid" class="btn btn-primary fs-bold fw-bolder px-6">
+                                            {{ 'btn.saveChangesBtn' | translate }}
+                                        </button>
+                                        <div class="btn btn-primary btn-icon fs-bold" ngbDropdown container="body" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" [disabled]="formGroup.invalid" class="btn btn-icon rounded-start-0" ngbDropdownToggle>
+                                                <span class="svg-icon svg-icon-2 m-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black"></path>
+                                                    </svg>
+                                                </span>                                        
+                                            </button>
+                                            <div class="menu menu-sub menu-sub-dropdown w-150px py-4" ngbDropdownMenu>
+                                                <div class="menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7">
+                                                    <ng-container *ngIf="category.id">
+                                                        <div class="menu-item px-3">
+                                                            <a (click)="save()" class="menu-link px-3 cursor-pointer">
+                                                                <span class="menu-title">{{ 'btn.saveContinueBtn' | translate }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </ng-container>
+                                                    <li class="menu-item px-3">
+                                                        <a (click)="editExit()" class="menu-link px-3 cursor-pointer">
+                                                            <span class="menu-title">{{ 'btn.saveOutBtn' | translate }}</span>
+                                                        </a>
+                                                    </li>
+                                                </div>
+                                            </div>
+                                        </div>                         
+                                    </div>   
+                                </div>               
+                            </div>  
+                        </div>                                           
+                    </form>
+                </ng-container>               
+            </div>            
+        </div>             
+    </div>
+</div>

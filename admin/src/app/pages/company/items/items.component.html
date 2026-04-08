@@ -1,0 +1,93 @@
+<div class="card mb-5 mb-xl-8">
+    <div class="card-header border-0 pt-5">
+        <div class="card-title">
+            <h3 class="card-label fw-bolder fs-3 mb-1">{{'nav.servicesNav' | translate }}</h3>
+        </div>
+        <div class="card-toolbar">
+            <button
+                type="button"
+                class="btn btn-primary fw-bolder"
+                (click)="create()">
+                <span
+                    [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                    class="svg-icon svg-icon-3">
+                </span>          
+                {{ 'btn.addBtn' | translate }}
+            </button>
+        </div>
+    </div>
+    <div 
+        class="card-body cursor-default" 
+        [ngClass]="{'overlay overlay-block': isLoading}">
+        <ng-container *ngIf="isLoading">
+            <div class="overlay-layer bg-dark bg-opacity-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>            
+        </ng-container>         
+        <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-row-dashed table-row-gray-300 align-middle gs-0 gy-3 draggable">
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th>
+                        (ID)
+                    </th>
+                    <th>
+                        {{ 'table.tab_name' | translate }}                
+                    </th>   
+                    <th>{{ 'table.tab_description' | translate }}</th> 
+                    <th>{{ 'table.tab_createdBy' | translate }}</th> 
+                    <th>{{ 'table.tab_dateCreated' | translate }}</th>                             
+                    <th class="text-end"></th>   
+                </tr>                 
+            </thead>
+            <tbody 
+                cdkDropList
+                #doneList="cdkDropList"
+                [cdkDropListData]="itemService.items$ | async"
+                (cdkDropListDropped)="dragDropped($event)">
+                <tr *ngFor="let goal of itemService.items$ | async" cdkDrag>
+                    <td>{{ goal.id }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">															
+                            <div class="ml-3">									
+                                <div class="text-dark-75 fw-bold line-height-sm">
+                                    {{ goal.name }}
+                                </div>	
+                                <a class="text-muted fw-bold text-hover-primary"></a>								
+                            </div>
+                        </div>                        
+                    </td>              
+                    <td [innerHTML]="goal.description | truncatetext:50"></td>
+                    <td>
+                        <div class="fw-bold text-muted">{{ goal.staff?.fullname }}</div>
+                    </td>
+                    <td>
+                        <div class="fw-bolder text-primary mb-0">{{ goal.date | datelocale }}</div>
+                    </td> 
+                    <td class="d-flex justify-content-end flex-shrink-0">                                          
+                        <a
+                            title="Edit"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+                            (click)="edit(goal.id)">
+                            <span
+                                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                class="svg-icon svg-icon-3">
+                            </span>
+                        </a>
+                        <a
+                            title="Delete"
+                            class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                            (click)="delete(goal.id)">
+                            <span
+                                [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                class="svg-icon svg-icon-3">
+                            </span>
+                        </a>
+                    </td>               
+                </tr>
+            </tbody>             
+        </table>
+    </div>
+</div>

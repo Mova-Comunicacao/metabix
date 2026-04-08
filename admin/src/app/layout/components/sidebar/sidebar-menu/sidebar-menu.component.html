@@ -1,0 +1,142 @@
+<!--begin::Menu wrapper-->
+<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+  <!--begin::Menu-->
+  <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+    <!-- Dashboard -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/dashboard'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="home-2" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.dashboardNav'"></span>
+      </a>
+    </div>
+    <!-- Slides -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/slides'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="slider" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.slideNav'"></span>
+      </a>
+    </div>
+    <!-- Company -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/company'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="subtitle" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.aboutNav'"></span>
+      </a>
+    </div>            
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/teams'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="user" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.teamNav'"></span>
+      </a>
+    </div>   
+    <!-- Partners -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/partners'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="people" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.partnersNav'"></span>
+      </a>
+    </div>     
+    <!-- Separator -->
+    <div class="menu-item">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Projects</span>
+      </div>
+    </div>
+
+    <!-- Technology --> 
+    <div
+      class="menu-item menu-accordion"
+      data-kt-menu-trigger="click"
+      routerLinkActive="here show">  
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="chart-line" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.technologyNav'"></span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item">
+          <a class="menu-link without-sub" [routerLink]="['/technology/overview'] | localize" routerLinkActive="active">
+            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+            <span class="menu-title" [translate]="'nav.overviewNav'"></span>
+          </a>
+        </div> 
+        <div class="menu-item">
+          <a class="menu-link without-sub" [routerLink]="['/technology/content'] | localize" routerLinkActive="active">
+            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+            <span class="menu-title" [translate]="'nav.technologyNav'"></span>
+          </a>
+        </div>         
+        <div class="menu-item">
+          <a class="menu-link without-sub" [routerLink]="['/technology/solutions'] | localize" routerLinkActive="active">
+            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+            <span class="menu-title" [translate]="'nav.solutionsNav'"></span>
+          </a>
+        </div> 
+      </div>
+    </div>  
+
+    <!-- Separator -->
+    <div class="menu-item">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Posts</span>
+      </div>
+    </div>    
+
+    <!-- Posts -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/posts'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="subtitle" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.postsNav'"></span>
+      </a>
+    </div>     
+
+    <!-- Separator -->
+    <div class="menu-item">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Applications</span>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/categories'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="switch" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.categoriesNav'"></span>
+      </a>
+    </div>   
+    <!-- Carousel -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/carousel'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="people" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.carouselNav'"></span>
+      </a>
+    </div>       
+    <!-- Customers -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" [routerLink]="['/curtomers'] | localize" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="people" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" [translate]="'nav.clientsNav'"></span>
+      </a>
+    </div>            
+  </div>
+</div>

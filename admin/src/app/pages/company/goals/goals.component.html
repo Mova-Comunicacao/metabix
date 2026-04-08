@@ -1,0 +1,84 @@
+<div class="card mb-5 mb-xl-8">
+    <div class="card-header border-0 pt-5">
+      <div class="card-title">
+        <h3 class="card-label fw-bolder fs-3 mb-1">{{'nav.goalSubNav' | translate }}</h3>
+      </div>
+      <div class="card-toolbar">
+        <button
+            type="button"
+            class="btn btn-primary fw-bolder"
+            (click)="create()">
+            <span
+                [inlineSVG]="'./assets/media/icons/duotune/abstract/abs053.svg'"
+                class="svg-icon svg-icon-3">
+            </span>          
+          {{ 'btn.addBtn' | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive angular-bootstrap-table">
+        <table class="table table-head-custom table-row-dashed table-row-gray-300 align-middle gs-0 gy-3 draggable">
+            <thead>
+                <tr class="fw-bolder text-muted">
+                    <th>
+                        (ID)
+                    </th>
+                    <th>
+                        {{ 'table.tab_name' | translate }}                
+                    </th>   
+                    <th>{{ 'table.tab_description' | translate }}</th> 
+                    <th>{{ 'table.tab_createdBy' | translate }}</th> 
+                    <th>{{ 'table.tab_dateCreated' | translate }}</th>                             
+                    <th class="text-end"></th>   
+                </tr>                 
+            </thead>
+            <tbody 
+                cdkDropList
+                #doneList="cdkDropList"
+                [cdkDropListData]="goalService.items$ | async"
+                (cdkDropListDropped)="drop($event)">
+                <tr *ngFor="let goal of goalService.items$ | async" cdkDrag>
+                    <td>{{ goal.goalId }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">															
+                            <div class="ml-3">									
+                                <div class="text-dark-75 fw-bold line-height-sm">
+                                    {{ goal.goalName }}
+                                </div>	
+                                <a class="text-muted fw-bold text-hover-primary"></a>								
+                            </div>
+                        </div>                        
+                    </td>              
+                    <td [innerHtml]="goal.goalNotes"></td>
+                    <td>
+                        <div class="fw-bold text-muted">{{ goal.admin?.adminFirstName }} {{ goal.admin?.adminLastName }}</div>
+                    </td>
+                    <td>
+                        <div class="fw-bolder text-primary mb-0">{{ goal.date | datelocale: 'll' }}</div>
+                    </td> 
+                    <td class="d-flex justify-content-end flex-shrink-0">                                          
+                        <a
+                            title="Edit"
+                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+                            (click)="edit(goal.goalId)">
+                            <span
+                                [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
+                                class="svg-icon svg-icon-3">
+                            </span>
+                        </a>
+                        <a
+                            title="Delete"
+                            class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
+                            (click)="delete(goal.goalId)">
+                            <span
+                                [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                class="svg-icon svg-icon-3">
+                            </span>
+                        </a>
+                    </td>               
+                </tr>
+            </tbody>             
+        </table>
+    </div>
+</div>

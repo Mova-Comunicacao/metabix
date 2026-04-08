@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <div class="modal-title h4">
+        <ng-container *ngIf="videos">
+            <ng-container *ngIf="videos.id">{{ 'title.editTitle' | translate }}</ng-container>
+            <ng-container *ngIf="!videos.id">{{ 'title.createTitle' | translate }}</ng-container>
+            Video
+            <ng-container *ngIf="videos.id">'{{videos.subject}}'</ng-container>
+        </ng-container>
+    </div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>   
+</div>
+<div 
+    class="modal-body" 
+    [ngClass]="{'overlay overlay-block ': isLoading$ | async}"
+    style="min-height: 325px;">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>      
+    </ng-container>
+    <ng-container *ngIf="videos">        
+        <form action="#" class="form form-label-right" [formGroup]="formGroup">
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">{{ 'form.propertyNameField' | translate }}</label>
+                    <input 
+                        type="text"
+                        name="subject"
+                        class="form-control form-control-lg" 
+                        [class.is-invalid]="isControlInvalid('subject')"
+                        [class.is-valid]="isControlValid('subject')"                        
+                        formControlName="subject"
+                    />
+                    <div class="valid-feedback" *ngIf="isControlValid('subject')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'subject')">{{ 'form.propertyNameReq' | translate }}</div>                    
+                </div>
+            </div>
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">{{ 'form.propertyNotesField' | translate }}</label>
+                    <quill-editor
+                        name="description"
+                        formControlName="description"
+                        [class.is-invalid]="isControlInvalid('description')"
+                        [class.is-valid]="isControlValid('description')"                       
+                        class="w-100">
+                        <div quill-editor-toolbar>                            
+                            <span class="ql-formats">
+                                <button class="ql-bold" [title]="'Bold'"></button>
+                                <button class="ql-italic" [title]="'Italic'"></button>
+                                <button class="ql-underline" [title]="'Undeline'"></button>
+                            </span>                          
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" [title]="'List'"></button>
+                                <button class="ql-list" value="bullet" [title]="'List'"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-clean" [title]="'Clean'"></button>
+                            </span>                              
+                        </div>                            
+                    </quill-editor>  
+                    <div class="valid-feedback" *ngIf="isControlValid('description')">{{ 'form.propertyfieldMsg' | translate }}</div>
+                    <div class="invalid-feedback" *ngIf="controlHasError('required', 'description')">{{ 'form.propertyNameReq' | translate }}</div>                      
+                </div>
+            </div>  
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">URL Video</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        [placeholder]="'form.propertyWebsite' | translate"
+                        [class.is-invalid]="isControlInvalid('external')"
+                        [class.is-valid]="isControlValid('external')"
+                        name="external"
+                        formControlName="external"
+                    /> 
+                    <span class="form-text text-muted">Ex: https://www.youtube.com/watch?v=3Nm7_36YaUQ</span>
+                    <div class="valid-feedback" *ngIf="isControlValid('external')">{{ 'form.propertyfieldMsg' | translate }}</div>                                        
+                </div>
+            </div>
+            <div class="form-group row mb-7">
+                <div class="d-flex flex-stack">
+                    <!--Label-->
+                    <div class="fw-bold me-5">
+                        <label class="fs-6">Visible to Users</label>
+                        <div class="fs-7 text-muted">Visible on the carousel.</div>
+                    </div>
+                    <!--Checkboxes-->
+                    <div class="d-flex align-items-center">
+                        <!--Checkbox-->
+                        <label class="form-check form-check-custom form-check-solid me-10">
+                            <input 
+                                class="form-check-input h-20px w-20px" 
+                                type="checkbox" 
+                                name="visible_to_customer" 
+                                [value]="videos.visible_to_customer"
+                                [checked]="videos.visible_to_customer == 0 ? true : false"
+                                (change)="toggleVisibility($event)">
+                            <span class="form-check-label fw-bold">Visible Customers</span>
+                        </label>
+                    </div>
+                </div>                   
+            </div>                        
+        </form>
+    </ng-container>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate fw-bolder me-2" (click)="modal.close()">
+        {{ 'btn.cancelBtn' | translate }}
+    </button>
+    <ng-container *ngIf="videos">
+        <button type="submit" class="btn btn-primary btn-elevate fw-bolder" (click)="save()" [disabled]="formGroup.invalid">
+            {{ 'btn.saveBtn' | translate }}
+        </button>
+    </ng-container>
+</div> 

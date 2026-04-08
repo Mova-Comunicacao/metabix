@@ -1,0 +1,71 @@
+<div class="modal-header">
+    <div class="modal-title h4">
+        <ng-container *ngIf="social">
+            <ng-container *ngIf="social.id">{{ 'title.editTitle' | translate }}</ng-container>
+            <ng-container *ngIf="!social.id">{{ 'title.createTitle' | translate }}</ng-container>
+            {{'nav.socialNav' | translate }}
+            <ng-container *ngIf="social.id">'{{social.name}}'</ng-container>
+        </ng-container>
+    </div>
+    <button 
+        type="button"
+        class="btn btn-icon btn-sm btn-close btn-active-light-primary" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"  
+        (click)="modal.close()">
+        <app-keenicon name="cross" class="fs-1"></app-keenicon>
+    </button>    
+</div>
+<div 
+    class="modal-body"
+    [ngClass]="{'overlay overlay-block': isLoading$ | async}">
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>     
+    </ng-container>
+    <ng-container *ngIf="social">  
+        <form action="#" class="form form-label-right" [formGroup]="formGroup">
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">Social</label>
+                    <select 
+                        class="form-select form-select-solid form-select-lg fw-bold" 
+                        [class.is-invalid]="isControlInvalid('name')"
+                        [class.is-valid]="isControlValid('name')"                               
+                        formControlName="name">
+                        <option [value]="social.name">{{ social.name }}</option> 
+                        <ng-container *ngIf="!social.id"> 
+                            <option *ngFor="let s of socials" [value]="s.name">{{ s.name }}</option>                     
+                        </ng-container>                    
+                    </select>                          
+                </div>
+            </div>
+            <div class="form-group row mb-7">
+                <div class="col-12">
+                    <label class="form-label">URL</label>
+                    <div class="input-group input-group-lg input-group-solid">
+                        <span class="input-group-text">
+                            <i class="fa fa-link icon-sm"></i>
+                        </span> 
+                        <input 
+                            type="text"
+                            name="link"
+                            class="form-control form-control-lg form-control-solid " 
+                            [class.is-invalid]="isControlInvalid('link')"
+                            [class.is-valid]="isControlValid('link')"                        
+                            formControlName="link"
+                        />
+                    </div>
+                    <div class="valid-feedback" *ngIf="isControlValid('link')">{{ 'form.propertyfieldMsg' | translate }}</div>                       
+                </div>
+            </div>                              
+        </form>
+    </ng-container>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light btn-elevate fw-bolder me-2" (click)="modal.close()">{{ 'btn.cancelBtn' | translate }}</button>
+    <ng-container *ngIf="social">
+        <button type="submit" class="btn btn-primary btn-elevate fw-bolder" (click)="save()" [disabled]="formGroup.invalid">{{ 'btn.saveBtn' | translate }}</button>
+    </ng-container>
+</div>    

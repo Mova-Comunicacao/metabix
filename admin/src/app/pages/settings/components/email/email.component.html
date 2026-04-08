@@ -1,0 +1,294 @@
+<div 
+    class="card card-flush"
+    [ngClass]="{'overlay overlay-block': isLoading }"> 
+    <ng-container *ngIf="isLoading">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>      
+    <ng-container *ngIf="settingService.settings$ | async as settings">
+        <ng-container *ngIf="settings.smtp_email === ''">
+
+        </ng-container>
+        <div class="card-header">
+            <div class="card-title fs-3 fw-bolder">SMTP Settings</div>
+        </div>  
+        <div class="card-body p-9">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()" autocomplete="off">
+                <!-- fake fields are a workaround for chrome autofill getting the wrong fields 
+                <input type="text" class="fake-autofill-field" name="fakeusernameremembered" value='' tabindex="-1" />
+                <input type="password" class="fake-autofill-field" name="fakepasswordremembered" value='' tabindex="-1" /> 
+                -->               
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">Mail Engine</label>
+                    <div class="col-lg-9">
+                        <div class="d-flex fw-semibold h-100">
+                            <div class="form-check form-check-custom form-check-solid me-9">
+                                <input readonly class="form-check-input" type="radio" value="phpmailer" id="phpmailer" formControlName="mail_engine">
+                                <label class="form-check-label ms-3" for="phpmailer">
+                                    PHPMailer
+                                </label>
+                            </div>
+                            <div class="form-check form-check-custom form-check-solid me-9">
+                                <input class="form-check-input" type="radio" value="codeigniter" id="codeigniter" formControlName="mail_engine">
+                                <label class="form-check-label ms-3" for="codeigniter">
+                                    CodeIgniter
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <ng-container *ngIf="formGroup.value.email_protocolo === 'mail'">
+                    <div class="form-group row mb-8">
+                        <div class="col-lg-9 ms-auto">
+                            <div class="alert alert-info d-flex align-items-center p-5">
+                                <span
+                                    [inlineSVG]="'./assets/media/icons/duotune/general/gen048.svg'"
+                                    class="svg-icon svg-icon-2hx svg-icon-info me-4">
+                                </span>   
+                                <div class="d-flex flex-column">
+                                    <h4 class="mb-1 text-info">The "mail" protocolo</h4>
+                                    <span>The "mail" protocolo is not the recommended protocol to send emails, you should strongly consider configuring the "SMTP" protocol to avoid any distruptions and delivery issues</span>
+                                </div>
+                            </div>     
+                        </div>               
+                    </div>    
+                </ng-container>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">Email Protocolo</label>
+                    <div class="col-lg-9">
+                        <div class="d-flex fw-semibold h-100">
+                            <div class="form-check form-check-custom form-check-solid me-9">
+                                <input class="form-check-input" type="radio" value="smtp" id="smtp" formControlName="email_protocolo">
+                                <label class="form-check-label ms-3" for="smtp">
+                                    SMTP
+                                </label>
+                            </div>
+                            <div class="form-check form-check-custom form-check-solid me-9">
+                                <input class="form-check-input" type="radio" value="sendmail" id="sendmail" formControlName="email_protocolo">
+                                <label class="form-check-label ms-3" for="sendmail">
+                                    Sendmail
+                                </label>
+                            </div>
+                            <div class="form-check form-check-custom form-check-solid me-9">
+                                <input class="form-check-input" type="radio" value="mail" id="mail" formControlName="email_protocolo">
+                                <label class="form-check-label ms-3" for="mail">
+                                    Mail
+                                </label>
+                            </div>                            
+                        </div> 
+                    </div>
+                </div>   
+                <ng-container *ngIf="formGroup.value.email_protocolo !== 'mail'">    
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Email Encryption</label>
+                        <div class="col-lg-9">
+                            <select 
+                                class="form-select form-select-lg fw-bold" 
+                                name="smtp_encryption"
+                                [class.is-invalid]="isControlInvalid('smtp_encryption')"
+                                [class.is-valid]="isControlValid('smtp_encryption')" 
+                                formControlName="smtp_encryption">
+                                <option value="">None</option>
+                                <option value="ssl">SSL</option>
+                                <option value="tls">TLS</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">SMTP Host</label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="smtp_host"
+                                [class.is-invalid]="isControlInvalid('smtp_host')"
+                                [class.is-valid]="isControlValid('smtp_host')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>    
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">SMTP Port</label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="smtp_port"
+                                [class.is-invalid]="isControlInvalid('smtp_port')"
+                                [class.is-valid]="isControlValid('smtp_port')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>  
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">SMTP Email</label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="smtp_email"
+                                [class.is-invalid]="isControlInvalid('smtp_email')"
+                                [class.is-valid]="isControlValid('smtp_email')"
+                            />  
+                            <span class="form-text text-muted">
+                                If you are using your Google Account password to connect to SMTP, it's highly recommended to 
+                                <span class="bold">update your password with an App Password</span> to avoid any email sending disruptions, find more information on how to generate App Password for your Google Account at the following link: 
+                                <a href="https://support.google.com/accounts/answer/185833?hl=en">https://support.google.com/accounts/answer/185833?hl=en</a>                                
+                            </span>
+                        </div>
+                    </div>      
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                            SMTP Username 
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" [ngbTooltip]="'Fill only if your email client use username for SMTP login.'"></i>
+                        </label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="text"
+                                formControlName="smtp_username"
+                                [class.is-invalid]="isControlInvalid('smtp_username')"
+                                [class.is-valid]="isControlValid('smtp_username')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>   
+                    <div class="form-group row mb-8">
+                        <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                            SMTP Password 
+                        </label>
+                        <div class="col-lg-9">
+                            <input class="form-control form-control-lg"
+                                type="password"
+                                formControlName="smtp_password"
+                                autocomplete="off"
+                                [class.is-invalid]="isControlInvalid('smtp_password')"
+                                [class.is-valid]="isControlValid('smtp_password')"
+                            />  
+                            <span class="form-text text-muted"></span>
+                        </div>
+                    </div>  
+                </ng-container>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        Email Charset 
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="smtp_email_charset"
+                            [class.is-invalid]="isControlInvalid('smtp_email_charset')"
+                            [class.is-valid]="isControlValid('smtp_email_charset')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">
+                        BCC All Emails To 
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="bcc_emails"
+                            [class.is-invalid]="isControlInvalid('bcc_emails')"
+                            [class.is-valid]="isControlValid('bcc_emails')"
+                        />  
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>    
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Email Signature</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control form-control-lg"
+                            type="text"
+                            formControlName="email_signature"
+                            [class.is-invalid]="isControlInvalid('email_signature')"
+                            [class.is-valid]="isControlValid('email_signature')">
+                        </textarea>    
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div> 
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Predefined Header</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control form-control-lg"
+                            type="text"
+                            formControlName="email_header"
+                            [class.is-invalid]="isControlInvalid('email_header')"
+                            [class.is-valid]="isControlValid('email_header')"
+                            rows="10">
+                        </textarea>    
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div> 
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end">Predefined Footer</label>
+                    <div class="col-lg-9">
+                        <textarea class="form-control form-control-lg"
+                            type="text"
+                            formControlName="email_footer"
+                            [class.is-invalid]="isControlInvalid('email_footer')"
+                            [class.is-valid]="isControlValid('email_footer')"
+                            rows="10">
+                        </textarea>    
+                        <span class="form-text text-muted"></span>
+                    </div>
+                </div>    
+                <div class="form-group row mb-4">
+                    <div class="col-lg-9 ms-auto">
+                        <h2 class="fw-bold fs-2">Send Test Email</h2>
+                        <p class="text-muted">Send test email to make sure that your SMTP settings is set correctly.</p>
+                    </div>
+                </div>                                                                                                                                                                                                            
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end" for="send">Send Test Email</label>
+                    <div class="col-lg-9">
+                        <div class="d-flex">
+                            <input 
+                                id="send" 
+                                type="email" 
+                                class="form-control  form-control-lg me-3 flex-grow-1"
+                                name="test_email" placeholder="Email Address" 
+                                [class.is-invalid]="isControlInvalid('test_email')"
+                                [class.is-valid]="isControlValid('test_email')"                                
+                                formControlName="test_email" />
+                                <button type="button" class="btn btn-lg btn-light btn-active-light-primary fw-bold flex-shrink-0" (click)="test_email()">
+                                <ng-container *ngIf="!(testService.isSending$ | async)">{{ 'btn.sendBtn' | translate }}</ng-container>               
+                                <ng-container *ngIf="testService.isSending$ | async">   
+                                    <span class="indicator-progress" [style.display]="'block'">
+                                        Sending...{{ " " }}
+                                        <span
+                                            class="spinner-border spinner-border-sm align-middle ms-2"
+                                        ></span>
+                                    </span>                        
+                                </ng-container>                                       
+                            </button>                          </div>                      
+                        <div class="valid-feedback" *ngIf="isControlValid('test_email')">Email was entered correct</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('required', 'test_email')">{{ 'settings.businessEmalMsg' | translate }}</div>
+                        <div class="invalid-feedback" *ngIf="controlHasError('email', 'test_email')">{{ 'settings.adminEmailReq' | translate }}</div>  
+                    </div>
+                </div>                               
+            </form>
+            <div class="card-footer d-flex justify-content-end py-6 px-0" [formGroup]="formGroup">
+                <button type="submit" class="btn btn-transparent btn-active-light-primary fw-bold me-2">
+                    {{ 'btn.cancelBtn' | translate }}
+                </button>          
+                <button 
+                    type="submit" 
+                    [disabled]="formGroup.invalid" 
+                    (click)="onSubmit()" 
+                    class="btn btn-primary fw-bold">
+                    <ng-container>{{ 'btn.saveBtn' | translate }}</ng-container>               
+                    <ng-container *ngIf="isLoading$ | async">   
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Loading...{{ " " }}
+                            <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>                        
+                    </ng-container>                    
+                </button>
+            </div>             
+        </div>        
+    </ng-container>
+</div>

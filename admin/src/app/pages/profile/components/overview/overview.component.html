@@ -1,0 +1,107 @@
+<ng-container *ngIf="staff">
+  <div class="card mb-5 mb-xxl-8 py-5" id="kt_profile_details_view">
+    <div class="card-header">
+      <div class="card-title m-0">
+        <h3 class="fw-bolder m-0">{{ 'profile.formTitle' | translate }}</h3>
+      </div>
+      <a
+        routerLink="/profile/settings"
+        class="btn btn-primary fw-bold align-self-center">
+        Edit Profile
+      </a>
+    </div>
+
+    <div class="card-body p-9">
+      <div class="row mb-7">
+        <label class="col-lg-4 fw-bold text-muted">{{ 'form.usersFirstNameField' | translate }}</label>
+        <div class="col-lg-8">
+          <span class="fw-bolder fs-6 text-dark">
+            {{ staff.firstname }} {{ staff.lastname }}
+            <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">
+              <ng-container *ngIf="staff.role == 0">{{ 'profile.formRoleAdmin' | translate }}</ng-container>
+              <ng-container *ngIf="staff.role == 1">{{ 'profile.formRoleSupereditor' | translate }}</ng-container>
+              <ng-container *ngIf="staff.role == 2">{{ 'profile.formRoleSupervisor' | translate }}</ng-container>              
+            </span>            
+          </span>
+        </div>
+      </div>
+
+      <div class="row mb-7">
+        <label class="col-lg-4 fw-bold text-muted">{{ 'form.phoneField' | translate }}</label>
+
+        <div class="col-lg-8 d-flex align-items-center">
+          <span class="fw-bolder fs-6 me-2">{{ staff.phone }}</span>
+        </div>
+      </div>
+
+      <div class="row mb-7">
+        <label class="col-lg-4 fw-bold text-muted">{{ 'form.propertyWebsite' | translate }}</label>
+        <div class="col-lg-8">
+          <a href="#" class="fw-bold fs-6 text-dark text-hover-primary">
+            {{ staff.website }}
+          </a>
+        </div>
+      </div>
+
+      <div class="row mb-7">
+        <label class="col-lg-4 fw-bold text-muted">
+          {{ 'form.languageField' | translate }}
+          <i
+            class="fas fa-exclamation-circle ms-1 fs-7"
+            [ngbTooltip]="'Linguagem de preferência'"
+            container="body"
+            placement="top"            
+          ></i>
+        </label>
+        <div class="col-lg-8">
+          <span class="fw-bolder fs-6 text-dark">
+            <ng-container *ngIf="staff.default_language === 'english'">{{ 'form.optionEnglish' | translate }}</ng-container>
+            <ng-container *ngIf="staff.default_language === 'portuguese'">{{ 'form.optionPortuguese' | translate }}</ng-container>            
+          </span>
+        </div>
+      </div>
+
+      <div class="row mb-7">
+        <label class="col-lg-4 fw-bold text-muted">{{ 'form.addressField' | translate }}</label>
+
+        <div class="col-lg-8">
+          <span class="fw-bolder fs-6 text-dark">{{ staff.address }}</span>
+        </div>
+      </div>
+
+      <div class="row mb-10">
+        <label class="col-lg-4 fw-bold text-muted">{{ 'form.allowChangeField' | translate }}</label>
+        <div class="col-lg-8">
+          <span class="fw-bold fs-6">
+            <ng-container *ngIf="staff.admin == 1">{{ 'form.yesField' | translate }}</ng-container>
+            <ng-container *ngIf="staff.admin == 0">{{ 'form.noField' | translate }}</ng-container>           
+          </span>
+        </div>
+      </div>
+
+      <div
+        class="
+          notice
+          d-flex
+          bg-light-warning
+          rounded
+          border-warning border border-dashed
+          p-6">
+        <span
+          [inlineSVG]="'./assets/media/icons/duotune/general/gen044.svg'"
+          class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+        </span>
+        <div class="d-flex flex-stack flex-grow-1">
+          <div class="fw-bold">
+            <h4 class="text-gray-800 fw-bolder">
+              {{ 'profile.myProfileH3' | translate }}
+            </h4>
+            <div class="fs-6 text-gray-600">
+              {{ 'profile.myProfileQuip' | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

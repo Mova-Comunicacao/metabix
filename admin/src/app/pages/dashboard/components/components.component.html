@@ -1,0 +1,40 @@
+<div class="row gy-5 g-xl-8">
+    <ng-container *ngIf="isLoading$ | async">
+        <!--Page loading(append to body)-->
+        <div class="d-flex justify-content-center position-absolute z-index-1 w-100">
+            <div class="w-50px h-50px bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>                
+            </div>
+        </div>                 
+    </ng-container>    
+    <ng-container *ngIf="date$ | async as _date">
+        <ng-container *ngIf="_date">
+            <!--Widgets-->
+            <div class="col-lg-12 col-xl-12">
+                <app-widget1 [start_date]="_date.start_date" [end_date]="_date.end_date"></app-widget1>
+            </div>              
+            <div class="col-lg-12 col-xl-8 col-xxl-8">
+                <app-widget2 
+                    [start_date]="_date.start_date" 
+                    [end_date]="_date.end_date"
+                    chartColor="info"
+                    chartHeight="350px">
+                </app-widget2>
+            </div>   
+            <div class="col-lg-6 col-xl-4 order-0 order-xl-0">
+                <app-widget3 [start_date]="_date.start_date" [end_date]="_date.end_date"></app-widget3>
+            </div>       
+            <div class="col-lg-6 col-xl-4 order-1 order-xl-1">
+                <app-widget4 [start_date]="_date.start_date" [end_date]="_date.end_date"></app-widget4>
+            </div>                     
+            <div class="col-lg-6 col-xl-4 order-2 order-xl-2">
+                <app-widget5 [start_date]="_date.start_date" [end_date]="_date.end_date"></app-widget5>
+            </div>   
+            <div class="col-lg-6 col-xl-4 order-3 order-xl-3">
+                <app-widget6 [start_date]="_date.start_date" [end_date]="_date.end_date"></app-widget6>
+            </div>        
+        </ng-container>
+    </ng-container> 
+</div>

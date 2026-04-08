@@ -1,0 +1,125 @@
+<div class="d-flex flex-wrap flex-stack mb-6">
+	<div class="d-flex align-items-center justify-content-between w-100">
+		<h3 class="fw-bolder my-2">
+			Analytics
+			<span class="fs-6 text-gray-400 fw-bold ms-2">&nbsp;</span>
+		</h3>   
+		<ng-container *ngIf="error">
+			{{ error }}
+		</ng-container> 
+		<div class="d-flex flex-wrap my-2">
+			<div class="me-2">
+				<form class="form-inline">
+					<div class="form-group row">
+						<div class="col-12">
+							<div class="dp-hidden position-relative">
+								<div class="position-absolute w-100">
+									<input
+										name="datepicker"
+										class="form-control form-control-transparent"
+										ngbDatepicker
+										#datepicker="ngbDatepicker"
+										[autoClose]="'outside'"
+										(dateSelect)="onDateSelection($event)"
+										[displayMonths]="3"
+										[dayTemplate]="t"
+										[footerTemplate]="f" 
+										outsideDays="hidden"
+										tabindex="-1"
+									/>  
+									<ng-template #t let-date let-focused="focused">
+										<span
+											class="custom-day"
+											[class.focused]="focused"
+											[class.range]="isRange(date)"
+											[class.faded]="isHovered(date) || isInside(date)"
+											(mouseenter)="hovered_date = date"
+											(mouseleave)="hovered_date = null">
+											{{ date.day }}
+										</span>
+									</ng-template>   
+									<ng-template #f let-date="date">
+										<hr class="border-bottom-1 border-gray-500" />
+										<div class="d-flex flex-wrap flex-stack pb-3 px-3">
+											<ul class="nav nav-pills nav-pills-sm nav-dark-75 me-5" role="tablist">
+												<li class="nav-item">
+													<a class="nav-link btn btn-md btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+														(click)="onLastDaysDateChange(28)"
+														[ngClass]="isActive(28)"
+														role="tab">
+														<span class="nav-text fs-7">28 {{ 'dashboard.days' | translate }}</span>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link btn btn-md btn-color-muted btn-active btn-active-light-primary fw-bolder px-4 me-1"
+														(click)="onLastDaysDateChange(16)"
+														[ngClass]="isActive(16)"
+														role="tab">
+														<span class="nav-text fs-7">16 {{ 'dashboard.days' | translate }}</span>
+													</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link btn btn-md btn-color-muted btn-active btn-active-light-primary fw-bolder px-4"
+														(click)="onLastDaysDateChange(7)"
+														[ngClass]="isActive(7)"
+														role="tab">
+														<span class="nav-text fs-7">7 {{ 'dashboard.days' | translate }}</span>
+													</a>
+												</li>
+											</ul>      
+											<div class="align-items-end my-2">            
+												<button class="btn btn-default fw-bolder btn-sm" (click)="datepicker.close()">
+													{{ 'btn.cancelBtn' | translate }}
+												</button>
+												<button class="btn btn-light-primary fw-bolder btn-sm ms-2" (click)="loadDateRange();datepicker.close()">
+													{{ 'btn.updateBtn' | translate }}
+												</button>
+											</div>
+										</div>
+									</ng-template>  						                             
+								</div>  
+							</div>    
+							<div class="row g-4">      
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span class="input-group-text" (click)="datepicker.toggle()">
+											<app-keenicon name="calendar" class="fs-1"></app-keenicon>
+										</span>  
+										<input
+											#startDate
+											type="text"
+											class="form-control"
+											placeholder="yyyy-mm-dd"
+											name="start_date"
+											[value]="formatter.format(start_date)"
+											(input)="start_date = validateInput(start_date, startDate.value)"
+										/>
+									</div>    
+								</div>
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span class="input-group-text" (click)="datepicker.toggle()">
+										<app-keenicon name="calendar" class="fs-1"></app-keenicon>
+										</span>  
+										<input
+											#endDate
+											type="text"
+											class="form-control"
+											placeholder="yyyy-mm-dd"
+											name="end_date"
+											[value]="formatter.format(end_date)"
+											(input)="end_date = validateInput(end_date, endDate.value)"
+										/>
+									</div>  
+								</div>	
+							</div>	
+						</div>		           
+					</div> 
+				</form>        
+			</div>
+		</div>    
+	</div>
+</div>
+<div class="px-0">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,1 @@
+export { CarouselService } from './carousel.service';

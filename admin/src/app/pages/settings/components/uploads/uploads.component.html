@@ -1,0 +1,110 @@
+<div 
+    class="card card-flush"
+    [ngClass]="{'overlay overlay-block': settingService.isLoading$ | async}"> 
+    <ng-container *ngIf="settingService.isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>      
+    <ng-container *ngIf="settingService.settings$ | async as settings">
+        <div class="card-header">
+            <div class="card-title fs-3 fw-bolder">{{ 'settings.uploadsAccTitle' | translate }}</div>
+        </div>      
+        <div class="card-body p-9">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">Date Format</label>
+                    <div class="col-lg-9">
+                        <select 
+                            class="form-select form-select-lg fw-bold" 
+                            formControlName="dateformat"
+                            [class.is-invalid]="isControlInvalid('dateformat')"
+                            [class.is-valid]="isControlValid('dateformat')">                            >
+                            <ng-container *ngFor="let date of settings.array_dateformat">
+                                <option [value]="date.key">{{ date.val }}</option>                   
+                            </ng-container>
+                        </select>   
+                    </div>
+                </div>    
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">Default Timezone</label>
+                    <div class="col-lg-9">
+                        <select 
+                            class="form-select form-select-lg fw-bold" 
+                            formControlName="default_timezone"
+                            [class.is-invalid]="isControlInvalid('default_timezone')"
+                            [class.is-valid]="isControlValid('default_timezone')">                            >
+                            <ng-container *ngFor="let timezone of settings.array_timezone">
+                                <option [value]="timezone.val">{{ timezone.val }}</option>                   
+                            </ng-container>
+                        </select>   
+                    </div>
+                </div>                                 
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.propPicTypesField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="site_pic_types"
+                            [class.is-invalid]="isControlInvalid('site_pic_types')"
+                            [class.is-valid]="isControlValid('site_pic_types')"
+                        />  
+                        <span class="form-text text-muted">{{ 'settings.propPicTypesHelper' | translate }}</span>
+                    </div>
+                </div>                 
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.uploadTypesField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="allowed_files"
+                            [class.is-invalid]="isControlInvalid('allowed_files')"
+                            [class.is-valid]="isControlValid('allowed_files')"
+                        />  
+                        <span class="form-text text-muted">{{ 'settings.uploadTypesHelper' | translate }}</span>
+                    </div>
+                </div>   
+                <div class="form-group row mb-8">
+                    <label class="col-lg-3 col-form-label fw-bold fs-6 text-md-end required">
+                    {{ 'settings.avatarTypesField' | translate }}
+                    </label>
+                    <div class="col-lg-9">
+                        <input class="form-control form-control-lg"
+                            type="text"
+                            formControlName="avatar_types"
+                            [class.is-invalid]="isControlInvalid('avatar_types')"
+                            [class.is-valid]="isControlValid('avatar_types')"
+                        />  
+                        <span class="form-text text-muted">{{ 'settings.avatarTypesHelper' | translate }}</span>
+                    </div>
+                </div>                            
+            </form>
+            <div class="card-footer d-flex justify-content-end py-6 px-0" [formGroup]="formGroup">
+                <button type="submit" class="btn btn-light btn-active-light-primary fw-bold me-2">
+                    {{ 'btn.cancelBtn' | translate }}
+                </button>          
+                <button 
+                    type="submit" 
+                    [disabled]="formGroup.invalid" 
+                    (click)="onSubmit()" 
+                    class="btn btn-primary fw-bold">
+                    <ng-container>{{ 'btn.saveBtn' | translate }}</ng-container>               
+                    <ng-container *ngIf="isLoading$ | async">   
+                        <span class="indicator-progress" [style.display]="'block'">
+                            Loading...{{ " " }}
+                            <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>                        
+                    </ng-container>                    
+                </button>
+            </div>               
+        </div>
+    </ng-container>
+</div>

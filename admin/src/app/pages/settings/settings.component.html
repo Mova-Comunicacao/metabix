@@ -1,0 +1,368 @@
+<div class="card mb-10">
+    <div class="card-body d-flex align-items-center py-8">
+        <div class="d-flex h-80px w-80px flex-shrink-0 flex-center position-relative">
+            <span class="svg-icon svg-icon-primary position-absolute opacity-15">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70px" height="70px" viewBox="0 0 70 70" fill="none" class="h-80px w-80px">
+                    <path d="M28 4.04145C32.3316 1.54059 37.6684 1.54059 42 4.04145L58.3109 13.4585C62.6425 15.9594 65.3109 20.5812 65.3109 25.5829V44.4171C65.3109 49.4188 62.6425 54.0406 58.3109 56.5415L42 65.9585C37.6684 68.4594 32.3316 68.4594 28 65.9585L11.6891 56.5415C7.3575 54.0406 4.68911  49.4188 4.68911 44.4171V25.5829C4.68911 20.5812 7.3575 15.9594 11.6891 13.4585L28 4.04145Z" fill="currentColor"></path>
+                </svg>
+            </span>
+            <span class="svg-icon svg-icon-3x svg-icon-primary position-absolute">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3" d="M22.0318 8.59998C22.0318 10.4 21.4318 12.2 20.0318 13.5C18.4318 15.1 16.3318 15.7 14.2318 15.4C13.3318 15.3 12.3318 15.6 11.7318 16.3L6.93177 21.1C5.73177 22.3 3.83179 22.2 2.73179 21C1.63179 19.8 1.83177 18 2.93177 16.9L7.53178 12.3C8.23178 11.6 8.53177 10.7 8.43177 9.80005C8.13177 7.80005 8.73176 5.6 10.3318 4C11.7318 2.6 13.5318 2 15.2318 2C16.1318 2 16.6318 3.20005 15.9318 3.80005L13.0318 6.70007C12.5318 7.20007 12.4318 7.9 12.7318 8.5C13.3318 9.7 14.2318 10.6001 15.4318 11.2001C16.0318 11.5001 16.7318 11.3 17.2318 10.9L20.1318 8C20.8318 7.2 22.0318 7.59998 22.0318 8.59998Z" fill="currentColor"></path>
+                    <path d="M4.23179 19.7C3.83179 19.3 3.83179 18.7 4.23179 18.3L9.73179 12.8C10.1318 12.4 10.7318 12.4 11.1318 12.8C11.5318 13.2 11.5318 13.8 11.1318 14.2L5.63179 19.7C5.23179 20.1 4.53179 20.1 4.23179 19.7Z" fill="currentColor"></path>
+                </svg>
+            </span>
+        </div>
+        <div class="ms-6">
+            <div class="list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0">
+                <h4 class="text-gray-800 fw-bolder">{{ 'settings.updateSettingsBtn' | translate }}</h4>
+                <p class="fs-6 text-gray-600 pe-7">
+                    {{ 'settings.uploadsNote' | translate }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card card-flush mb-10">
+    <div class="card-body pt-4 pb-0">
+        <div class="d-flex overflow-auto h-55px">
+            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap" role="tablist">
+                <li class="nav-item">
+                    <a
+                        class="nav-link me-6 cursor-pointer"
+                        [routerLink]="['general'] | localize"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        role="tab">
+                        {{ 'settings.siteSetAccTitle' | translate }}
+                    </a>
+                </li>
+                <ng-container >
+                    <li class="nav-item">
+                        <a
+                            class="nav-link cursor-pointer"
+                            [routerLink]="['uploads'] | localize"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            role="tab">                         
+                            {{ 'settings.uploadsAccTitle' | translate }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link cursor-pointer"
+                            [routerLink]="['email'] | localize"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            role="tab">                         
+                            Email
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link cursor-pointer"
+                            [routerLink]="['google'] | localize"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            role="tab">                         
+                            Google
+                        </a>
+                    </li>   
+                    <li class="nav-item">
+                        <a
+                            class="nav-link cursor-pointer"
+                            [routerLink]="['whatsapp'] | localize"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            role="tab">                         
+                            Whatsapp
+                        </a>
+                    </li>                                                                               
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
+<!--
+<div class="card card-custom overlay overlay-block"> 
+    <ng-container *ngIf="isLoading$ | async">
+        <div class="overlay-layer bg-dark bg-opacity-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>            
+    </ng-container>       
+    <ng-container *ngIf="settings">      
+
+        <div
+            class=" w-100">
+            <div class="card-header">
+                <div class="card-title fs-3 fw-bolder">{{ 'settings.siteSetAccTitle' | translate }}</div>
+            </div>
+        </div>        
+        <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+            <div class="card-body p-9">                     
+                <div class="tab-content pt-3">
+
+                    <div class="tab-pane" [ngClass]="getActiveTabCSSClass(1)">
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.installUrlField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control form-control-lg"
+                                    type="text"
+                                    formControlName="installUrl"
+                                    [class.is-invalid]="isControlInvalid('installUrl')"
+                                    [class.is-valid]="isControlValid('installUrl')"
+                                />  
+                                <span class="form-text text-muted">{{ 'settings.installUrlHelper' | translate }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.siteNameField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control form-control-lg"
+                                    type="text"
+                                    formControlName="siteName"
+                                    [class.is-invalid]="isControlInvalid('siteName')"
+                                    [class.is-valid]="isControlValid('siteName')"
+                                />   
+                                <span class="form-text text-muted">{{ 'settings.siteNameHelper' | translate }}</span>
+                            </div>
+                        </div>                        
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.businessNameField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control form-control-lg"
+                                    type="text"
+                                    formControlName="businessName"
+                                    [class.is-invalid]="isControlInvalid('businessName')"
+                                    [class.is-valid]="isControlValid('businessName')"
+                                /> 
+                                <span class="form-text text-muted"></span>
+                            </div>
+                        </div>  
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.businessAddressField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control form-control-lg"
+                                    type="text"
+                                    formControlName="businessAddress"
+                                    [class.is-invalid]="isControlInvalid('businessAddress')"
+                                    [class.is-valid]="isControlValid('businessAddress')">
+                                </textarea>    
+                                <span class="form-text text-muted">{{ 'settings.businessAddressHelper' | translate }}</span>
+                            </div>
+                        </div>  
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.businessEmailField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-at"></i>
+                                    </span>                        
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="businessEmail"
+                                        [class.is-invalid]="isControlInvalid('businessEmail')"
+                                        [class.is-valid]="isControlValid('businessEmail')"
+                                    />   
+                                </div>
+                                <div class="valid-feedback" *ngIf="isControlValid('businessEmail')">Email was entered correct</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('required', 'businessEmail')">{{ 'settings.businessEmalMsg' | translate }}</div>
+                                <div class="invalid-feedback" *ngIf="controlHasError('email', 'businessEmail')">{{ 'settings.adminEmailReq' | translate }}</div>                                                                     
+                                <span class="form-text text-muted">{{ 'settings.businessEmailHelper' | translate }}</span>
+                            </div>
+                        </div>                          
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                            {{ 'settings.businessPhoneField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-phone"></i>
+                                    </span>               
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="businessPhone"
+                                        [class.is-invalid]="isControlInvalid('businessPhone')"
+                                        [class.is-valid]="isControlValid('businessPhone')"
+                                    />      
+                                </div>                      
+                            </div>
+                        </div> 
+                        <div class="form-group row mb-8">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">
+                            {{ 'settings.contactPhoneField' | translate }}
+                            </label>
+                            <div class="col-lg-8">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </span>                           
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="contactPhone"
+                                        [class.is-invalid]="isControlInvalid('contactPhone')"
+                                        [class.is-valid]="isControlValid('contactPhone')"
+                                    />  
+                                </div>                          
+                                <span class="form-text text-muted">{{ 'settings.contactPhoneHelper' | translate }}</span>
+                            </div>
+                        </div>                         
+                    </div>
+                    <ng-container *ngIf="currentAdmin.superuser == 1">
+                        <div class="tab-pane" [ngClass]="getActiveTabCSSClass(2)">
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.propFileUploadField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="uploadPath"
+                                        [class.is-invalid]="isControlInvalid('uploadPath')"
+                                        [class.is-valid]="isControlValid('uploadPath')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.propFileUploadHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.templatesDirField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="templatesPath"
+                                        [class.is-invalid]="isControlInvalid('templatesPath')"
+                                        [class.is-valid]="isControlValid('templatesPath')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.templatesDirHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.userDocUploadField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="userDocsPath"
+                                        [class.is-invalid]="isControlInvalid('userDocsPath')"
+                                        [class.is-valid]="isControlValid('userDocsPath')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.userDocsUploadHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.uploadTypesField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="fileTypesAllowed"
+                                        [class.is-invalid]="isControlInvalid('fileTypesAllowed')"
+                                        [class.is-valid]="isControlValid('fileTypesAllowed')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.uploadTypesHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.avatarUploadField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="avatarFolder"
+                                        [class.is-invalid]="isControlInvalid('avatarFolder')"
+                                        [class.is-valid]="isControlValid('avatarFolder')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.avatarUploadHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.avatarTypesField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="avatarTypes"
+                                        [class.is-invalid]="isControlInvalid('avatarTypes')"
+                                        [class.is-valid]="isControlValid('avatarTypes')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.avatarTypesHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.propPicUploadField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="sitePicsPath"
+                                        [class.is-invalid]="isControlInvalid('sitePicsPath')"
+                                        [class.is-valid]="isControlValid('sitePicsPath')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.propPicUploadHelper' | translate }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-8">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6 required">
+                                {{ 'settings.propPicTypesField' | translate }}
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control form-control-lg"
+                                        type="text"
+                                        formControlName="sitePicTypes"
+                                        [class.is-invalid]="isControlInvalid('sitePicTypes')"
+                                        [class.is-valid]="isControlValid('sitePicTypes')"
+                                    />  
+                                    <span class="form-text text-muted">{{ 'settings.propPicTypesHelper' | translate }}</span>
+                                </div>
+                            </div>                       
+                        </div>     
+                    </ng-container>                                   
+                </div>
+            </div>           
+        </form>
+        <div class="card-footer d-flex justify-content-end py-6 px-9" [formGroup]="formGroup">
+            <button type="submit" (click)="reset()" class="btn btn-light btn-active-light-primary me-2">
+                {{ 'btn.cancelBtn' | translate }}
+            </button>          
+            <button 
+                type="submit" 
+                [disabled]="formGroup.invalid" 
+                (click)="onSubmit()" 
+                class="btn btn-primary">
+                <ng-container *ngIf="!isLoading">{{ 'btn.saveBtn' | translate }}</ng-container>               
+
+                <ng-container *ngIf="isLoading">   
+                    <span class="indicator-progress" [style.display]="'block'">
+                        Loading...{{ " " }}
+                        <span
+                            class="spinner-border spinner-border-sm align-middle ms-2"
+                        ></span>
+                    </span>                        
+                </ng-container>                    
+            </button>
+        </div>             
+    </ng-container>
+</div>
+-->
